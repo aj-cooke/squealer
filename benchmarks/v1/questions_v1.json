@@ -1,0 +1,1420 @@
+[
+  {
+    "id": "q001",
+    "question": "How many teams are in the database?",
+    "canonical_sql": "SELECT COUNT(*) AS value FROM teams;",
+    "check": {
+      "type": "numeric",
+      "tolerance": 0.0
+    },
+    "tags": [
+      "count",
+      "teams"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q002",
+    "question": "Count the number of teams.",
+    "canonical_sql": "SELECT COUNT(*) AS value FROM teams;",
+    "check": {
+      "type": "numeric",
+      "tolerance": 0.0
+    },
+    "tags": [
+      "count",
+      "teams"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q003",
+    "question": "How many drivers are recorded?",
+    "canonical_sql": "SELECT COUNT(*) AS value FROM drivers;",
+    "check": {
+      "type": "numeric",
+      "tolerance": 0.0
+    },
+    "tags": [
+      "count",
+      "drivers"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q004",
+    "question": "Count all drivers.",
+    "canonical_sql": "SELECT COUNT(*) AS value FROM drivers;",
+    "check": {
+      "type": "numeric",
+      "tolerance": 0.0
+    },
+    "tags": [
+      "count",
+      "drivers"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q005",
+    "question": "How many races are in the dataset?",
+    "canonical_sql": "SELECT COUNT(*) AS value FROM races;",
+    "check": {
+      "type": "numeric",
+      "tolerance": 0.0
+    },
+    "tags": [
+      "count",
+      "races"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q006",
+    "question": "Count all races.",
+    "canonical_sql": "SELECT COUNT(*) AS value FROM races;",
+    "check": {
+      "type": "numeric",
+      "tolerance": 0.0
+    },
+    "tags": [
+      "count",
+      "races"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q007",
+    "question": "How many race result rows exist?",
+    "canonical_sql": "SELECT COUNT(*) AS value FROM race_results;",
+    "check": {
+      "type": "numeric",
+      "tolerance": 0.0
+    },
+    "tags": [
+      "count",
+      "results"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q008",
+    "question": "Count entries in race_results.",
+    "canonical_sql": "SELECT COUNT(*) AS value FROM race_results;",
+    "check": {
+      "type": "numeric",
+      "tolerance": 0.0
+    },
+    "tags": [
+      "count",
+      "results"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q009",
+    "question": "How many lap time rows are stored?",
+    "canonical_sql": "SELECT COUNT(*) AS value FROM lap_times;",
+    "check": {
+      "type": "numeric",
+      "tolerance": 0.0
+    },
+    "tags": [
+      "count",
+      "laps"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q010",
+    "question": "Count all records in lap_times.",
+    "canonical_sql": "SELECT COUNT(*) AS value FROM lap_times;",
+    "check": {
+      "type": "numeric",
+      "tolerance": 0.0
+    },
+    "tags": [
+      "count",
+      "laps"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q011",
+    "question": "How many pit stop events are stored?",
+    "canonical_sql": "SELECT COUNT(*) AS value FROM pit_stops;",
+    "check": {
+      "type": "numeric",
+      "tolerance": 0.0
+    },
+    "tags": [
+      "count",
+      "pit_stops"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q012",
+    "question": "Count all pit stops.",
+    "canonical_sql": "SELECT COUNT(*) AS value FROM pit_stops;",
+    "check": {
+      "type": "numeric",
+      "tolerance": 0.0
+    },
+    "tags": [
+      "count",
+      "pit_stops"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q013",
+    "question": "What is the average number of laps per race?",
+    "canonical_sql": "SELECT ROUND(AVG(laps), 3) AS value FROM races;",
+    "check": {
+      "type": "numeric",
+      "tolerance": 0.01
+    },
+    "tags": [
+      "aggregate",
+      "races"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q014",
+    "question": "Compute mean laps across races.",
+    "canonical_sql": "SELECT ROUND(AVG(laps), 3) AS value FROM races;",
+    "check": {
+      "type": "numeric",
+      "tolerance": 0.01
+    },
+    "tags": [
+      "aggregate",
+      "races"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q015",
+    "question": "What is the maximum laps in any race?",
+    "canonical_sql": "SELECT MAX(laps) AS value FROM races;",
+    "check": {
+      "type": "numeric",
+      "tolerance": 0.0
+    },
+    "tags": [
+      "aggregate",
+      "races"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q016",
+    "question": "Find the highest race lap count.",
+    "canonical_sql": "SELECT MAX(laps) AS value FROM races;",
+    "check": {
+      "type": "numeric",
+      "tolerance": 0.0
+    },
+    "tags": [
+      "aggregate",
+      "races"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q017",
+    "question": "What is the minimum laps in any race?",
+    "canonical_sql": "SELECT MIN(laps) AS value FROM races;",
+    "check": {
+      "type": "numeric",
+      "tolerance": 0.0
+    },
+    "tags": [
+      "aggregate",
+      "races"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q018",
+    "question": "Find the lowest race lap count.",
+    "canonical_sql": "SELECT MIN(laps) AS value FROM races;",
+    "check": {
+      "type": "numeric",
+      "tolerance": 0.0
+    },
+    "tags": [
+      "aggregate",
+      "races"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q019",
+    "question": "How many races had rain probability at least 0.5?",
+    "canonical_sql": "SELECT COUNT(*) AS value FROM weather WHERE rain_probability >= 0.5;",
+    "check": {
+      "type": "numeric",
+      "tolerance": 0.0
+    },
+    "tags": [
+      "weather",
+      "filter"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q020",
+    "question": "Count races likely wet (rain_probability >= 0.5).",
+    "canonical_sql": "SELECT COUNT(*) AS value FROM weather WHERE rain_probability >= 0.5;",
+    "check": {
+      "type": "numeric",
+      "tolerance": 0.0
+    },
+    "tags": [
+      "weather",
+      "filter"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q021",
+    "question": "How many races had clear weather?",
+    "canonical_sql": "SELECT COUNT(*) AS value FROM weather WHERE condition = 'Clear';",
+    "check": {
+      "type": "numeric",
+      "tolerance": 0.0
+    },
+    "tags": [
+      "weather",
+      "filter"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q022",
+    "question": "Count weather rows where condition is Clear.",
+    "canonical_sql": "SELECT COUNT(*) AS value FROM weather WHERE condition = 'Clear';",
+    "check": {
+      "type": "numeric",
+      "tolerance": 0.0
+    },
+    "tags": [
+      "weather",
+      "filter"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q023",
+    "question": "What is average air temperature across races?",
+    "canonical_sql": "SELECT ROUND(AVG(air_temp_c), 3) AS value FROM weather;",
+    "check": {
+      "type": "numeric",
+      "tolerance": 0.01
+    },
+    "tags": [
+      "weather",
+      "aggregate"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q024",
+    "question": "Compute mean air_temp_c in weather.",
+    "canonical_sql": "SELECT ROUND(AVG(air_temp_c), 3) AS value FROM weather;",
+    "check": {
+      "type": "numeric",
+      "tolerance": 0.01
+    },
+    "tags": [
+      "weather",
+      "aggregate"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q025",
+    "question": "What is average track temperature?",
+    "canonical_sql": "SELECT ROUND(AVG(track_temp_c), 3) AS value FROM weather;",
+    "check": {
+      "type": "numeric",
+      "tolerance": 0.01
+    },
+    "tags": [
+      "weather",
+      "aggregate"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q026",
+    "question": "Compute mean track_temp_c in weather.",
+    "canonical_sql": "SELECT ROUND(AVG(track_temp_c), 3) AS value FROM weather;",
+    "check": {
+      "type": "numeric",
+      "tolerance": 0.01
+    },
+    "tags": [
+      "weather",
+      "aggregate"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q027",
+    "question": "How many drivers have zero DNFs?",
+    "canonical_sql": "SELECT COUNT(*) AS value FROM drivers d WHERE NOT EXISTS (SELECT 1 FROM race_results rr WHERE rr.driver_id = d.id AND rr.status = 'DNF');",
+    "check": {
+      "type": "numeric",
+      "tolerance": 0.0
+    },
+    "tags": [
+      "drivers",
+      "dnf"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q028",
+    "question": "Count drivers that never DNFed.",
+    "canonical_sql": "SELECT COUNT(*) AS value FROM drivers d WHERE NOT EXISTS (SELECT 1 FROM race_results rr WHERE rr.driver_id = d.id AND rr.status = 'DNF');",
+    "check": {
+      "type": "numeric",
+      "tolerance": 0.0
+    },
+    "tags": [
+      "drivers",
+      "dnf"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q029",
+    "question": "How many DNF results exist in total?",
+    "canonical_sql": "SELECT COUNT(*) AS value FROM race_results WHERE status = 'DNF';",
+    "check": {
+      "type": "numeric",
+      "tolerance": 0.0
+    },
+    "tags": [
+      "results",
+      "dnf"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q030",
+    "question": "Count total DNFs in race_results.",
+    "canonical_sql": "SELECT COUNT(*) AS value FROM race_results WHERE status = 'DNF';",
+    "check": {
+      "type": "numeric",
+      "tolerance": 0.0
+    },
+    "tags": [
+      "results",
+      "dnf"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q031",
+    "question": "Which team has the most points overall?",
+    "canonical_sql": "SELECT t.name AS team_name FROM teams t JOIN drivers d ON d.team_id = t.id JOIN race_results rr ON rr.driver_id = d.id GROUP BY t.id ORDER BY SUM(rr.points) DESC, t.name ASC LIMIT 1;",
+    "check": {
+      "type": "exact_rows"
+    },
+    "tags": [
+      "points",
+      "teams",
+      "join"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q032",
+    "question": "Return the points-leading team across all races.",
+    "canonical_sql": "SELECT t.name AS team_name FROM teams t JOIN drivers d ON d.team_id = t.id JOIN race_results rr ON rr.driver_id = d.id GROUP BY t.id ORDER BY SUM(rr.points) DESC, t.name ASC LIMIT 1;",
+    "check": {
+      "type": "exact_rows"
+    },
+    "tags": [
+      "points",
+      "teams",
+      "join"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q033",
+    "question": "Which driver has the most points overall?",
+    "canonical_sql": "SELECT d.full_name AS driver_name FROM drivers d JOIN race_results rr ON rr.driver_id = d.id GROUP BY d.id ORDER BY SUM(rr.points) DESC, d.full_name ASC LIMIT 1;",
+    "check": {
+      "type": "exact_rows"
+    },
+    "tags": [
+      "points",
+      "drivers",
+      "join"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q034",
+    "question": "Return the season-total points leader among drivers.",
+    "canonical_sql": "SELECT d.full_name AS driver_name FROM drivers d JOIN race_results rr ON rr.driver_id = d.id GROUP BY d.id ORDER BY SUM(rr.points) DESC, d.full_name ASC LIMIT 1;",
+    "check": {
+      "type": "exact_rows"
+    },
+    "tags": [
+      "points",
+      "drivers",
+      "join"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q035",
+    "question": "Who are the top 3 drivers by total points?",
+    "canonical_sql": "SELECT d.full_name AS driver_name, ROUND(SUM(rr.points), 3) AS total_points FROM drivers d JOIN race_results rr ON rr.driver_id = d.id GROUP BY d.id ORDER BY total_points DESC, d.full_name ASC LIMIT 3;",
+    "check": {
+      "type": "ordered_top_k",
+      "k": 3
+    },
+    "tags": [
+      "points",
+      "drivers",
+      "ranking"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q036",
+    "question": "List top three drivers ranked by summed points.",
+    "canonical_sql": "SELECT d.full_name AS driver_name, ROUND(SUM(rr.points), 3) AS total_points FROM drivers d JOIN race_results rr ON rr.driver_id = d.id GROUP BY d.id ORDER BY total_points DESC, d.full_name ASC LIMIT 3;",
+    "check": {
+      "type": "ordered_top_k",
+      "k": 3
+    },
+    "tags": [
+      "points",
+      "drivers",
+      "ranking"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q037",
+    "question": "Which 3 drivers have the best average finish position?",
+    "canonical_sql": "SELECT d.full_name AS driver_name, ROUND(AVG(rr.finish_position), 3) AS avg_finish FROM drivers d JOIN race_results rr ON rr.driver_id = d.id GROUP BY d.id ORDER BY avg_finish ASC, d.full_name ASC LIMIT 3;",
+    "check": {
+      "type": "ordered_top_k",
+      "k": 3
+    },
+    "tags": [
+      "drivers",
+      "finish_position",
+      "ranking"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q038",
+    "question": "Top three drivers by lowest average finish position.",
+    "canonical_sql": "SELECT d.full_name AS driver_name, ROUND(AVG(rr.finish_position), 3) AS avg_finish FROM drivers d JOIN race_results rr ON rr.driver_id = d.id GROUP BY d.id ORDER BY avg_finish ASC, d.full_name ASC LIMIT 3;",
+    "check": {
+      "type": "ordered_top_k",
+      "k": 3
+    },
+    "tags": [
+      "drivers",
+      "finish_position",
+      "ranking"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q039",
+    "question": "Show team standings by total points.",
+    "canonical_sql": "SELECT t.name AS team_name, ROUND(SUM(rr.points), 3) AS total_points FROM teams t JOIN drivers d ON d.team_id = t.id JOIN race_results rr ON rr.driver_id = d.id GROUP BY t.id ORDER BY total_points DESC, t.name ASC;",
+    "check": {
+      "type": "exact_rows"
+    },
+    "tags": [
+      "teams",
+      "points",
+      "table"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q040",
+    "question": "Return each team with summed points, ordered descending.",
+    "canonical_sql": "SELECT t.name AS team_name, ROUND(SUM(rr.points), 3) AS total_points FROM teams t JOIN drivers d ON d.team_id = t.id JOIN race_results rr ON rr.driver_id = d.id GROUP BY t.id ORDER BY total_points DESC, t.name ASC;",
+    "check": {
+      "type": "exact_rows"
+    },
+    "tags": [
+      "teams",
+      "points",
+      "table"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q041",
+    "question": "What is the average pit stop duration overall?",
+    "canonical_sql": "SELECT ROUND(AVG(duration_sec), 3) AS value FROM pit_stops;",
+    "check": {
+      "type": "numeric",
+      "tolerance": 0.01
+    },
+    "tags": [
+      "pit_stops",
+      "aggregate"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q042",
+    "question": "Compute mean duration_sec for all pit stops.",
+    "canonical_sql": "SELECT ROUND(AVG(duration_sec), 3) AS value FROM pit_stops;",
+    "check": {
+      "type": "numeric",
+      "tolerance": 0.01
+    },
+    "tags": [
+      "pit_stops",
+      "aggregate"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q043",
+    "question": "Which driver recorded the fastest single lap?",
+    "canonical_sql": "SELECT d.full_name AS driver_name, MIN(rr.fastest_lap_sec) AS fastest_lap_sec FROM drivers d JOIN race_results rr ON rr.driver_id = d.id GROUP BY d.id ORDER BY fastest_lap_sec ASC, d.full_name ASC LIMIT 1;",
+    "check": {
+      "type": "exact_rows"
+    },
+    "tags": [
+      "laps",
+      "drivers",
+      "fastest_lap"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q044",
+    "question": "Return the driver with the minimum fastest_lap_sec.",
+    "canonical_sql": "SELECT d.full_name AS driver_name, MIN(rr.fastest_lap_sec) AS fastest_lap_sec FROM drivers d JOIN race_results rr ON rr.driver_id = d.id GROUP BY d.id ORDER BY fastest_lap_sec ASC, d.full_name ASC LIMIT 1;",
+    "check": {
+      "type": "exact_rows"
+    },
+    "tags": [
+      "laps",
+      "drivers",
+      "fastest_lap"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q045",
+    "question": "Which circuit has the lowest average fastest lap?",
+    "canonical_sql": "SELECT r.circuit, ROUND(AVG(rr.fastest_lap_sec), 3) AS avg_fastest_lap FROM races r JOIN race_results rr ON rr.race_id = r.id GROUP BY r.circuit ORDER BY avg_fastest_lap ASC, r.circuit ASC LIMIT 1;",
+    "check": {
+      "type": "exact_rows"
+    },
+    "tags": [
+      "laps",
+      "circuits",
+      "aggregate"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q046",
+    "question": "Find the quickest circuit by avg fastest_lap_sec.",
+    "canonical_sql": "SELECT r.circuit, ROUND(AVG(rr.fastest_lap_sec), 3) AS avg_fastest_lap FROM races r JOIN race_results rr ON rr.race_id = r.id GROUP BY r.circuit ORDER BY avg_fastest_lap ASC, r.circuit ASC LIMIT 1;",
+    "check": {
+      "type": "exact_rows"
+    },
+    "tags": [
+      "laps",
+      "circuits",
+      "aggregate"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q047",
+    "question": "Show the 5 races with highest rain probability.",
+    "canonical_sql": "SELECT r.race_name, w.rain_probability FROM races r JOIN weather w ON w.race_id = r.id ORDER BY w.rain_probability DESC, r.race_name ASC LIMIT 5;",
+    "check": {
+      "type": "ordered_top_k",
+      "k": 5
+    },
+    "tags": [
+      "weather",
+      "races",
+      "ranking"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q048",
+    "question": "Top five races by rain_probability.",
+    "canonical_sql": "SELECT r.race_name, w.rain_probability FROM races r JOIN weather w ON w.race_id = r.id ORDER BY w.rain_probability DESC, r.race_name ASC LIMIT 5;",
+    "check": {
+      "type": "ordered_top_k",
+      "k": 5
+    },
+    "tags": [
+      "weather",
+      "races",
+      "ranking"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q049",
+    "question": "List the latest 5 races with weather condition.",
+    "canonical_sql": "SELECT r.race_date, r.race_name, w.condition FROM races r JOIN weather w ON w.race_id = r.id ORDER BY r.race_date DESC, r.id DESC LIMIT 5;",
+    "check": {
+      "type": "ordered_top_k",
+      "k": 5
+    },
+    "tags": [
+      "weather",
+      "date",
+      "races"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q050",
+    "question": "Show most recent five race dates and conditions.",
+    "canonical_sql": "SELECT r.race_date, r.race_name, w.condition FROM races r JOIN weather w ON w.race_id = r.id ORDER BY r.race_date DESC, r.id DESC LIMIT 5;",
+    "check": {
+      "type": "ordered_top_k",
+      "k": 5
+    },
+    "tags": [
+      "weather",
+      "date",
+      "races"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q051",
+    "question": "Which season has the highest total awarded points?",
+    "canonical_sql": "SELECT r.season_year, ROUND(SUM(rr.points), 3) AS total_points FROM races r JOIN race_results rr ON rr.race_id = r.id GROUP BY r.season_year ORDER BY total_points DESC, r.season_year ASC LIMIT 1;",
+    "check": {
+      "type": "exact_rows"
+    },
+    "tags": [
+      "season",
+      "points"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q052",
+    "question": "Find the season_year with max summed points.",
+    "canonical_sql": "SELECT r.season_year, ROUND(SUM(rr.points), 3) AS total_points FROM races r JOIN race_results rr ON rr.race_id = r.id GROUP BY r.season_year ORDER BY total_points DESC, r.season_year ASC LIMIT 1;",
+    "check": {
+      "type": "exact_rows"
+    },
+    "tags": [
+      "season",
+      "points"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q053",
+    "question": "Which team has the most DNFs?",
+    "canonical_sql": "SELECT t.name AS team_name, COUNT(*) AS dnf_count FROM teams t JOIN drivers d ON d.team_id = t.id JOIN race_results rr ON rr.driver_id = d.id WHERE rr.status = 'DNF' GROUP BY t.id ORDER BY dnf_count DESC, team_name ASC LIMIT 1;",
+    "check": {
+      "type": "exact_rows"
+    },
+    "tags": [
+      "teams",
+      "dnf",
+      "ranking"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q054",
+    "question": "Return the team leading DNF count.",
+    "canonical_sql": "SELECT t.name AS team_name, COUNT(*) AS dnf_count FROM teams t JOIN drivers d ON d.team_id = t.id JOIN race_results rr ON rr.driver_id = d.id WHERE rr.status = 'DNF' GROUP BY t.id ORDER BY dnf_count DESC, team_name ASC LIMIT 1;",
+    "check": {
+      "type": "exact_rows"
+    },
+    "tags": [
+      "teams",
+      "dnf",
+      "ranking"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q055",
+    "question": "Which driver has the most DNFs?",
+    "canonical_sql": "SELECT d.full_name AS driver_name, COUNT(*) AS dnf_count FROM drivers d JOIN race_results rr ON rr.driver_id = d.id WHERE rr.status = 'DNF' GROUP BY d.id ORDER BY dnf_count DESC, driver_name ASC LIMIT 1;",
+    "check": {
+      "type": "exact_rows"
+    },
+    "tags": [
+      "drivers",
+      "dnf",
+      "ranking"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q056",
+    "question": "Return the driver with highest DNF count.",
+    "canonical_sql": "SELECT d.full_name AS driver_name, COUNT(*) AS dnf_count FROM drivers d JOIN race_results rr ON rr.driver_id = d.id WHERE rr.status = 'DNF' GROUP BY d.id ORDER BY dnf_count DESC, driver_name ASC LIMIT 1;",
+    "check": {
+      "type": "exact_rows"
+    },
+    "tags": [
+      "drivers",
+      "dnf",
+      "ranking"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q057",
+    "question": "Top 5 drivers by average points per race result.",
+    "canonical_sql": "SELECT d.full_name AS driver_name, ROUND(AVG(rr.points), 3) AS avg_points FROM drivers d JOIN race_results rr ON rr.driver_id = d.id GROUP BY d.id ORDER BY avg_points DESC, driver_name ASC LIMIT 5;",
+    "check": {
+      "type": "ordered_top_k",
+      "k": 5
+    },
+    "tags": [
+      "drivers",
+      "points",
+      "aggregate"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q058",
+    "question": "Rank five drivers by mean points per entry.",
+    "canonical_sql": "SELECT d.full_name AS driver_name, ROUND(AVG(rr.points), 3) AS avg_points FROM drivers d JOIN race_results rr ON rr.driver_id = d.id GROUP BY d.id ORDER BY avg_points DESC, driver_name ASC LIMIT 5;",
+    "check": {
+      "type": "ordered_top_k",
+      "k": 5
+    },
+    "tags": [
+      "drivers",
+      "points",
+      "aggregate"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q059",
+    "question": "Which 3 drivers gain the most places on average?",
+    "canonical_sql": "SELECT d.full_name AS driver_name, ROUND(AVG(rr.start_position - rr.finish_position), 3) AS avg_places_gained FROM drivers d JOIN race_results rr ON rr.driver_id = d.id GROUP BY d.id ORDER BY avg_places_gained DESC, driver_name ASC LIMIT 3;",
+    "check": {
+      "type": "ordered_top_k",
+      "k": 3
+    },
+    "tags": [
+      "drivers",
+      "positions",
+      "improvement"
+    ],
+    "difficulty": "hard"
+  },
+  {
+    "id": "q060",
+    "question": "Top three by average (start_position - finish_position).",
+    "canonical_sql": "SELECT d.full_name AS driver_name, ROUND(AVG(rr.start_position - rr.finish_position), 3) AS avg_places_gained FROM drivers d JOIN race_results rr ON rr.driver_id = d.id GROUP BY d.id ORDER BY avg_places_gained DESC, driver_name ASC LIMIT 3;",
+    "check": {
+      "type": "ordered_top_k",
+      "k": 3
+    },
+    "tags": [
+      "drivers",
+      "positions",
+      "improvement"
+    ],
+    "difficulty": "hard"
+  },
+  {
+    "id": "q061",
+    "question": "Which 3 drivers lose the most places on average?",
+    "canonical_sql": "SELECT d.full_name AS driver_name, ROUND(AVG(rr.start_position - rr.finish_position), 3) AS avg_places_gained FROM drivers d JOIN race_results rr ON rr.driver_id = d.id GROUP BY d.id ORDER BY avg_places_gained ASC, driver_name ASC LIMIT 3;",
+    "check": {
+      "type": "ordered_top_k",
+      "k": 3
+    },
+    "tags": [
+      "drivers",
+      "positions",
+      "decline"
+    ],
+    "difficulty": "hard"
+  },
+  {
+    "id": "q062",
+    "question": "Bottom three by average places gained metric.",
+    "canonical_sql": "SELECT d.full_name AS driver_name, ROUND(AVG(rr.start_position - rr.finish_position), 3) AS avg_places_gained FROM drivers d JOIN race_results rr ON rr.driver_id = d.id GROUP BY d.id ORDER BY avg_places_gained ASC, driver_name ASC LIMIT 3;",
+    "check": {
+      "type": "ordered_top_k",
+      "k": 3
+    },
+    "tags": [
+      "drivers",
+      "positions",
+      "decline"
+    ],
+    "difficulty": "hard"
+  },
+  {
+    "id": "q063",
+    "question": "Show count of race_results by status.",
+    "canonical_sql": "SELECT status, COUNT(*) AS result_count FROM race_results GROUP BY status ORDER BY status ASC;",
+    "check": {
+      "type": "exact_rows"
+    },
+    "tags": [
+      "results",
+      "status",
+      "distribution"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q064",
+    "question": "How many Finished vs DNF results are there?",
+    "canonical_sql": "SELECT status, COUNT(*) AS result_count FROM race_results GROUP BY status ORDER BY status ASC;",
+    "check": {
+      "type": "exact_rows"
+    },
+    "tags": [
+      "results",
+      "status",
+      "distribution"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q065",
+    "question": "Total awarded points by season year.",
+    "canonical_sql": "SELECT r.season_year, ROUND(SUM(rr.points), 3) AS total_points FROM races r JOIN race_results rr ON rr.race_id = r.id GROUP BY r.season_year ORDER BY r.season_year ASC;",
+    "check": {
+      "type": "exact_rows"
+    },
+    "tags": [
+      "season",
+      "points",
+      "aggregate"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q066",
+    "question": "For each season_year, sum all points.",
+    "canonical_sql": "SELECT r.season_year, ROUND(SUM(rr.points), 3) AS total_points FROM races r JOIN race_results rr ON rr.race_id = r.id GROUP BY r.season_year ORDER BY r.season_year ASC;",
+    "check": {
+      "type": "exact_rows"
+    },
+    "tags": [
+      "season",
+      "points",
+      "aggregate"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q067",
+    "question": "What is the average lap time across all laps?",
+    "canonical_sql": "SELECT ROUND(AVG(lap_time_sec), 3) AS value FROM lap_times;",
+    "check": {
+      "type": "numeric",
+      "tolerance": 0.01
+    },
+    "tags": [
+      "laps",
+      "aggregate"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q068",
+    "question": "Compute mean lap_time_sec in lap_times.",
+    "canonical_sql": "SELECT ROUND(AVG(lap_time_sec), 3) AS value FROM lap_times;",
+    "check": {
+      "type": "numeric",
+      "tolerance": 0.01
+    },
+    "tags": [
+      "laps",
+      "aggregate"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q069",
+    "question": "Which driver has the fastest average lap time?",
+    "canonical_sql": "SELECT d.full_name AS driver_name, ROUND(AVG(lt.lap_time_sec), 3) AS avg_lap_time FROM drivers d JOIN lap_times lt ON lt.driver_id = d.id GROUP BY d.id ORDER BY avg_lap_time ASC, driver_name ASC LIMIT 1;",
+    "check": {
+      "type": "exact_rows"
+    },
+    "tags": [
+      "drivers",
+      "laps",
+      "performance"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q070",
+    "question": "Return the driver with lowest mean lap_time_sec.",
+    "canonical_sql": "SELECT d.full_name AS driver_name, ROUND(AVG(lt.lap_time_sec), 3) AS avg_lap_time FROM drivers d JOIN lap_times lt ON lt.driver_id = d.id GROUP BY d.id ORDER BY avg_lap_time ASC, driver_name ASC LIMIT 1;",
+    "check": {
+      "type": "exact_rows"
+    },
+    "tags": [
+      "drivers",
+      "laps",
+      "performance"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q071",
+    "question": "Which driver has the slowest average lap time?",
+    "canonical_sql": "SELECT d.full_name AS driver_name, ROUND(AVG(lt.lap_time_sec), 3) AS avg_lap_time FROM drivers d JOIN lap_times lt ON lt.driver_id = d.id GROUP BY d.id ORDER BY avg_lap_time DESC, driver_name ASC LIMIT 1;",
+    "check": {
+      "type": "exact_rows"
+    },
+    "tags": [
+      "drivers",
+      "laps",
+      "performance"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q072",
+    "question": "Return the driver with highest mean lap_time_sec.",
+    "canonical_sql": "SELECT d.full_name AS driver_name, ROUND(AVG(lt.lap_time_sec), 3) AS avg_lap_time FROM drivers d JOIN lap_times lt ON lt.driver_id = d.id GROUP BY d.id ORDER BY avg_lap_time DESC, driver_name ASC LIMIT 1;",
+    "check": {
+      "type": "exact_rows"
+    },
+    "tags": [
+      "drivers",
+      "laps",
+      "performance"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q073",
+    "question": "What is the average number of pit stops per race?",
+    "canonical_sql": "SELECT ROUND(CAST(COUNT(*) AS REAL) / (SELECT COUNT(*) FROM races), 3) AS value FROM pit_stops;",
+    "check": {
+      "type": "numeric",
+      "tolerance": 0.01
+    },
+    "tags": [
+      "pit_stops",
+      "races",
+      "aggregate"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q074",
+    "question": "Compute pit_stops count divided by races count.",
+    "canonical_sql": "SELECT ROUND(CAST(COUNT(*) AS REAL) / (SELECT COUNT(*) FROM races), 3) AS value FROM pit_stops;",
+    "check": {
+      "type": "numeric",
+      "tolerance": 0.01
+    },
+    "tags": [
+      "pit_stops",
+      "races",
+      "aggregate"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q075",
+    "question": "Which driver has the most pit stops?",
+    "canonical_sql": "SELECT d.full_name AS driver_name, COUNT(*) AS pit_count FROM drivers d JOIN pit_stops ps ON ps.driver_id = d.id GROUP BY d.id ORDER BY pit_count DESC, driver_name ASC LIMIT 1;",
+    "check": {
+      "type": "exact_rows"
+    },
+    "tags": [
+      "drivers",
+      "pit_stops",
+      "ranking"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q076",
+    "question": "Return driver with highest pit stop count.",
+    "canonical_sql": "SELECT d.full_name AS driver_name, COUNT(*) AS pit_count FROM drivers d JOIN pit_stops ps ON ps.driver_id = d.id GROUP BY d.id ORDER BY pit_count DESC, driver_name ASC LIMIT 1;",
+    "check": {
+      "type": "exact_rows"
+    },
+    "tags": [
+      "drivers",
+      "pit_stops",
+      "ranking"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q077",
+    "question": "Which race had the most pit stops?",
+    "canonical_sql": "SELECT r.race_name, COUNT(*) AS pit_count FROM races r JOIN pit_stops ps ON ps.race_id = r.id GROUP BY r.id ORDER BY pit_count DESC, r.race_name ASC LIMIT 1;",
+    "check": {
+      "type": "exact_rows"
+    },
+    "tags": [
+      "races",
+      "pit_stops",
+      "ranking"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q078",
+    "question": "Return race with max pit_count.",
+    "canonical_sql": "SELECT r.race_name, COUNT(*) AS pit_count FROM races r JOIN pit_stops ps ON ps.race_id = r.id GROUP BY r.id ORDER BY pit_count DESC, r.race_name ASC LIMIT 1;",
+    "check": {
+      "type": "exact_rows"
+    },
+    "tags": [
+      "races",
+      "pit_stops",
+      "ranking"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q079",
+    "question": "Show how many races were run at each circuit.",
+    "canonical_sql": "SELECT circuit, COUNT(*) AS race_count FROM races GROUP BY circuit ORDER BY race_count DESC, circuit ASC;",
+    "check": {
+      "type": "exact_rows"
+    },
+    "tags": [
+      "races",
+      "circuits",
+      "distribution"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q080",
+    "question": "Count races grouped by circuit.",
+    "canonical_sql": "SELECT circuit, COUNT(*) AS race_count FROM races GROUP BY circuit ORDER BY race_count DESC, circuit ASC;",
+    "check": {
+      "type": "exact_rows"
+    },
+    "tags": [
+      "races",
+      "circuits",
+      "distribution"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q081",
+    "question": "Which circuit appears most often?",
+    "canonical_sql": "SELECT circuit FROM races GROUP BY circuit ORDER BY COUNT(*) DESC, circuit ASC LIMIT 1;",
+    "check": {
+      "type": "exact_rows"
+    },
+    "tags": [
+      "races",
+      "circuits",
+      "ranking"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q082",
+    "question": "Find the most frequently used circuit.",
+    "canonical_sql": "SELECT circuit FROM races GROUP BY circuit ORDER BY COUNT(*) DESC, circuit ASC LIMIT 1;",
+    "check": {
+      "type": "exact_rows"
+    },
+    "tags": [
+      "races",
+      "circuits",
+      "ranking"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q083",
+    "question": "Who is the points leader in 2024?",
+    "canonical_sql": "SELECT d.full_name AS driver_name FROM drivers d JOIN race_results rr ON rr.driver_id = d.id JOIN races r ON r.id = rr.race_id WHERE r.season_year = 2024 GROUP BY d.id ORDER BY SUM(rr.points) DESC, driver_name ASC LIMIT 1;",
+    "check": {
+      "type": "exact_rows"
+    },
+    "tags": [
+      "season",
+      "drivers",
+      "points"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q084",
+    "question": "Top driver by points in season 2024.",
+    "canonical_sql": "SELECT d.full_name AS driver_name FROM drivers d JOIN race_results rr ON rr.driver_id = d.id JOIN races r ON r.id = rr.race_id WHERE r.season_year = 2024 GROUP BY d.id ORDER BY SUM(rr.points) DESC, driver_name ASC LIMIT 1;",
+    "check": {
+      "type": "exact_rows"
+    },
+    "tags": [
+      "season",
+      "drivers",
+      "points"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q085",
+    "question": "Who is the points leader in 2025?",
+    "canonical_sql": "SELECT d.full_name AS driver_name FROM drivers d JOIN race_results rr ON rr.driver_id = d.id JOIN races r ON r.id = rr.race_id WHERE r.season_year = 2025 GROUP BY d.id ORDER BY SUM(rr.points) DESC, driver_name ASC LIMIT 1;",
+    "check": {
+      "type": "exact_rows"
+    },
+    "tags": [
+      "season",
+      "drivers",
+      "points"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q086",
+    "question": "Top driver by points in season 2025.",
+    "canonical_sql": "SELECT d.full_name AS driver_name FROM drivers d JOIN race_results rr ON rr.driver_id = d.id JOIN races r ON r.id = rr.race_id WHERE r.season_year = 2025 GROUP BY d.id ORDER BY SUM(rr.points) DESC, driver_name ASC LIMIT 1;",
+    "check": {
+      "type": "exact_rows"
+    },
+    "tags": [
+      "season",
+      "drivers",
+      "points"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q087",
+    "question": "Which team scored most points in 2024?",
+    "canonical_sql": "SELECT t.name AS team_name FROM teams t JOIN drivers d ON d.team_id = t.id JOIN race_results rr ON rr.driver_id = d.id JOIN races r ON r.id = rr.race_id WHERE r.season_year = 2024 GROUP BY t.id ORDER BY SUM(rr.points) DESC, team_name ASC LIMIT 1;",
+    "check": {
+      "type": "exact_rows"
+    },
+    "tags": [
+      "season",
+      "teams",
+      "points"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q088",
+    "question": "Top team by points for season 2024.",
+    "canonical_sql": "SELECT t.name AS team_name FROM teams t JOIN drivers d ON d.team_id = t.id JOIN race_results rr ON rr.driver_id = d.id JOIN races r ON r.id = rr.race_id WHERE r.season_year = 2024 GROUP BY t.id ORDER BY SUM(rr.points) DESC, team_name ASC LIMIT 1;",
+    "check": {
+      "type": "exact_rows"
+    },
+    "tags": [
+      "season",
+      "teams",
+      "points"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q089",
+    "question": "Which team scored most points in 2025?",
+    "canonical_sql": "SELECT t.name AS team_name FROM teams t JOIN drivers d ON d.team_id = t.id JOIN race_results rr ON rr.driver_id = d.id JOIN races r ON r.id = rr.race_id WHERE r.season_year = 2025 GROUP BY t.id ORDER BY SUM(rr.points) DESC, team_name ASC LIMIT 1;",
+    "check": {
+      "type": "exact_rows"
+    },
+    "tags": [
+      "season",
+      "teams",
+      "points"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q090",
+    "question": "Top team by points for season 2025.",
+    "canonical_sql": "SELECT t.name AS team_name FROM teams t JOIN drivers d ON d.team_id = t.id JOIN race_results rr ON rr.driver_id = d.id JOIN races r ON r.id = rr.race_id WHERE r.season_year = 2025 GROUP BY t.id ORDER BY SUM(rr.points) DESC, team_name ASC LIMIT 1;",
+    "check": {
+      "type": "exact_rows"
+    },
+    "tags": [
+      "season",
+      "teams",
+      "points"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q091",
+    "question": "Top 5 circuits by average rain probability.",
+    "canonical_sql": "SELECT r.circuit, ROUND(AVG(w.rain_probability), 3) AS avg_rain_prob FROM races r JOIN weather w ON w.race_id = r.id GROUP BY r.circuit ORDER BY avg_rain_prob DESC, r.circuit ASC LIMIT 5;",
+    "check": {
+      "type": "ordered_top_k",
+      "k": 5
+    },
+    "tags": [
+      "weather",
+      "circuits",
+      "aggregate"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q092",
+    "question": "Rank circuits by mean rain_probability and show five.",
+    "canonical_sql": "SELECT r.circuit, ROUND(AVG(w.rain_probability), 3) AS avg_rain_prob FROM races r JOIN weather w ON w.race_id = r.id GROUP BY r.circuit ORDER BY avg_rain_prob DESC, r.circuit ASC LIMIT 5;",
+    "check": {
+      "type": "ordered_top_k",
+      "k": 5
+    },
+    "tags": [
+      "weather",
+      "circuits",
+      "aggregate"
+    ],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q093",
+    "question": "How many races by each weather condition?",
+    "canonical_sql": "SELECT condition, COUNT(*) AS race_count FROM weather GROUP BY condition ORDER BY race_count DESC, condition ASC;",
+    "check": {
+      "type": "exact_rows"
+    },
+    "tags": [
+      "weather",
+      "distribution"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q094",
+    "question": "Show weather condition distribution.",
+    "canonical_sql": "SELECT condition, COUNT(*) AS race_count FROM weather GROUP BY condition ORDER BY race_count DESC, condition ASC;",
+    "check": {
+      "type": "exact_rows"
+    },
+    "tags": [
+      "weather",
+      "distribution"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q095",
+    "question": "How many distinct circuits are there?",
+    "canonical_sql": "SELECT COUNT(DISTINCT circuit) AS value FROM races;",
+    "check": {
+      "type": "numeric",
+      "tolerance": 0.0
+    },
+    "tags": [
+      "circuits",
+      "count"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q096",
+    "question": "Count unique circuit values in races.",
+    "canonical_sql": "SELECT COUNT(DISTINCT circuit) AS value FROM races;",
+    "check": {
+      "type": "numeric",
+      "tolerance": 0.0
+    },
+    "tags": [
+      "circuits",
+      "count"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q097",
+    "question": "How many races happened on or after 2025-01-01?",
+    "canonical_sql": "SELECT COUNT(*) AS value FROM races WHERE race_date >= '2025-01-01';",
+    "check": {
+      "type": "numeric",
+      "tolerance": 0.0
+    },
+    "tags": [
+      "date",
+      "filter",
+      "races"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q098",
+    "question": "Count races with race_date >= 2025-01-01.",
+    "canonical_sql": "SELECT COUNT(*) AS value FROM races WHERE race_date >= '2025-01-01';",
+    "check": {
+      "type": "numeric",
+      "tolerance": 0.0
+    },
+    "tags": [
+      "date",
+      "filter",
+      "races"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q099",
+    "question": "How many races happened before 2025-01-01?",
+    "canonical_sql": "SELECT COUNT(*) AS value FROM races WHERE race_date < '2025-01-01';",
+    "check": {
+      "type": "numeric",
+      "tolerance": 0.0
+    },
+    "tags": [
+      "date",
+      "filter",
+      "races"
+    ],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q100",
+    "question": "Count races with race_date < 2025-01-01.",
+    "canonical_sql": "SELECT COUNT(*) AS value FROM races WHERE race_date < '2025-01-01';",
+    "check": {
+      "type": "numeric",
+      "tolerance": 0.0
+    },
+    "tags": [
+      "date",
+      "filter",
+      "races"
+    ],
+    "difficulty": "easy"
+  }
+]
