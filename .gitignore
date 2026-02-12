@@ -1,0 +1,6 @@
+__pycache__/
+.env
+*.key
+*_key.txt
+*.db
+eval_report.json
