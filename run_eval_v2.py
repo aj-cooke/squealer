@@ -7,11 +7,12 @@ import sqlite3
 import statistics
 import time
 from collections import Counter, defaultdict
+from datetime import datetime, timezone
+from pathlib import Path
 from typing import Any
 
-from llm_client import OpenAIClient
+from agent import run_once
 from schema_context import get_schema_context
-from sql_guardrails import validate_read_only_sql
 
 
 def parse_args() -> argparse.Namespace:
@@ -20,9 +21,44 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--model", default="gpt-4.1-mini")
     p.add_argument("--benchmark", default="benchmarks/v1/questions_v1.json")
     p.add_argument("--max-rows", type=int, default=5000)
-    p.add_argument("--out", default="eval_report_v2.json")
+    p.add_argument("--out", default=None, help="Optional explicit output path. If omitted, auto-generates a timestamped filename.")
+    p.add_argument("--out-dir", default="eval_reports")
+    p.add_argument("--answer-preview-rows", type=int, default=20)
+    p.add_argument(
+        "--case-sleep-sec",
+        type=float,
+        default=0.0,
+        help="Optional sleep between benchmark cases to reduce burst pressure on API/network.",
+    )
+    p.add_argument(
+        "--fail-fast-infra-rate",
+        type=float,
+        default=0.0,
+        help="If > 0, abort early when infra_error rate >= this threshold after min cases.",
+    )
+    p.add_argument(
+        "--fail-fast-min-cases",
+        type=int,
+        default=10,
+        help="Minimum processed cases before fail-fast infra-rate is evaluated.",
+    )
     p.add_argument("--strict-columns", action="store_true")
     return p.parse_args()
+
+
+def _build_report_path(args: argparse.Namespace, summary: dict[str, Any]) -> str:
+    if args.out:
+        return args.out
+    ts = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    score = f"{summary['success_rate']:.3f}"
+    out_dir = Path(args.out_dir)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    return str(out_dir / f"eval_report_v2_{ts}_sr{score}.json")
+
+
+def _is_infra_error(exc: Exception) -> bool:
+    msg = str(exc).lower()
+    return "connection error" in msg or "timeout" in msg or "temporarily unavailable" in msg
 
 
 def _normalize_value(v: Any) -> Any:
@@ -118,12 +154,15 @@ def main() -> None:
     with open(args.benchmark, "r", encoding="utf-8") as f:
         cases = json.load(f)
 
-    llm = OpenAIClient(model=args.model)
     schema = get_schema_context(args.db_path)
 
     results: list[dict[str, Any]] = []
 
-    for case in cases:
+    aborted_early = False
+    abort_reason = ""
+    infra_error_count = 0
+
+    for idx, case in enumerate(cases):
         start = time.time()
         cid = case["id"]
         q = case["question"]
@@ -138,32 +177,72 @@ def main() -> None:
             "check": check,
             "canonical_sql": canonical_sql,
             "generated_sql": "",
+            "status": "fail",
             "ok": False,
             "reason": "",
+            "generated_answer": "",
             "elapsed_sec": 0.0,
         }
 
         try:
-            generated_sql = llm.generate_sql(question=q, schema=schema).strip()
+            agent_result = run_once(args.db_path, args.model, q, args.max_rows)
+            generated_sql = (agent_result.get("sql") or "").strip()
             row["generated_sql"] = generated_sql
+            row["generated_answer"] = agent_result.get("answer", "")
+            row["agent_error"] = agent_result.get("error")
+            row["agent_error_type"] = agent_result.get("error_type", "")
+            row["agent_error_repr"] = agent_result.get("error_repr", "")
+            row["agent_error_cause_type"] = agent_result.get("error_cause_type", "")
+            row["agent_error_cause_repr"] = agent_result.get("error_cause_repr", "")
+            row["agent_error_traceback"] = agent_result.get("error_traceback", "")
 
-            valid = validate_read_only_sql(generated_sql)
-            if not valid.ok:
-                row["reason"] = f"guardrail_block: {valid.error}"
+            if not generated_sql:
+                row["reason"] = f"agent_error: {agent_result.get('error')}"
             else:
                 canonical_rows = _execute_sql(args.db_path, canonical_sql, args.max_rows)
-                agent_rows = _execute_sql(args.db_path, generated_sql, args.max_rows)
+                if agent_result.get("ok"):
+                    agent_rows = agent_result.get("rows", [])
+                elif agent_result.get("rows"):
+                    # If answer generation failed in run_once, SQL rows may still be present.
+                    agent_rows = agent_result.get("rows", [])
+                else:
+                    agent_rows = _execute_sql(args.db_path, generated_sql, args.max_rows)
                 ok, reason = _compare_rows(check, agent_rows, canonical_rows, args.strict_columns)
                 row["ok"] = ok
+                row["status"] = "pass" if ok else "fail"
                 row["reason"] = reason
                 row["canonical_row_count"] = len(canonical_rows)
                 row["agent_row_count"] = len(agent_rows)
+                row["canonical_rows_preview"] = canonical_rows[: args.answer_preview_rows]
+                row["agent_rows_preview"] = agent_rows[: args.answer_preview_rows]
         except Exception as exc:
             row["reason"] = f"exception: {exc}"
+            if _is_infra_error(exc):
+                row["error_type"] = "infra_error"
+                infra_error_count += 1
+            else:
+                row["error_type"] = "runtime_error"
 
         row["elapsed_sec"] = round(time.time() - start, 3)
         results.append(row)
-        print(f"[{'OK' if row['ok'] else 'FAIL'}] {cid} {q}")
+        print(f"[{'OK' if row['ok'] else 'FAIL'}] {cid} {q}", flush=True)
+
+        processed = len(results)
+        if (
+            args.fail_fast_infra_rate > 0.0
+            and processed >= args.fail_fast_min_cases
+            and (infra_error_count / processed) >= args.fail_fast_infra_rate
+        ):
+            aborted_early = True
+            abort_reason = (
+                f"fail_fast_triggered: infra_error_rate={infra_error_count / processed:.3f} "
+                f">= threshold={args.fail_fast_infra_rate:.3f} after {processed} cases"
+            )
+            print(f"[ABORT] {abort_reason}", flush=True)
+            break
+
+        if args.case_sleep_sec > 0 and idx < len(cases) - 1:
+            time.sleep(args.case_sleep_sec)
 
     total = len(results)
     ok_count = sum(1 for r in results if r["ok"])
@@ -202,6 +281,10 @@ def main() -> None:
         "ok": ok_count,
         "failed": fail_count,
         "success_rate": round(ok_count / total, 3) if total else 0.0,
+        "infra_error_count": infra_error_count,
+        "infra_error_rate": round(infra_error_count / total, 3) if total else 0.0,
+        "aborted_early": aborted_early,
+        "abort_reason": abort_reason if aborted_early else "",
         "latency_p50": round(statistics.median(latencies), 3) if latencies else None,
         "latency_p95": round(statistics.quantiles(latencies, n=20)[18], 3) if len(latencies) >= 20 else None,
         "latency_max": round(max(latencies), 3) if latencies else None,
@@ -209,19 +292,22 @@ def main() -> None:
         "by_tag": by_tag,
     }
 
+    generated_at = datetime.now(timezone.utc).isoformat()
     report = {
+        "generated_at_utc": generated_at,
         "benchmark": args.benchmark,
         "model": args.model,
         "summary": summary,
         "results": results,
     }
 
-    with open(args.out, "w", encoding="utf-8") as f:
+    out_path = _build_report_path(args, summary)
+    with open(out_path, "w", encoding="utf-8") as f:
         json.dump(report, f, indent=2)
 
-    print("\nSummary")
-    print(json.dumps(summary, indent=2))
-    print(f"Report written to: {args.out}")
+    print("\nSummary", flush=True)
+    print(json.dumps(summary, indent=2), flush=True)
+    print(f"Report written to: {out_path}", flush=True)
 
 
 if __name__ == "__main__":

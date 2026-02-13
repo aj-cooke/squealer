@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import json
 import time
+import traceback
 from typing import Any
 
 from db import execute_select
@@ -12,19 +13,46 @@ from schema_context import get_schema_context
 from sql_guardrails import validate_read_only_sql
 
 
+def _exception_details(exc: Exception) -> dict[str, Any]:
+    cause = exc.__cause__
+    return {
+        "error_type": type(exc).__name__,
+        "error_repr": repr(exc),
+        "error_cause_type": type(cause).__name__ if cause is not None else "",
+        "error_cause_repr": repr(cause) if cause is not None else "",
+        "error_traceback": traceback.format_exc(),
+    }
+
+
 def run_once(db_path: str, model: str, question: str, row_limit: int) -> dict[str, Any]:
     started = time.time()
     try:
         llm = OpenAIClient(model=model)
     except Exception as exc:
-        return {"ok": False, "error": f"LLM client init failed: {exc}", "question": question, "sql": "", "rows": [], "elapsed_sec": round(time.time() - started, 3)}
+        return {
+            "ok": False,
+            "error": f"LLM client init failed: {exc}",
+            "question": question,
+            "sql": "",
+            "rows": [],
+            "elapsed_sec": round(time.time() - started, 3),
+            **_exception_details(exc),
+        }
 
     schema = get_schema_context(db_path)
 
     try:
         sql = llm.generate_sql(question=question, schema=schema).strip()
     except Exception as exc:
-        return {"ok": False, "error": f"SQL generation failed: {exc}", "question": question, "sql": "", "rows": [], "elapsed_sec": round(time.time() - started, 3)}
+        return {
+            "ok": False,
+            "error": f"SQL generation failed: {exc}",
+            "question": question,
+            "sql": "",
+            "rows": [],
+            "elapsed_sec": round(time.time() - started, 3),
+            **_exception_details(exc),
+        }
 
     validation = validate_read_only_sql(sql)
     if not validation.ok:
@@ -33,12 +61,28 @@ def run_once(db_path: str, model: str, question: str, row_limit: int) -> dict[st
     try:
         rows = execute_select(db_path=db_path, sql=sql, row_limit=row_limit)
     except Exception as exc:
-        return {"ok": False, "error": f"SQL execution failed: {exc}", "question": question, "sql": sql, "rows": [], "elapsed_sec": round(time.time() - started, 3)}
+        return {
+            "ok": False,
+            "error": f"SQL execution failed: {exc}",
+            "question": question,
+            "sql": sql,
+            "rows": [],
+            "elapsed_sec": round(time.time() - started, 3),
+            **_exception_details(exc),
+        }
 
     try:
         answer = llm.generate_answer(question=question, sql=sql, rows=rows)
     except Exception as exc:
-        return {"ok": False, "error": f"Answer generation failed: {exc}", "question": question, "sql": sql, "rows": rows, "elapsed_sec": round(time.time() - started, 3)}
+        return {
+            "ok": False,
+            "error": f"Answer generation failed: {exc}",
+            "question": question,
+            "sql": sql,
+            "rows": rows,
+            "elapsed_sec": round(time.time() - started, 3),
+            **_exception_details(exc),
+        }
 
     return {"ok": True, "error": None, "question": question, "sql": sql, "rows": rows, "answer": answer, "elapsed_sec": round(time.time() - started, 3)}
 

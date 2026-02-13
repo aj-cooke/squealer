@@ -1,0 +1,4804 @@
+{
+  "generated_at_utc": "2026-02-13T04:22:03.658603+00:00",
+  "benchmark": "benchmarks/v1/questions_v1.json",
+  "model": "gpt-4.1-mini",
+  "summary": {
+    "total": 100,
+    "ok": 53,
+    "failed": 47,
+    "success_rate": 0.53,
+    "infra_error_count": 0,
+    "infra_error_rate": 0.0,
+    "aborted_early": false,
+    "abort_reason": "",
+    "latency_p50": 2.325,
+    "latency_p95": 3.589,
+    "latency_max": 4.217,
+    "by_difficulty": {
+      "easy": {
+        "total": 56,
+        "ok": 40,
+        "failed": 16,
+        "success_rate": 0.714
+      },
+      "medium": {
+        "total": 40,
+        "ok": 13,
+        "failed": 27,
+        "success_rate": 0.325
+      },
+      "hard": {
+        "total": 4,
+        "ok": 0,
+        "failed": 4,
+        "success_rate": 0.0
+      }
+    },
+    "by_tag": {
+      "aggregate": {
+        "total": 24,
+        "ok": 18,
+        "failed": 6,
+        "success_rate": 0.75
+      },
+      "circuits": {
+        "total": 10,
+        "ok": 2,
+        "failed": 8,
+        "success_rate": 0.2
+      },
+      "count": {
+        "total": 14,
+        "ok": 14,
+        "failed": 0,
+        "success_rate": 1.0
+      },
+      "date": {
+        "total": 6,
+        "ok": 4,
+        "failed": 2,
+        "success_rate": 0.667
+      },
+      "decline": {
+        "total": 2,
+        "ok": 0,
+        "failed": 2,
+        "success_rate": 0.0
+      },
+      "distribution": {
+        "total": 6,
+        "ok": 1,
+        "failed": 5,
+        "success_rate": 0.167
+      },
+      "dnf": {
+        "total": 8,
+        "ok": 7,
+        "failed": 1,
+        "success_rate": 0.875
+      },
+      "drivers": {
+        "total": 30,
+        "ok": 10,
+        "failed": 20,
+        "success_rate": 0.333
+      },
+      "fastest_lap": {
+        "total": 2,
+        "ok": 1,
+        "failed": 1,
+        "success_rate": 0.5
+      },
+      "filter": {
+        "total": 8,
+        "ok": 7,
+        "failed": 1,
+        "success_rate": 0.875
+      },
+      "finish_position": {
+        "total": 2,
+        "ok": 0,
+        "failed": 2,
+        "success_rate": 0.0
+      },
+      "improvement": {
+        "total": 2,
+        "ok": 0,
+        "failed": 2,
+        "success_rate": 0.0
+      },
+      "join": {
+        "total": 4,
+        "ok": 2,
+        "failed": 2,
+        "success_rate": 0.5
+      },
+      "laps": {
+        "total": 12,
+        "ok": 5,
+        "failed": 7,
+        "success_rate": 0.417
+      },
+      "performance": {
+        "total": 4,
+        "ok": 0,
+        "failed": 4,
+        "success_rate": 0.0
+      },
+      "pit_stops": {
+        "total": 10,
+        "ok": 6,
+        "failed": 4,
+        "success_rate": 0.6
+      },
+      "points": {
+        "total": 22,
+        "ok": 7,
+        "failed": 15,
+        "success_rate": 0.318
+      },
+      "positions": {
+        "total": 4,
+        "ok": 0,
+        "failed": 4,
+        "success_rate": 0.0
+      },
+      "races": {
+        "total": 24,
+        "ok": 14,
+        "failed": 10,
+        "success_rate": 0.583
+      },
+      "ranking": {
+        "total": 16,
+        "ok": 5,
+        "failed": 11,
+        "success_rate": 0.312
+      },
+      "results": {
+        "total": 6,
+        "ok": 5,
+        "failed": 1,
+        "success_rate": 0.833
+      },
+      "season": {
+        "total": 12,
+        "ok": 4,
+        "failed": 8,
+        "success_rate": 0.333
+      },
+      "status": {
+        "total": 2,
+        "ok": 1,
+        "failed": 1,
+        "success_rate": 0.5
+      },
+      "table": {
+        "total": 2,
+        "ok": 0,
+        "failed": 2,
+        "success_rate": 0.0
+      },
+      "teams": {
+        "total": 12,
+        "ok": 5,
+        "failed": 7,
+        "success_rate": 0.417
+      },
+      "weather": {
+        "total": 16,
+        "ok": 7,
+        "failed": 9,
+        "success_rate": 0.438
+      }
+    }
+  },
+  "results": [
+    {
+      "id": "q001",
+      "question": "How many teams are in the database?",
+      "difficulty": "easy",
+      "tags": [
+        "count",
+        "teams"
+      ],
+      "check": {
+        "type": "numeric",
+        "tolerance": 0.0
+      },
+      "canonical_sql": "SELECT COUNT(*) AS value FROM teams;",
+      "generated_sql": "SELECT COUNT(*) FROM teams;",
+      "status": "pass",
+      "ok": true,
+      "reason": "numeric diff=0.000000, tol=0.0",
+      "generated_answer": "There are 4 teams in the database.",
+      "elapsed_sec": 2.35,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "value": 4
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "COUNT(*)": 4
+        }
+      ]
+    },
+    {
+      "id": "q002",
+      "question": "Count the number of teams.",
+      "difficulty": "easy",
+      "tags": [
+        "count",
+        "teams"
+      ],
+      "check": {
+        "type": "numeric",
+        "tolerance": 0.0
+      },
+      "canonical_sql": "SELECT COUNT(*) AS value FROM teams;",
+      "generated_sql": "SELECT COUNT(*) FROM teams;",
+      "status": "pass",
+      "ok": true,
+      "reason": "numeric diff=0.000000, tol=0.0",
+      "generated_answer": "There are 4 teams.",
+      "elapsed_sec": 3.116,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "value": 4
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "COUNT(*)": 4
+        }
+      ]
+    },
+    {
+      "id": "q003",
+      "question": "How many drivers are recorded?",
+      "difficulty": "easy",
+      "tags": [
+        "count",
+        "drivers"
+      ],
+      "check": {
+        "type": "numeric",
+        "tolerance": 0.0
+      },
+      "canonical_sql": "SELECT COUNT(*) AS value FROM drivers;",
+      "generated_sql": "SELECT COUNT(*) FROM drivers;",
+      "status": "pass",
+      "ok": true,
+      "reason": "numeric diff=0.000000, tol=0.0",
+      "generated_answer": "There are 8 drivers recorded.",
+      "elapsed_sec": 2.006,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "value": 8
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "COUNT(*)": 8
+        }
+      ]
+    },
+    {
+      "id": "q004",
+      "question": "Count all drivers.",
+      "difficulty": "easy",
+      "tags": [
+        "count",
+        "drivers"
+      ],
+      "check": {
+        "type": "numeric",
+        "tolerance": 0.0
+      },
+      "canonical_sql": "SELECT COUNT(*) AS value FROM drivers;",
+      "generated_sql": "SELECT COUNT(*) FROM drivers;",
+      "status": "pass",
+      "ok": true,
+      "reason": "numeric diff=0.000000, tol=0.0",
+      "generated_answer": "There are 8 drivers in total.",
+      "elapsed_sec": 1.789,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "value": 8
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "COUNT(*)": 8
+        }
+      ]
+    },
+    {
+      "id": "q005",
+      "question": "How many races are in the dataset?",
+      "difficulty": "easy",
+      "tags": [
+        "count",
+        "races"
+      ],
+      "check": {
+        "type": "numeric",
+        "tolerance": 0.0
+      },
+      "canonical_sql": "SELECT COUNT(*) AS value FROM races;",
+      "generated_sql": "SELECT COUNT(*) FROM races;",
+      "status": "pass",
+      "ok": true,
+      "reason": "numeric diff=0.000000, tol=0.0",
+      "generated_answer": "There are 48 races in the dataset.",
+      "elapsed_sec": 2.273,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "value": 48
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "COUNT(*)": 48
+        }
+      ]
+    },
+    {
+      "id": "q006",
+      "question": "Count all races.",
+      "difficulty": "easy",
+      "tags": [
+        "count",
+        "races"
+      ],
+      "check": {
+        "type": "numeric",
+        "tolerance": 0.0
+      },
+      "canonical_sql": "SELECT COUNT(*) AS value FROM races;",
+      "generated_sql": "SELECT COUNT(*) FROM races;",
+      "status": "pass",
+      "ok": true,
+      "reason": "numeric diff=0.000000, tol=0.0",
+      "generated_answer": "There are 48 races in total.",
+      "elapsed_sec": 1.524,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "value": 48
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "COUNT(*)": 48
+        }
+      ]
+    },
+    {
+      "id": "q007",
+      "question": "How many race result rows exist?",
+      "difficulty": "easy",
+      "tags": [
+        "count",
+        "results"
+      ],
+      "check": {
+        "type": "numeric",
+        "tolerance": 0.0
+      },
+      "canonical_sql": "SELECT COUNT(*) AS value FROM race_results;",
+      "generated_sql": "SELECT COUNT(*) FROM race_results;",
+      "status": "pass",
+      "ok": true,
+      "reason": "numeric diff=0.000000, tol=0.0",
+      "generated_answer": "There are 384 race result rows.",
+      "elapsed_sec": 1.671,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "value": 384
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "COUNT(*)": 384
+        }
+      ]
+    },
+    {
+      "id": "q008",
+      "question": "Count entries in race_results.",
+      "difficulty": "easy",
+      "tags": [
+        "count",
+        "results"
+      ],
+      "check": {
+        "type": "numeric",
+        "tolerance": 0.0
+      },
+      "canonical_sql": "SELECT COUNT(*) AS value FROM race_results;",
+      "generated_sql": "SELECT COUNT(*) FROM race_results;",
+      "status": "pass",
+      "ok": true,
+      "reason": "numeric diff=0.000000, tol=0.0",
+      "generated_answer": "There are 384 entries in the race_results table.",
+      "elapsed_sec": 1.646,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "value": 384
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "COUNT(*)": 384
+        }
+      ]
+    },
+    {
+      "id": "q009",
+      "question": "How many lap time rows are stored?",
+      "difficulty": "easy",
+      "tags": [
+        "count",
+        "laps"
+      ],
+      "check": {
+        "type": "numeric",
+        "tolerance": 0.0
+      },
+      "canonical_sql": "SELECT COUNT(*) AS value FROM lap_times;",
+      "generated_sql": "SELECT COUNT(*) FROM lap_times;",
+      "status": "pass",
+      "ok": true,
+      "reason": "numeric diff=0.000000, tol=0.0",
+      "generated_answer": "There are 22,997 lap time rows stored.",
+      "elapsed_sec": 1.882,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "value": 22997
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "COUNT(*)": 22997
+        }
+      ]
+    },
+    {
+      "id": "q010",
+      "question": "Count all records in lap_times.",
+      "difficulty": "easy",
+      "tags": [
+        "count",
+        "laps"
+      ],
+      "check": {
+        "type": "numeric",
+        "tolerance": 0.0
+      },
+      "canonical_sql": "SELECT COUNT(*) AS value FROM lap_times;",
+      "generated_sql": "SELECT COUNT(*) FROM lap_times;",
+      "status": "pass",
+      "ok": true,
+      "reason": "numeric diff=0.000000, tol=0.0",
+      "generated_answer": "There are 22,997 records in the lap_times table.",
+      "elapsed_sec": 1.829,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "value": 22997
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "COUNT(*)": 22997
+        }
+      ]
+    },
+    {
+      "id": "q011",
+      "question": "How many pit stop events are stored?",
+      "difficulty": "easy",
+      "tags": [
+        "count",
+        "pit_stops"
+      ],
+      "check": {
+        "type": "numeric",
+        "tolerance": 0.0
+      },
+      "canonical_sql": "SELECT COUNT(*) AS value FROM pit_stops;",
+      "generated_sql": "SELECT COUNT(*) FROM pit_stops;",
+      "status": "pass",
+      "ok": true,
+      "reason": "numeric diff=0.000000, tol=0.0",
+      "generated_answer": "There are 609 pit stop events stored.",
+      "elapsed_sec": 1.653,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "value": 609
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "COUNT(*)": 609
+        }
+      ]
+    },
+    {
+      "id": "q012",
+      "question": "Count all pit stops.",
+      "difficulty": "easy",
+      "tags": [
+        "count",
+        "pit_stops"
+      ],
+      "check": {
+        "type": "numeric",
+        "tolerance": 0.0
+      },
+      "canonical_sql": "SELECT COUNT(*) AS value FROM pit_stops;",
+      "generated_sql": "SELECT COUNT(*) FROM pit_stops;",
+      "status": "pass",
+      "ok": true,
+      "reason": "numeric diff=0.000000, tol=0.0",
+      "generated_answer": "There are 609 pit stops in total.",
+      "elapsed_sec": 1.508,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "value": 609
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "COUNT(*)": 609
+        }
+      ]
+    },
+    {
+      "id": "q013",
+      "question": "What is the average number of laps per race?",
+      "difficulty": "easy",
+      "tags": [
+        "aggregate",
+        "races"
+      ],
+      "check": {
+        "type": "numeric",
+        "tolerance": 0.01
+      },
+      "canonical_sql": "SELECT ROUND(AVG(laps), 3) AS value FROM races;",
+      "generated_sql": "SELECT AVG(laps) AS average_laps_per_race FROM races;",
+      "status": "pass",
+      "ok": true,
+      "reason": "numeric diff=0.000333, tol=0.01",
+      "generated_answer": "The average number of laps per race is approximately 61.08.",
+      "elapsed_sec": 1.694,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "value": 61.083
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "average_laps_per_race": 61.083333333333336
+        }
+      ]
+    },
+    {
+      "id": "q014",
+      "question": "Compute mean laps across races.",
+      "difficulty": "easy",
+      "tags": [
+        "aggregate",
+        "races"
+      ],
+      "check": {
+        "type": "numeric",
+        "tolerance": 0.01
+      },
+      "canonical_sql": "SELECT ROUND(AVG(laps), 3) AS value FROM races;",
+      "generated_sql": "SELECT AVG(laps) AS mean_laps FROM races;",
+      "status": "pass",
+      "ok": true,
+      "reason": "numeric diff=0.000333, tol=0.01",
+      "generated_answer": "The mean number of laps across races is approximately 61.08.",
+      "elapsed_sec": 1.854,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "value": 61.083
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "mean_laps": 61.083333333333336
+        }
+      ]
+    },
+    {
+      "id": "q015",
+      "question": "What is the maximum laps in any race?",
+      "difficulty": "easy",
+      "tags": [
+        "aggregate",
+        "races"
+      ],
+      "check": {
+        "type": "numeric",
+        "tolerance": 0.0
+      },
+      "canonical_sql": "SELECT MAX(laps) AS value FROM races;",
+      "generated_sql": "SELECT MAX(laps) AS max_laps FROM races;",
+      "status": "pass",
+      "ok": true,
+      "reason": "numeric diff=0.000000, tol=0.0",
+      "generated_answer": "The maximum laps in any race is 69.",
+      "elapsed_sec": 1.892,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "value": 69
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "max_laps": 69
+        }
+      ]
+    },
+    {
+      "id": "q016",
+      "question": "Find the highest race lap count.",
+      "difficulty": "easy",
+      "tags": [
+        "aggregate",
+        "races"
+      ],
+      "check": {
+        "type": "numeric",
+        "tolerance": 0.0
+      },
+      "canonical_sql": "SELECT MAX(laps) AS value FROM races;",
+      "generated_sql": "SELECT MAX(laps) AS highest_lap_count FROM races;",
+      "status": "pass",
+      "ok": true,
+      "reason": "numeric diff=0.000000, tol=0.0",
+      "generated_answer": "The highest race lap count is 69.",
+      "elapsed_sec": 1.988,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "value": 69
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "highest_lap_count": 69
+        }
+      ]
+    },
+    {
+      "id": "q017",
+      "question": "What is the minimum laps in any race?",
+      "difficulty": "easy",
+      "tags": [
+        "aggregate",
+        "races"
+      ],
+      "check": {
+        "type": "numeric",
+        "tolerance": 0.0
+      },
+      "canonical_sql": "SELECT MIN(laps) AS value FROM races;",
+      "generated_sql": "SELECT MIN(laps) AS minimum_laps FROM races;",
+      "status": "pass",
+      "ok": true,
+      "reason": "numeric diff=0.000000, tol=0.0",
+      "generated_answer": "The minimum number of laps in any race is 52.",
+      "elapsed_sec": 1.708,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "value": 52
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "minimum_laps": 52
+        }
+      ]
+    },
+    {
+      "id": "q018",
+      "question": "Find the lowest race lap count.",
+      "difficulty": "easy",
+      "tags": [
+        "aggregate",
+        "races"
+      ],
+      "check": {
+        "type": "numeric",
+        "tolerance": 0.0
+      },
+      "canonical_sql": "SELECT MIN(laps) AS value FROM races;",
+      "generated_sql": "SELECT MIN(laps) AS lowest_lap_count FROM races;",
+      "status": "pass",
+      "ok": true,
+      "reason": "numeric diff=0.000000, tol=0.0",
+      "generated_answer": "The lowest race lap count is 52.",
+      "elapsed_sec": 1.962,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "value": 52
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "lowest_lap_count": 52
+        }
+      ]
+    },
+    {
+      "id": "q019",
+      "question": "How many races had rain probability at least 0.5?",
+      "difficulty": "easy",
+      "tags": [
+        "weather",
+        "filter"
+      ],
+      "check": {
+        "type": "numeric",
+        "tolerance": 0.0
+      },
+      "canonical_sql": "SELECT COUNT(*) AS value FROM weather WHERE rain_probability >= 0.5;",
+      "generated_sql": "SELECT COUNT(*) FROM weather WHERE rain_probability >= 0.5;",
+      "status": "pass",
+      "ok": true,
+      "reason": "numeric diff=0.000000, tol=0.0",
+      "generated_answer": "There were 9 races with a rain probability of at least 0.5.",
+      "elapsed_sec": 1.973,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "value": 9
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "COUNT(*)": 9
+        }
+      ]
+    },
+    {
+      "id": "q020",
+      "question": "Count races likely wet (rain_probability >= 0.5).",
+      "difficulty": "easy",
+      "tags": [
+        "weather",
+        "filter"
+      ],
+      "check": {
+        "type": "numeric",
+        "tolerance": 0.0
+      },
+      "canonical_sql": "SELECT COUNT(*) AS value FROM weather WHERE rain_probability >= 0.5;",
+      "generated_sql": "SELECT COUNT(*) FROM weather WHERE rain_probability >= 0.5;",
+      "status": "pass",
+      "ok": true,
+      "reason": "numeric diff=0.000000, tol=0.0",
+      "generated_answer": "There are 9 races likely to be wet with a rain probability of 0.5 or higher.",
+      "elapsed_sec": 2.1,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "value": 9
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "COUNT(*)": 9
+        }
+      ]
+    },
+    {
+      "id": "q021",
+      "question": "How many races had clear weather?",
+      "difficulty": "easy",
+      "tags": [
+        "weather",
+        "filter"
+      ],
+      "check": {
+        "type": "numeric",
+        "tolerance": 0.0
+      },
+      "canonical_sql": "SELECT COUNT(*) AS value FROM weather WHERE condition = 'Clear';",
+      "generated_sql": "SELECT COUNT(*) FROM weather WHERE condition = 'clear';",
+      "status": "fail",
+      "ok": false,
+      "reason": "numeric diff=20.000000, tol=0.0",
+      "generated_answer": "No races had clear weather.",
+      "elapsed_sec": 1.679,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "value": 20
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "COUNT(*)": 0
+        }
+      ]
+    },
+    {
+      "id": "q022",
+      "question": "Count weather rows where condition is Clear.",
+      "difficulty": "easy",
+      "tags": [
+        "weather",
+        "filter"
+      ],
+      "check": {
+        "type": "numeric",
+        "tolerance": 0.0
+      },
+      "canonical_sql": "SELECT COUNT(*) AS value FROM weather WHERE condition = 'Clear';",
+      "generated_sql": "SELECT COUNT(*) FROM weather WHERE condition = 'Clear';",
+      "status": "pass",
+      "ok": true,
+      "reason": "numeric diff=0.000000, tol=0.0",
+      "generated_answer": "There are 20 weather rows where the condition is Clear.",
+      "elapsed_sec": 1.845,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "value": 20
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "COUNT(*)": 20
+        }
+      ]
+    },
+    {
+      "id": "q023",
+      "question": "What is average air temperature across races?",
+      "difficulty": "easy",
+      "tags": [
+        "weather",
+        "aggregate"
+      ],
+      "check": {
+        "type": "numeric",
+        "tolerance": 0.01
+      },
+      "canonical_sql": "SELECT ROUND(AVG(air_temp_c), 3) AS value FROM weather;",
+      "generated_sql": "SELECT AVG(air_temp_c) AS average_air_temperature FROM weather;",
+      "status": "pass",
+      "ok": true,
+      "reason": "numeric diff=0.000250, tol=0.01",
+      "generated_answer": "The average air temperature across races is 22.53\u00b0C.",
+      "elapsed_sec": 2.151,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "value": 22.531
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "average_air_temperature": 22.53125
+        }
+      ]
+    },
+    {
+      "id": "q024",
+      "question": "Compute mean air_temp_c in weather.",
+      "difficulty": "easy",
+      "tags": [
+        "weather",
+        "aggregate"
+      ],
+      "check": {
+        "type": "numeric",
+        "tolerance": 0.01
+      },
+      "canonical_sql": "SELECT ROUND(AVG(air_temp_c), 3) AS value FROM weather;",
+      "generated_sql": "SELECT AVG(air_temp_c) AS mean_air_temp_c FROM weather;",
+      "status": "pass",
+      "ok": true,
+      "reason": "numeric diff=0.000250, tol=0.01",
+      "generated_answer": "The mean air temperature (air_temp_c) in the weather data is 22.53\u00b0C.",
+      "elapsed_sec": 4.217,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "value": 22.531
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "mean_air_temp_c": 22.53125
+        }
+      ]
+    },
+    {
+      "id": "q025",
+      "question": "What is average track temperature?",
+      "difficulty": "easy",
+      "tags": [
+        "weather",
+        "aggregate"
+      ],
+      "check": {
+        "type": "numeric",
+        "tolerance": 0.01
+      },
+      "canonical_sql": "SELECT ROUND(AVG(track_temp_c), 3) AS value FROM weather;",
+      "generated_sql": "SELECT AVG(track_temp_c) AS average_track_temperature FROM weather;",
+      "status": "pass",
+      "ok": true,
+      "reason": "numeric diff=0.000083, tol=0.01",
+      "generated_answer": "The average track temperature is approximately 33.5\u00b0C.",
+      "elapsed_sec": 3.438,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "value": 33.498
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "average_track_temperature": 33.497916666666676
+        }
+      ]
+    },
+    {
+      "id": "q026",
+      "question": "Compute mean track_temp_c in weather.",
+      "difficulty": "easy",
+      "tags": [
+        "weather",
+        "aggregate"
+      ],
+      "check": {
+        "type": "numeric",
+        "tolerance": 0.01
+      },
+      "canonical_sql": "SELECT ROUND(AVG(track_temp_c), 3) AS value FROM weather;",
+      "generated_sql": "SELECT AVG(track_temp_c) AS mean_track_temp_c FROM weather;",
+      "status": "pass",
+      "ok": true,
+      "reason": "numeric diff=0.000083, tol=0.01",
+      "generated_answer": "The mean track temperature (track_temp_c) in the weather data is approximately 33.50\u00b0C.",
+      "elapsed_sec": 3.084,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "value": 33.498
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "mean_track_temp_c": 33.497916666666676
+        }
+      ]
+    },
+    {
+      "id": "q027",
+      "question": "How many drivers have zero DNFs?",
+      "difficulty": "medium",
+      "tags": [
+        "drivers",
+        "dnf"
+      ],
+      "check": {
+        "type": "numeric",
+        "tolerance": 0.0
+      },
+      "canonical_sql": "SELECT COUNT(*) AS value FROM drivers d WHERE NOT EXISTS (SELECT 1 FROM race_results rr WHERE rr.driver_id = d.id AND rr.status = 'DNF');",
+      "generated_sql": "SELECT COUNT(DISTINCT driver_id) \nFROM race_results \nGROUP BY driver_id \nHAVING SUM(CASE WHEN status = 'DNF' THEN 1 ELSE 0 END) = 0;",
+      "status": "fail",
+      "ok": false,
+      "reason": "numeric diff=1.000000, tol=0.0",
+      "generated_answer": "There is 1 driver who has zero DNFs.",
+      "elapsed_sec": 2.251,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 2,
+      "canonical_rows_preview": [
+        {
+          "value": 2
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "COUNT(DISTINCT driver_id)": 1
+        },
+        {
+          "COUNT(DISTINCT driver_id)": 1
+        }
+      ]
+    },
+    {
+      "id": "q028",
+      "question": "Count drivers that never DNFed.",
+      "difficulty": "medium",
+      "tags": [
+        "drivers",
+        "dnf"
+      ],
+      "check": {
+        "type": "numeric",
+        "tolerance": 0.0
+      },
+      "canonical_sql": "SELECT COUNT(*) AS value FROM drivers d WHERE NOT EXISTS (SELECT 1 FROM race_results rr WHERE rr.driver_id = d.id AND rr.status = 'DNF');",
+      "generated_sql": "SELECT COUNT(DISTINCT drivers.id)\nFROM drivers\nWHERE drivers.id NOT IN (\n    SELECT driver_id\n    FROM race_results\n    WHERE status = 'DNF'\n)",
+      "status": "pass",
+      "ok": true,
+      "reason": "numeric diff=0.000000, tol=0.0",
+      "generated_answer": "There are 2 drivers who never DNFed.",
+      "elapsed_sec": 1.9,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "value": 2
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "COUNT(DISTINCT drivers.id)": 2
+        }
+      ]
+    },
+    {
+      "id": "q029",
+      "question": "How many DNF results exist in total?",
+      "difficulty": "easy",
+      "tags": [
+        "results",
+        "dnf"
+      ],
+      "check": {
+        "type": "numeric",
+        "tolerance": 0.0
+      },
+      "canonical_sql": "SELECT COUNT(*) AS value FROM race_results WHERE status = 'DNF';",
+      "generated_sql": "SELECT COUNT(*) AS total_dnf FROM race_results WHERE status = 'DNF';",
+      "status": "pass",
+      "ok": true,
+      "reason": "numeric diff=0.000000, tol=0.0",
+      "generated_answer": "There are a total of 16 DNF results.",
+      "elapsed_sec": 1.764,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "value": 16
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "total_dnf": 16
+        }
+      ]
+    },
+    {
+      "id": "q030",
+      "question": "Count total DNFs in race_results.",
+      "difficulty": "easy",
+      "tags": [
+        "results",
+        "dnf"
+      ],
+      "check": {
+        "type": "numeric",
+        "tolerance": 0.0
+      },
+      "canonical_sql": "SELECT COUNT(*) AS value FROM race_results WHERE status = 'DNF';",
+      "generated_sql": "SELECT COUNT(*) AS total_dnfs FROM race_results WHERE status = 'DNF';",
+      "status": "pass",
+      "ok": true,
+      "reason": "numeric diff=0.000000, tol=0.0",
+      "generated_answer": "There are a total of 16 DNFs in race_results.",
+      "elapsed_sec": 1.99,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "value": 16
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "total_dnfs": 16
+        }
+      ]
+    },
+    {
+      "id": "q031",
+      "question": "Which team has the most points overall?",
+      "difficulty": "medium",
+      "tags": [
+        "points",
+        "teams",
+        "join"
+      ],
+      "check": {
+        "type": "exact_rows"
+      },
+      "canonical_sql": "SELECT t.name AS team_name FROM teams t JOIN drivers d ON d.team_id = t.id JOIN race_results rr ON rr.driver_id = d.id GROUP BY t.id ORDER BY SUM(rr.points) DESC, t.name ASC LIMIT 1;",
+      "generated_sql": "SELECT teams.name\nFROM teams\nJOIN drivers ON teams.id = drivers.team_id\nJOIN race_results ON drivers.id = race_results.driver_id\nGROUP BY teams.id\nORDER BY SUM(race_results.points) DESC\nLIMIT 1;",
+      "status": "pass",
+      "ok": true,
+      "reason": "rows match",
+      "generated_answer": "The team with the most points overall is Quantum Racing.",
+      "elapsed_sec": 2.905,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "team_name": "Quantum Racing"
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "name": "Quantum Racing"
+        }
+      ]
+    },
+    {
+      "id": "q032",
+      "question": "Return the points-leading team across all races.",
+      "difficulty": "medium",
+      "tags": [
+        "points",
+        "teams",
+        "join"
+      ],
+      "check": {
+        "type": "exact_rows"
+      },
+      "canonical_sql": "SELECT t.name AS team_name FROM teams t JOIN drivers d ON d.team_id = t.id JOIN race_results rr ON rr.driver_id = d.id GROUP BY t.id ORDER BY SUM(rr.points) DESC, t.name ASC LIMIT 1;",
+      "generated_sql": "SELECT teams.id, teams.name, SUM(race_results.points) AS total_points\nFROM teams\nJOIN drivers ON drivers.team_id = teams.id\nJOIN race_results ON race_results.driver_id = drivers.id\nGROUP BY teams.id, teams.name\nORDER BY total_points DESC\nLIMIT 1;",
+      "status": "fail",
+      "ok": false,
+      "reason": "row mismatch",
+      "generated_answer": "The points-leading team across all races is Quantum Racing with a total of 1318 points.",
+      "elapsed_sec": 2.606,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "team_name": "Quantum Racing"
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "id": 4,
+          "name": "Quantum Racing",
+          "total_points": 1318.0
+        }
+      ]
+    },
+    {
+      "id": "q033",
+      "question": "Which driver has the most points overall?",
+      "difficulty": "medium",
+      "tags": [
+        "points",
+        "drivers",
+        "join"
+      ],
+      "check": {
+        "type": "exact_rows"
+      },
+      "canonical_sql": "SELECT d.full_name AS driver_name FROM drivers d JOIN race_results rr ON rr.driver_id = d.id GROUP BY d.id ORDER BY SUM(rr.points) DESC, d.full_name ASC LIMIT 1;",
+      "generated_sql": "SELECT drivers.full_name\nFROM drivers\nJOIN race_results ON drivers.id = race_results.driver_id\nGROUP BY drivers.id\nORDER BY SUM(race_results.points) DESC\nLIMIT 1;",
+      "status": "pass",
+      "ok": true,
+      "reason": "rows match",
+      "generated_answer": "The driver with the most points overall is Ethan Tanaka.",
+      "elapsed_sec": 2.511,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "driver_name": "Ethan Tanaka"
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "full_name": "Ethan Tanaka"
+        }
+      ]
+    },
+    {
+      "id": "q034",
+      "question": "Return the season-total points leader among drivers.",
+      "difficulty": "medium",
+      "tags": [
+        "points",
+        "drivers",
+        "join"
+      ],
+      "check": {
+        "type": "exact_rows"
+      },
+      "canonical_sql": "SELECT d.full_name AS driver_name FROM drivers d JOIN race_results rr ON rr.driver_id = d.id GROUP BY d.id ORDER BY SUM(rr.points) DESC, d.full_name ASC LIMIT 1;",
+      "generated_sql": "SELECT driver_id, SUM(points) AS total_points\nFROM race_results\nGROUP BY driver_id\nORDER BY total_points DESC\nLIMIT 1;",
+      "status": "fail",
+      "ok": false,
+      "reason": "row mismatch",
+      "generated_answer": "The season-total points leader among drivers is the driver with ID 8, who has 691 points.",
+      "elapsed_sec": 2.145,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "driver_name": "Ethan Tanaka"
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "driver_id": 8,
+          "total_points": 691.0
+        }
+      ]
+    },
+    {
+      "id": "q035",
+      "question": "Who are the top 3 drivers by total points?",
+      "difficulty": "medium",
+      "tags": [
+        "points",
+        "drivers",
+        "ranking"
+      ],
+      "check": {
+        "type": "ordered_top_k",
+        "k": 3
+      },
+      "canonical_sql": "SELECT d.full_name AS driver_name, ROUND(SUM(rr.points), 3) AS total_points FROM drivers d JOIN race_results rr ON rr.driver_id = d.id GROUP BY d.id ORDER BY total_points DESC, d.full_name ASC LIMIT 3;",
+      "generated_sql": "SELECT drivers.full_name, SUM(race_results.points) AS total_points\nFROM drivers\nJOIN race_results ON drivers.id = race_results.driver_id\nGROUP BY drivers.id\nORDER BY total_points DESC\nLIMIT 3;",
+      "status": "pass",
+      "ok": true,
+      "reason": "top 3 match",
+      "generated_answer": "The top 3 drivers by total points are Ethan Tanaka with 691 points, Olivia Novak with 627 points, and Liam Rossi with 615 points.",
+      "elapsed_sec": 2.256,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 3,
+      "agent_row_count": 3,
+      "canonical_rows_preview": [
+        {
+          "driver_name": "Ethan Tanaka",
+          "total_points": 691.0
+        },
+        {
+          "driver_name": "Olivia Novak",
+          "total_points": 627.0
+        },
+        {
+          "driver_name": "Liam Rossi",
+          "total_points": 615.0
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "full_name": "Ethan Tanaka",
+          "total_points": 691.0
+        },
+        {
+          "full_name": "Olivia Novak",
+          "total_points": 627.0
+        },
+        {
+          "full_name": "Liam Rossi",
+          "total_points": 615.0
+        }
+      ]
+    },
+    {
+      "id": "q036",
+      "question": "List top three drivers ranked by summed points.",
+      "difficulty": "medium",
+      "tags": [
+        "points",
+        "drivers",
+        "ranking"
+      ],
+      "check": {
+        "type": "ordered_top_k",
+        "k": 3
+      },
+      "canonical_sql": "SELECT d.full_name AS driver_name, ROUND(SUM(rr.points), 3) AS total_points FROM drivers d JOIN race_results rr ON rr.driver_id = d.id GROUP BY d.id ORDER BY total_points DESC, d.full_name ASC LIMIT 3;",
+      "generated_sql": "SELECT drivers.id, drivers.full_name, SUM(race_results.points) AS total_points\nFROM drivers\nJOIN race_results ON drivers.id = race_results.driver_id\nGROUP BY drivers.id, drivers.full_name\nORDER BY total_points DESC\nLIMIT 3;",
+      "status": "fail",
+      "ok": false,
+      "reason": "top 3 mismatch",
+      "generated_answer": "The top three drivers ranked by summed points are:\n1. Ethan Tanaka with 691 points\n2. Olivia Novak with 627 points\n3. Liam Rossi with 615 points",
+      "elapsed_sec": 2.698,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 3,
+      "agent_row_count": 3,
+      "canonical_rows_preview": [
+        {
+          "driver_name": "Ethan Tanaka",
+          "total_points": 691.0
+        },
+        {
+          "driver_name": "Olivia Novak",
+          "total_points": 627.0
+        },
+        {
+          "driver_name": "Liam Rossi",
+          "total_points": 615.0
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "id": 8,
+          "full_name": "Ethan Tanaka",
+          "total_points": 691.0
+        },
+        {
+          "id": 7,
+          "full_name": "Olivia Novak",
+          "total_points": 627.0
+        },
+        {
+          "id": 6,
+          "full_name": "Liam Rossi",
+          "total_points": 615.0
+        }
+      ]
+    },
+    {
+      "id": "q037",
+      "question": "Which 3 drivers have the best average finish position?",
+      "difficulty": "medium",
+      "tags": [
+        "drivers",
+        "finish_position",
+        "ranking"
+      ],
+      "check": {
+        "type": "ordered_top_k",
+        "k": 3
+      },
+      "canonical_sql": "SELECT d.full_name AS driver_name, ROUND(AVG(rr.finish_position), 3) AS avg_finish FROM drivers d JOIN race_results rr ON rr.driver_id = d.id GROUP BY d.id ORDER BY avg_finish ASC, d.full_name ASC LIMIT 3;",
+      "generated_sql": "SELECT drivers.full_name, AVG(race_results.finish_position) AS avg_finish_position\nFROM race_results\nJOIN drivers ON race_results.driver_id = drivers.id\nGROUP BY drivers.id\nORDER BY avg_finish_position ASC\nLIMIT 3;",
+      "status": "fail",
+      "ok": false,
+      "reason": "top 3 mismatch",
+      "generated_answer": "The three drivers with the best average finish positions are Liam Rossi (3.75), Olivia Novak (3.875), and Ethan Tanaka (3.875).",
+      "elapsed_sec": 2.45,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 3,
+      "agent_row_count": 3,
+      "canonical_rows_preview": [
+        {
+          "driver_name": "Liam Rossi",
+          "avg_finish": 3.75
+        },
+        {
+          "driver_name": "Ethan Tanaka",
+          "avg_finish": 3.875
+        },
+        {
+          "driver_name": "Olivia Novak",
+          "avg_finish": 3.875
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "full_name": "Liam Rossi",
+          "avg_finish_position": 3.75
+        },
+        {
+          "full_name": "Olivia Novak",
+          "avg_finish_position": 3.875
+        },
+        {
+          "full_name": "Ethan Tanaka",
+          "avg_finish_position": 3.875
+        }
+      ]
+    },
+    {
+      "id": "q038",
+      "question": "Top three drivers by lowest average finish position.",
+      "difficulty": "medium",
+      "tags": [
+        "drivers",
+        "finish_position",
+        "ranking"
+      ],
+      "check": {
+        "type": "ordered_top_k",
+        "k": 3
+      },
+      "canonical_sql": "SELECT d.full_name AS driver_name, ROUND(AVG(rr.finish_position), 3) AS avg_finish FROM drivers d JOIN race_results rr ON rr.driver_id = d.id GROUP BY d.id ORDER BY avg_finish ASC, d.full_name ASC LIMIT 3;",
+      "generated_sql": "SELECT driver_id, AVG(finish_position) AS avg_finish_position\nFROM race_results\nGROUP BY driver_id\nORDER BY avg_finish_position ASC\nLIMIT 3;",
+      "status": "fail",
+      "ok": false,
+      "reason": "top 3 mismatch",
+      "generated_answer": "The top three drivers by lowest average finish position are:\n1. Driver 6 with an average finish position of 3.75\n2. Driver 7 with an average finish position of 3.875\n3. Driver 8 with an average finish position of 3.875",
+      "elapsed_sec": 2.385,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 3,
+      "agent_row_count": 3,
+      "canonical_rows_preview": [
+        {
+          "driver_name": "Liam Rossi",
+          "avg_finish": 3.75
+        },
+        {
+          "driver_name": "Ethan Tanaka",
+          "avg_finish": 3.875
+        },
+        {
+          "driver_name": "Olivia Novak",
+          "avg_finish": 3.875
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "driver_id": 6,
+          "avg_finish_position": 3.75
+        },
+        {
+          "driver_id": 7,
+          "avg_finish_position": 3.875
+        },
+        {
+          "driver_id": 8,
+          "avg_finish_position": 3.875
+        }
+      ]
+    },
+    {
+      "id": "q039",
+      "question": "Show team standings by total points.",
+      "difficulty": "medium",
+      "tags": [
+        "teams",
+        "points",
+        "table"
+      ],
+      "check": {
+        "type": "exact_rows"
+      },
+      "canonical_sql": "SELECT t.name AS team_name, ROUND(SUM(rr.points), 3) AS total_points FROM teams t JOIN drivers d ON d.team_id = t.id JOIN race_results rr ON rr.driver_id = d.id GROUP BY t.id ORDER BY total_points DESC, t.name ASC;",
+      "generated_sql": "SELECT \n  teams.id AS team_id,\n  teams.name AS team_name,\n  SUM(race_results.points) AS total_points\nFROM \n  teams\nJOIN \n  drivers ON drivers.team_id = teams.id\nJOIN \n  race_results ON race_results.driver_id = drivers.id\nGROUP BY \n  teams.id, teams.name\nORDER BY \n  total_points DESC;",
+      "status": "fail",
+      "ok": false,
+      "reason": "row mismatch",
+      "generated_answer": "The team standings by total points are as follows:\n1. Quantum Racing - 1318 points\n2. Velocity Racing - 1138 points\n3. Titan Racing - 1127 points\n4. Apex Racing - 927 points",
+      "elapsed_sec": 3.152,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 4,
+      "agent_row_count": 4,
+      "canonical_rows_preview": [
+        {
+          "team_name": "Quantum Racing",
+          "total_points": 1318.0
+        },
+        {
+          "team_name": "Velocity Racing",
+          "total_points": 1138.0
+        },
+        {
+          "team_name": "Titan Racing",
+          "total_points": 1127.0
+        },
+        {
+          "team_name": "Apex Racing",
+          "total_points": 927.0
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "team_id": 4,
+          "team_name": "Quantum Racing",
+          "total_points": 1318.0
+        },
+        {
+          "team_id": 2,
+          "team_name": "Velocity Racing",
+          "total_points": 1138.0
+        },
+        {
+          "team_id": 3,
+          "team_name": "Titan Racing",
+          "total_points": 1127.0
+        },
+        {
+          "team_id": 1,
+          "team_name": "Apex Racing",
+          "total_points": 927.0
+        }
+      ]
+    },
+    {
+      "id": "q040",
+      "question": "Return each team with summed points, ordered descending.",
+      "difficulty": "medium",
+      "tags": [
+        "teams",
+        "points",
+        "table"
+      ],
+      "check": {
+        "type": "exact_rows"
+      },
+      "canonical_sql": "SELECT t.name AS team_name, ROUND(SUM(rr.points), 3) AS total_points FROM teams t JOIN drivers d ON d.team_id = t.id JOIN race_results rr ON rr.driver_id = d.id GROUP BY t.id ORDER BY total_points DESC, t.name ASC;",
+      "generated_sql": "SELECT teams.name, SUM(race_results.points) AS total_points\nFROM teams\nJOIN race_results ON teams.id = race_results.driver_id\nJOIN drivers ON race_results.driver_id = drivers.id AND drivers.team_id = teams.id\nGROUP BY teams.id, teams.name\nORDER BY total_points DESC;",
+      "status": "fail",
+      "ok": false,
+      "reason": "row mismatch",
+      "generated_answer": "Only one team, Apex Racing, is listed with a total of 485 points.",
+      "elapsed_sec": 2.493,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 4,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "team_name": "Quantum Racing",
+          "total_points": 1318.0
+        },
+        {
+          "team_name": "Velocity Racing",
+          "total_points": 1138.0
+        },
+        {
+          "team_name": "Titan Racing",
+          "total_points": 1127.0
+        },
+        {
+          "team_name": "Apex Racing",
+          "total_points": 927.0
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "name": "Apex Racing",
+          "total_points": 485.0
+        }
+      ]
+    },
+    {
+      "id": "q041",
+      "question": "What is the average pit stop duration overall?",
+      "difficulty": "easy",
+      "tags": [
+        "pit_stops",
+        "aggregate"
+      ],
+      "check": {
+        "type": "numeric",
+        "tolerance": 0.01
+      },
+      "canonical_sql": "SELECT ROUND(AVG(duration_sec), 3) AS value FROM pit_stops;",
+      "generated_sql": "SELECT AVG(duration_sec) AS average_pit_stop_duration FROM pit_stops;",
+      "status": "pass",
+      "ok": true,
+      "reason": "numeric diff=0.000079, tol=0.01",
+      "generated_answer": "The average pit stop duration overall is approximately 2.74 seconds.",
+      "elapsed_sec": 2.091,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "value": 2.743
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "average_pit_stop_duration": 2.7430788177339887
+        }
+      ]
+    },
+    {
+      "id": "q042",
+      "question": "Compute mean duration_sec for all pit stops.",
+      "difficulty": "easy",
+      "tags": [
+        "pit_stops",
+        "aggregate"
+      ],
+      "check": {
+        "type": "numeric",
+        "tolerance": 0.01
+      },
+      "canonical_sql": "SELECT ROUND(AVG(duration_sec), 3) AS value FROM pit_stops;",
+      "generated_sql": "SELECT AVG(duration_sec) AS mean_duration_sec FROM pit_stops;",
+      "status": "pass",
+      "ok": true,
+      "reason": "numeric diff=0.000079, tol=0.01",
+      "generated_answer": "The mean duration for all pit stops is approximately 2.74 seconds.",
+      "elapsed_sec": 1.629,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "value": 2.743
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "mean_duration_sec": 2.7430788177339887
+        }
+      ]
+    },
+    {
+      "id": "q043",
+      "question": "Which driver recorded the fastest single lap?",
+      "difficulty": "medium",
+      "tags": [
+        "laps",
+        "drivers",
+        "fastest_lap"
+      ],
+      "check": {
+        "type": "exact_rows"
+      },
+      "canonical_sql": "SELECT d.full_name AS driver_name, MIN(rr.fastest_lap_sec) AS fastest_lap_sec FROM drivers d JOIN race_results rr ON rr.driver_id = d.id GROUP BY d.id ORDER BY fastest_lap_sec ASC, d.full_name ASC LIMIT 1;",
+      "generated_sql": "SELECT drivers.full_name, MIN(lap_times.lap_time_sec) AS fastest_lap\nFROM lap_times\nJOIN drivers ON lap_times.driver_id = drivers.id\nGROUP BY drivers.id\nORDER BY fastest_lap\nLIMIT 1;",
+      "status": "pass",
+      "ok": true,
+      "reason": "rows match",
+      "generated_answer": "The driver who recorded the fastest single lap is Ethan Tanaka with a lap time of 82.29 seconds.",
+      "elapsed_sec": 2.505,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "driver_name": "Ethan Tanaka",
+          "fastest_lap_sec": 82.29
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "full_name": "Ethan Tanaka",
+          "fastest_lap": 82.29
+        }
+      ]
+    },
+    {
+      "id": "q044",
+      "question": "Return the driver with the minimum fastest_lap_sec.",
+      "difficulty": "medium",
+      "tags": [
+        "laps",
+        "drivers",
+        "fastest_lap"
+      ],
+      "check": {
+        "type": "exact_rows"
+      },
+      "canonical_sql": "SELECT d.full_name AS driver_name, MIN(rr.fastest_lap_sec) AS fastest_lap_sec FROM drivers d JOIN race_results rr ON rr.driver_id = d.id GROUP BY d.id ORDER BY fastest_lap_sec ASC, d.full_name ASC LIMIT 1;",
+      "generated_sql": "SELECT drivers.*\nFROM drivers\nJOIN race_results ON drivers.id = race_results.driver_id\nWHERE race_results.fastest_lap_sec = (\n    SELECT MIN(fastest_lap_sec)\n    FROM race_results\n    WHERE fastest_lap_sec IS NOT NULL\n)\nLIMIT 1;",
+      "status": "fail",
+      "ok": false,
+      "reason": "row mismatch",
+      "generated_answer": "The driver with the minimum fastest lap time is Ethan Tanaka from the USA.",
+      "elapsed_sec": 2.716,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "driver_name": "Ethan Tanaka",
+          "fastest_lap_sec": 82.29
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "id": 8,
+          "team_id": 4,
+          "full_name": "Ethan Tanaka",
+          "nationality": "USA",
+          "experience_years": 0,
+          "skill_rating": 1.028
+        }
+      ]
+    },
+    {
+      "id": "q045",
+      "question": "Which circuit has the lowest average fastest lap?",
+      "difficulty": "medium",
+      "tags": [
+        "laps",
+        "circuits",
+        "aggregate"
+      ],
+      "check": {
+        "type": "exact_rows"
+      },
+      "canonical_sql": "SELECT r.circuit, ROUND(AVG(rr.fastest_lap_sec), 3) AS avg_fastest_lap FROM races r JOIN race_results rr ON rr.race_id = r.id GROUP BY r.circuit ORDER BY avg_fastest_lap ASC, r.circuit ASC LIMIT 1;",
+      "generated_sql": "SELECT races.circuit\nFROM races\nJOIN race_results ON races.id = race_results.race_id\nGROUP BY races.circuit\nORDER BY AVG(race_results.fastest_lap_sec) ASC\nLIMIT 1;",
+      "status": "fail",
+      "ok": false,
+      "reason": "row mismatch",
+      "generated_answer": "The circuit with the lowest average fastest lap is Interlagos.",
+      "elapsed_sec": 2.361,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "circuit": "Interlagos",
+          "avg_fastest_lap": 84.453
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "circuit": "Interlagos"
+        }
+      ]
+    },
+    {
+      "id": "q046",
+      "question": "Find the quickest circuit by avg fastest_lap_sec.",
+      "difficulty": "medium",
+      "tags": [
+        "laps",
+        "circuits",
+        "aggregate"
+      ],
+      "check": {
+        "type": "exact_rows"
+      },
+      "canonical_sql": "SELECT r.circuit, ROUND(AVG(rr.fastest_lap_sec), 3) AS avg_fastest_lap FROM races r JOIN race_results rr ON rr.race_id = r.id GROUP BY r.circuit ORDER BY avg_fastest_lap ASC, r.circuit ASC LIMIT 1;",
+      "generated_sql": "SELECT races.circuit\nFROM races\nJOIN race_results ON races.id = race_results.race_id\nWHERE race_results.fastest_lap_sec IS NOT NULL\nGROUP BY races.circuit\nORDER BY AVG(race_results.fastest_lap_sec) ASC\nLIMIT 1;",
+      "status": "fail",
+      "ok": false,
+      "reason": "row mismatch",
+      "generated_answer": "The quickest circuit by average fastest lap time is Interlagos.",
+      "elapsed_sec": 3.103,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "circuit": "Interlagos",
+          "avg_fastest_lap": 84.453
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "circuit": "Interlagos"
+        }
+      ]
+    },
+    {
+      "id": "q047",
+      "question": "Show the 5 races with highest rain probability.",
+      "difficulty": "easy",
+      "tags": [
+        "weather",
+        "races",
+        "ranking"
+      ],
+      "check": {
+        "type": "ordered_top_k",
+        "k": 5
+      },
+      "canonical_sql": "SELECT r.race_name, w.rain_probability FROM races r JOIN weather w ON w.race_id = r.id ORDER BY w.rain_probability DESC, r.race_name ASC LIMIT 5;",
+      "generated_sql": "SELECT races.id, races.race_name, races.race_date, weather.rain_probability\nFROM races\nJOIN weather ON races.id = weather.race_id\nORDER BY weather.rain_probability DESC\nLIMIT 5;",
+      "status": "fail",
+      "ok": false,
+      "reason": "top 5 mismatch",
+      "generated_answer": "The 5 races with the highest rain probability are:\n\n1. Zandvoort Grand Prix on 2025-11-22 with 89.9% chance of rain\n2. Zandvoort Grand Prix on 2024-11-22 with 87.1% chance of rain\n3. Monza Grand Prix on 2025-08-02 with 79.2% chance of rain\n4. Montreal Grand Prix on 2025-05-24 with 76.8% chance of rain\n5. Monza Grand Prix on 2025-12-20 with 73.9% chance of rain",
+      "elapsed_sec": 3.592,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 5,
+      "agent_row_count": 5,
+      "canonical_rows_preview": [
+        {
+          "race_name": "Zandvoort Grand Prix",
+          "rain_probability": 0.899
+        },
+        {
+          "race_name": "Zandvoort Grand Prix",
+          "rain_probability": 0.871
+        },
+        {
+          "race_name": "Monza Grand Prix",
+          "rain_probability": 0.792
+        },
+        {
+          "race_name": "Montreal Grand Prix",
+          "rain_probability": 0.768
+        },
+        {
+          "race_name": "Monza Grand Prix",
+          "rain_probability": 0.739
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "id": 44,
+          "race_name": "Zandvoort Grand Prix",
+          "race_date": "2025-11-22",
+          "rain_probability": 0.899
+        },
+        {
+          "id": 20,
+          "race_name": "Zandvoort Grand Prix",
+          "race_date": "2024-11-22",
+          "rain_probability": 0.871
+        },
+        {
+          "id": 36,
+          "race_name": "Monza Grand Prix",
+          "race_date": "2025-08-02",
+          "rain_probability": 0.792
+        },
+        {
+          "id": 31,
+          "race_name": "Montreal Grand Prix",
+          "race_date": "2025-05-24",
+          "rain_probability": 0.768
+        },
+        {
+          "id": 46,
+          "race_name": "Monza Grand Prix",
+          "race_date": "2025-12-20",
+          "rain_probability": 0.739
+        }
+      ]
+    },
+    {
+      "id": "q048",
+      "question": "Top five races by rain_probability.",
+      "difficulty": "easy",
+      "tags": [
+        "weather",
+        "races",
+        "ranking"
+      ],
+      "check": {
+        "type": "ordered_top_k",
+        "k": 5
+      },
+      "canonical_sql": "SELECT r.race_name, w.rain_probability FROM races r JOIN weather w ON w.race_id = r.id ORDER BY w.rain_probability DESC, r.race_name ASC LIMIT 5;",
+      "generated_sql": "SELECT races.id, races.race_name, races.race_date, weather.rain_probability\nFROM races\nJOIN weather ON races.id = weather.race_id\nORDER BY weather.rain_probability DESC\nLIMIT 5;",
+      "status": "fail",
+      "ok": false,
+      "reason": "top 5 mismatch",
+      "generated_answer": "The top five races by rain probability are:\n\n1. Zandvoort Grand Prix on 2025-11-22 with a rain probability of 0.899\n2. Zandvoort Grand Prix on 2024-11-22 with a rain probability of 0.871\n3. Monza Grand Prix on 2025-08-02 with a rain probability of 0.792\n4. Montreal Grand Prix on 2025-05-24 with a rain probability of 0.768\n5. Monza Grand Prix on 2025-12-20 with a rain probability of 0.739",
+      "elapsed_sec": 3.524,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 5,
+      "agent_row_count": 5,
+      "canonical_rows_preview": [
+        {
+          "race_name": "Zandvoort Grand Prix",
+          "rain_probability": 0.899
+        },
+        {
+          "race_name": "Zandvoort Grand Prix",
+          "rain_probability": 0.871
+        },
+        {
+          "race_name": "Monza Grand Prix",
+          "rain_probability": 0.792
+        },
+        {
+          "race_name": "Montreal Grand Prix",
+          "rain_probability": 0.768
+        },
+        {
+          "race_name": "Monza Grand Prix",
+          "rain_probability": 0.739
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "id": 44,
+          "race_name": "Zandvoort Grand Prix",
+          "race_date": "2025-11-22",
+          "rain_probability": 0.899
+        },
+        {
+          "id": 20,
+          "race_name": "Zandvoort Grand Prix",
+          "race_date": "2024-11-22",
+          "rain_probability": 0.871
+        },
+        {
+          "id": 36,
+          "race_name": "Monza Grand Prix",
+          "race_date": "2025-08-02",
+          "rain_probability": 0.792
+        },
+        {
+          "id": 31,
+          "race_name": "Montreal Grand Prix",
+          "race_date": "2025-05-24",
+          "rain_probability": 0.768
+        },
+        {
+          "id": 46,
+          "race_name": "Monza Grand Prix",
+          "race_date": "2025-12-20",
+          "rain_probability": 0.739
+        }
+      ]
+    },
+    {
+      "id": "q049",
+      "question": "List the latest 5 races with weather condition.",
+      "difficulty": "easy",
+      "tags": [
+        "weather",
+        "date",
+        "races"
+      ],
+      "check": {
+        "type": "ordered_top_k",
+        "k": 5
+      },
+      "canonical_sql": "SELECT r.race_date, r.race_name, w.condition FROM races r JOIN weather w ON w.race_id = r.id ORDER BY r.race_date DESC, r.id DESC LIMIT 5;",
+      "generated_sql": "SELECT races.id, races.season_year, races.round_number, races.race_name, races.circuit, races.race_date, weather.condition\nFROM races\nJOIN weather ON races.id = weather.race_id\nORDER BY races.race_date DESC\nLIMIT 5;",
+      "status": "fail",
+      "ok": false,
+      "reason": "top 5 mismatch",
+      "generated_answer": "The latest 5 races with their weather conditions are:\n\n1. Spa Grand Prix (Spa) on 2026-01-17 - Cloudy\n2. Suzuka Grand Prix (Suzuka) on 2026-01-03 - Windy\n3. Monza Grand Prix (Monza) on 2025-12-20 - Light Rain\n4. Silverstone Grand Prix (Silverstone) on 2025-12-06 - Cloudy\n5. Zandvoort Grand Prix (Zandvoort) on 2025-11-22 - Heavy Rain",
+      "elapsed_sec": 3.277,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 5,
+      "agent_row_count": 5,
+      "canonical_rows_preview": [
+        {
+          "race_date": "2026-01-17",
+          "race_name": "Spa Grand Prix",
+          "condition": "Cloudy"
+        },
+        {
+          "race_date": "2026-01-03",
+          "race_name": "Suzuka Grand Prix",
+          "condition": "Windy"
+        },
+        {
+          "race_date": "2025-12-20",
+          "race_name": "Monza Grand Prix",
+          "condition": "Light Rain"
+        },
+        {
+          "race_date": "2025-12-06",
+          "race_name": "Silverstone Grand Prix",
+          "condition": "Cloudy"
+        },
+        {
+          "race_date": "2025-11-22",
+          "race_name": "Zandvoort Grand Prix",
+          "condition": "Heavy Rain"
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "id": 48,
+          "season_year": 2025,
+          "round_number": 24,
+          "race_name": "Spa Grand Prix",
+          "circuit": "Spa",
+          "race_date": "2026-01-17",
+          "condition": "Cloudy"
+        },
+        {
+          "id": 47,
+          "season_year": 2025,
+          "round_number": 23,
+          "race_name": "Suzuka Grand Prix",
+          "circuit": "Suzuka",
+          "race_date": "2026-01-03",
+          "condition": "Windy"
+        },
+        {
+          "id": 46,
+          "season_year": 2025,
+          "round_number": 22,
+          "race_name": "Monza Grand Prix",
+          "circuit": "Monza",
+          "race_date": "2025-12-20",
+          "condition": "Light Rain"
+        },
+        {
+          "id": 45,
+          "season_year": 2025,
+          "round_number": 21,
+          "race_name": "Silverstone Grand Prix",
+          "circuit": "Silverstone",
+          "race_date": "2025-12-06",
+          "condition": "Cloudy"
+        },
+        {
+          "id": 44,
+          "season_year": 2025,
+          "round_number": 20,
+          "race_name": "Zandvoort Grand Prix",
+          "circuit": "Zandvoort",
+          "race_date": "2025-11-22",
+          "condition": "Heavy Rain"
+        }
+      ]
+    },
+    {
+      "id": "q050",
+      "question": "Show most recent five race dates and conditions.",
+      "difficulty": "easy",
+      "tags": [
+        "weather",
+        "date",
+        "races"
+      ],
+      "check": {
+        "type": "ordered_top_k",
+        "k": 5
+      },
+      "canonical_sql": "SELECT r.race_date, r.race_name, w.condition FROM races r JOIN weather w ON w.race_id = r.id ORDER BY r.race_date DESC, r.id DESC LIMIT 5;",
+      "generated_sql": "SELECT races.race_date, weather.condition\nFROM races\nJOIN weather ON races.id = weather.race_id\nORDER BY races.race_date DESC\nLIMIT 5;",
+      "status": "fail",
+      "ok": false,
+      "reason": "top 5 mismatch",
+      "generated_answer": "The most recent five race dates and their conditions are:\n\n1. 2026-01-17 - Cloudy\n2. 2026-01-03 - Windy\n3. 2025-12-20 - Light Rain\n4. 2025-12-06 - Cloudy\n5. 2025-11-22 - Heavy Rain",
+      "elapsed_sec": 2.471,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 5,
+      "agent_row_count": 5,
+      "canonical_rows_preview": [
+        {
+          "race_date": "2026-01-17",
+          "race_name": "Spa Grand Prix",
+          "condition": "Cloudy"
+        },
+        {
+          "race_date": "2026-01-03",
+          "race_name": "Suzuka Grand Prix",
+          "condition": "Windy"
+        },
+        {
+          "race_date": "2025-12-20",
+          "race_name": "Monza Grand Prix",
+          "condition": "Light Rain"
+        },
+        {
+          "race_date": "2025-12-06",
+          "race_name": "Silverstone Grand Prix",
+          "condition": "Cloudy"
+        },
+        {
+          "race_date": "2025-11-22",
+          "race_name": "Zandvoort Grand Prix",
+          "condition": "Heavy Rain"
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "race_date": "2026-01-17",
+          "condition": "Cloudy"
+        },
+        {
+          "race_date": "2026-01-03",
+          "condition": "Windy"
+        },
+        {
+          "race_date": "2025-12-20",
+          "condition": "Light Rain"
+        },
+        {
+          "race_date": "2025-12-06",
+          "condition": "Cloudy"
+        },
+        {
+          "race_date": "2025-11-22",
+          "condition": "Heavy Rain"
+        }
+      ]
+    },
+    {
+      "id": "q051",
+      "question": "Which season has the highest total awarded points?",
+      "difficulty": "medium",
+      "tags": [
+        "season",
+        "points"
+      ],
+      "check": {
+        "type": "exact_rows"
+      },
+      "canonical_sql": "SELECT r.season_year, ROUND(SUM(rr.points), 3) AS total_points FROM races r JOIN race_results rr ON rr.race_id = r.id GROUP BY r.season_year ORDER BY total_points DESC, r.season_year ASC LIMIT 1;",
+      "generated_sql": "SELECT season_year\nFROM race_results\nJOIN races ON race_results.race_id = races.id\nGROUP BY season_year\nORDER BY SUM(points) DESC\nLIMIT 1;",
+      "status": "fail",
+      "ok": false,
+      "reason": "row mismatch",
+      "generated_answer": "The 2025 season has the highest total awarded points.",
+      "elapsed_sec": 3.325,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "season_year": 2025,
+          "total_points": 2336.0
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "season_year": 2025
+        }
+      ]
+    },
+    {
+      "id": "q052",
+      "question": "Find the season_year with max summed points.",
+      "difficulty": "medium",
+      "tags": [
+        "season",
+        "points"
+      ],
+      "check": {
+        "type": "exact_rows"
+      },
+      "canonical_sql": "SELECT r.season_year, ROUND(SUM(rr.points), 3) AS total_points FROM races r JOIN race_results rr ON rr.race_id = r.id GROUP BY r.season_year ORDER BY total_points DESC, r.season_year ASC LIMIT 1;",
+      "generated_sql": "SELECT season_year\nFROM (\n  SELECT r.season_year, SUM(rr.points) AS total_points\n  FROM race_results rr\n  JOIN races r ON rr.race_id = r.id\n  GROUP BY r.season_year\n)\nORDER BY total_points DESC\nLIMIT 1;",
+      "status": "fail",
+      "ok": false,
+      "reason": "row mismatch",
+      "generated_answer": "The season_year with the maximum summed points is 2025.",
+      "elapsed_sec": 2.566,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "season_year": 2025,
+          "total_points": 2336.0
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "season_year": 2025
+        }
+      ]
+    },
+    {
+      "id": "q053",
+      "question": "Which team has the most DNFs?",
+      "difficulty": "medium",
+      "tags": [
+        "teams",
+        "dnf",
+        "ranking"
+      ],
+      "check": {
+        "type": "exact_rows"
+      },
+      "canonical_sql": "SELECT t.name AS team_name, COUNT(*) AS dnf_count FROM teams t JOIN drivers d ON d.team_id = t.id JOIN race_results rr ON rr.driver_id = d.id WHERE rr.status = 'DNF' GROUP BY t.id ORDER BY dnf_count DESC, team_name ASC LIMIT 1;",
+      "generated_sql": "SELECT teams.name, COUNT(*) AS dnf_count\nFROM race_results\nJOIN teams ON race_results.driver_id IN (SELECT id FROM drivers WHERE team_id = teams.id)\nWHERE race_results.status = 'DNF'\nGROUP BY teams.id\nORDER BY dnf_count DESC\nLIMIT 1;",
+      "status": "pass",
+      "ok": true,
+      "reason": "rows match",
+      "generated_answer": "The team with the most DNFs is Titan Racing, with 5 DNFs.",
+      "elapsed_sec": 2.366,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "team_name": "Titan Racing",
+          "dnf_count": 5
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "name": "Titan Racing",
+          "dnf_count": 5
+        }
+      ]
+    },
+    {
+      "id": "q054",
+      "question": "Return the team leading DNF count.",
+      "difficulty": "medium",
+      "tags": [
+        "teams",
+        "dnf",
+        "ranking"
+      ],
+      "check": {
+        "type": "exact_rows"
+      },
+      "canonical_sql": "SELECT t.name AS team_name, COUNT(*) AS dnf_count FROM teams t JOIN drivers d ON d.team_id = t.id JOIN race_results rr ON rr.driver_id = d.id WHERE rr.status = 'DNF' GROUP BY t.id ORDER BY dnf_count DESC, team_name ASC LIMIT 1;",
+      "generated_sql": "SELECT teams.name, COUNT(*) AS dnf_count\nFROM race_results\nJOIN teams ON race_results.driver_id IN (\n    SELECT drivers.id FROM drivers WHERE drivers.team_id = teams.id\n)\nWHERE race_results.status = 'DNF'\nGROUP BY teams.id\nORDER BY dnf_count DESC\nLIMIT 1;",
+      "status": "pass",
+      "ok": true,
+      "reason": "rows match",
+      "generated_answer": "The team leading in DNF count is Titan Racing with 5 DNFs.",
+      "elapsed_sec": 2.065,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "team_name": "Titan Racing",
+          "dnf_count": 5
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "name": "Titan Racing",
+          "dnf_count": 5
+        }
+      ]
+    },
+    {
+      "id": "q055",
+      "question": "Which driver has the most DNFs?",
+      "difficulty": "medium",
+      "tags": [
+        "drivers",
+        "dnf",
+        "ranking"
+      ],
+      "check": {
+        "type": "exact_rows"
+      },
+      "canonical_sql": "SELECT d.full_name AS driver_name, COUNT(*) AS dnf_count FROM drivers d JOIN race_results rr ON rr.driver_id = d.id WHERE rr.status = 'DNF' GROUP BY d.id ORDER BY dnf_count DESC, driver_name ASC LIMIT 1;",
+      "generated_sql": "SELECT drivers.full_name, COUNT(*) AS dnf_count\nFROM race_results\nJOIN drivers ON race_results.driver_id = drivers.id\nWHERE race_results.status = 'DNF'\nGROUP BY drivers.id\nORDER BY dnf_count DESC\nLIMIT 1;",
+      "status": "pass",
+      "ok": true,
+      "reason": "rows match",
+      "generated_answer": "The driver with the most DNFs is Liam Rossi, with 5 DNFs.",
+      "elapsed_sec": 3.239,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "driver_name": "Liam Rossi",
+          "dnf_count": 5
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "full_name": "Liam Rossi",
+          "dnf_count": 5
+        }
+      ]
+    },
+    {
+      "id": "q056",
+      "question": "Return the driver with highest DNF count.",
+      "difficulty": "medium",
+      "tags": [
+        "drivers",
+        "dnf",
+        "ranking"
+      ],
+      "check": {
+        "type": "exact_rows"
+      },
+      "canonical_sql": "SELECT d.full_name AS driver_name, COUNT(*) AS dnf_count FROM drivers d JOIN race_results rr ON rr.driver_id = d.id WHERE rr.status = 'DNF' GROUP BY d.id ORDER BY dnf_count DESC, driver_name ASC LIMIT 1;",
+      "generated_sql": "SELECT drivers.full_name, COUNT(*) AS dnf_count\nFROM race_results\nJOIN drivers ON race_results.driver_id = drivers.id\nWHERE race_results.status = 'DNF'\nGROUP BY drivers.id\nORDER BY dnf_count DESC\nLIMIT 1;",
+      "status": "pass",
+      "ok": true,
+      "reason": "rows match",
+      "generated_answer": "The driver with the highest DNF count is Liam Rossi, with 5 DNFs.",
+      "elapsed_sec": 2.424,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "driver_name": "Liam Rossi",
+          "dnf_count": 5
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "full_name": "Liam Rossi",
+          "dnf_count": 5
+        }
+      ]
+    },
+    {
+      "id": "q057",
+      "question": "Top 5 drivers by average points per race result.",
+      "difficulty": "medium",
+      "tags": [
+        "drivers",
+        "points",
+        "aggregate"
+      ],
+      "check": {
+        "type": "ordered_top_k",
+        "k": 5
+      },
+      "canonical_sql": "SELECT d.full_name AS driver_name, ROUND(AVG(rr.points), 3) AS avg_points FROM drivers d JOIN race_results rr ON rr.driver_id = d.id GROUP BY d.id ORDER BY avg_points DESC, driver_name ASC LIMIT 5;",
+      "generated_sql": "SELECT \n    drivers.id,\n    drivers.full_name,\n    AVG(race_results.points) AS avg_points_per_race\nFROM \n    drivers\nJOIN \n    race_results ON drivers.id = race_results.driver_id\nGROUP BY \n    drivers.id, drivers.full_name\nORDER BY \n    avg_points_per_race DESC\nLIMIT 5;",
+      "status": "fail",
+      "ok": false,
+      "reason": "top 5 mismatch",
+      "generated_answer": "The top 5 drivers by average points per race are:\n\n1. Ethan Tanaka - 14.40 points per race\n2. Olivia Novak - 13.06 points per race\n3. Liam Rossi - 12.81 points per race\n4. Logan Ivanov - 12.40 points per race\n5. Olivia Schmidt - 11.31 points per race",
+      "elapsed_sec": 3.468,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 5,
+      "agent_row_count": 5,
+      "canonical_rows_preview": [
+        {
+          "driver_name": "Ethan Tanaka",
+          "avg_points": 14.396
+        },
+        {
+          "driver_name": "Olivia Novak",
+          "avg_points": 13.063
+        },
+        {
+          "driver_name": "Liam Rossi",
+          "avg_points": 12.813
+        },
+        {
+          "driver_name": "Logan Ivanov",
+          "avg_points": 12.396
+        },
+        {
+          "driver_name": "Olivia Schmidt",
+          "avg_points": 11.313
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "id": 8,
+          "full_name": "Ethan Tanaka",
+          "avg_points_per_race": 14.395833333333334
+        },
+        {
+          "id": 7,
+          "full_name": "Olivia Novak",
+          "avg_points_per_race": 13.0625
+        },
+        {
+          "id": 6,
+          "full_name": "Liam Rossi",
+          "avg_points_per_race": 12.8125
+        },
+        {
+          "id": 4,
+          "full_name": "Logan Ivanov",
+          "avg_points_per_race": 12.395833333333334
+        },
+        {
+          "id": 3,
+          "full_name": "Olivia Schmidt",
+          "avg_points_per_race": 11.3125
+        }
+      ]
+    },
+    {
+      "id": "q058",
+      "question": "Rank five drivers by mean points per entry.",
+      "difficulty": "medium",
+      "tags": [
+        "drivers",
+        "points",
+        "aggregate"
+      ],
+      "check": {
+        "type": "ordered_top_k",
+        "k": 5
+      },
+      "canonical_sql": "SELECT d.full_name AS driver_name, ROUND(AVG(rr.points), 3) AS avg_points FROM drivers d JOIN race_results rr ON rr.driver_id = d.id GROUP BY d.id ORDER BY avg_points DESC, driver_name ASC LIMIT 5;",
+      "generated_sql": "SELECT \n    drivers.id,\n    drivers.full_name,\n    AVG(race_results.points) AS mean_points_per_entry\nFROM \n    drivers\nJOIN \n    race_results ON drivers.id = race_results.driver_id\nGROUP BY \n    drivers.id, drivers.full_name\nORDER BY \n    mean_points_per_entry DESC\nLIMIT 5;",
+      "status": "fail",
+      "ok": false,
+      "reason": "top 5 mismatch",
+      "generated_answer": "The top five drivers ranked by mean points per entry are:\n\n1. Ethan Tanaka - 14.40 points\n2. Olivia Novak - 13.06 points\n3. Liam Rossi - 12.81 points\n4. Logan Ivanov - 12.40 points\n5. Olivia Schmidt - 11.31 points",
+      "elapsed_sec": 3.218,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 5,
+      "agent_row_count": 5,
+      "canonical_rows_preview": [
+        {
+          "driver_name": "Ethan Tanaka",
+          "avg_points": 14.396
+        },
+        {
+          "driver_name": "Olivia Novak",
+          "avg_points": 13.063
+        },
+        {
+          "driver_name": "Liam Rossi",
+          "avg_points": 12.813
+        },
+        {
+          "driver_name": "Logan Ivanov",
+          "avg_points": 12.396
+        },
+        {
+          "driver_name": "Olivia Schmidt",
+          "avg_points": 11.313
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "id": 8,
+          "full_name": "Ethan Tanaka",
+          "mean_points_per_entry": 14.395833333333334
+        },
+        {
+          "id": 7,
+          "full_name": "Olivia Novak",
+          "mean_points_per_entry": 13.0625
+        },
+        {
+          "id": 6,
+          "full_name": "Liam Rossi",
+          "mean_points_per_entry": 12.8125
+        },
+        {
+          "id": 4,
+          "full_name": "Logan Ivanov",
+          "mean_points_per_entry": 12.395833333333334
+        },
+        {
+          "id": 3,
+          "full_name": "Olivia Schmidt",
+          "mean_points_per_entry": 11.3125
+        }
+      ]
+    },
+    {
+      "id": "q059",
+      "question": "Which 3 drivers gain the most places on average?",
+      "difficulty": "hard",
+      "tags": [
+        "drivers",
+        "positions",
+        "improvement"
+      ],
+      "check": {
+        "type": "ordered_top_k",
+        "k": 3
+      },
+      "canonical_sql": "SELECT d.full_name AS driver_name, ROUND(AVG(rr.start_position - rr.finish_position), 3) AS avg_places_gained FROM drivers d JOIN race_results rr ON rr.driver_id = d.id GROUP BY d.id ORDER BY avg_places_gained DESC, driver_name ASC LIMIT 3;",
+      "generated_sql": "SELECT d.full_name, AVG(rr.start_position - rr.finish_position) AS avg_places_gained\nFROM race_results rr\nJOIN drivers d ON rr.driver_id = d.id\nGROUP BY d.id\nORDER BY avg_places_gained DESC\nLIMIT 3;",
+      "status": "fail",
+      "ok": false,
+      "reason": "top 3 mismatch",
+      "generated_answer": "The three drivers who gain the most places on average are Logan Rossi (0.71 places), Leo Dubois (0.54 places), and Sofia Anders (0.25 places).",
+      "elapsed_sec": 2.624,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 3,
+      "agent_row_count": 3,
+      "canonical_rows_preview": [
+        {
+          "driver_name": "Logan Rossi",
+          "avg_places_gained": 0.708
+        },
+        {
+          "driver_name": "Leo Dubois",
+          "avg_places_gained": 0.542
+        },
+        {
+          "driver_name": "Sofia Anders",
+          "avg_places_gained": 0.25
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "full_name": "Logan Rossi",
+          "avg_places_gained": 0.7083333333333334
+        },
+        {
+          "full_name": "Leo Dubois",
+          "avg_places_gained": 0.5416666666666666
+        },
+        {
+          "full_name": "Sofia Anders",
+          "avg_places_gained": 0.25
+        }
+      ]
+    },
+    {
+      "id": "q060",
+      "question": "Top three by average (start_position - finish_position).",
+      "difficulty": "hard",
+      "tags": [
+        "drivers",
+        "positions",
+        "improvement"
+      ],
+      "check": {
+        "type": "ordered_top_k",
+        "k": 3
+      },
+      "canonical_sql": "SELECT d.full_name AS driver_name, ROUND(AVG(rr.start_position - rr.finish_position), 3) AS avg_places_gained FROM drivers d JOIN race_results rr ON rr.driver_id = d.id GROUP BY d.id ORDER BY avg_places_gained DESC, driver_name ASC LIMIT 3;",
+      "generated_sql": "SELECT driver_id, AVG(start_position - finish_position) AS avg_position_gain\nFROM race_results\nGROUP BY driver_id\nORDER BY avg_position_gain DESC\nLIMIT 3;",
+      "status": "fail",
+      "ok": false,
+      "reason": "top 3 mismatch",
+      "generated_answer": "The top three drivers by average position gain (start_position - finish_position) are:\n\n1. Driver 1 with an average gain of 0.71 positions\n2. Driver 2 with an average gain of 0.54 positions\n3. Driver 5 with an average gain of 0.25 positions",
+      "elapsed_sec": 2.319,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 3,
+      "agent_row_count": 3,
+      "canonical_rows_preview": [
+        {
+          "driver_name": "Logan Rossi",
+          "avg_places_gained": 0.708
+        },
+        {
+          "driver_name": "Leo Dubois",
+          "avg_places_gained": 0.542
+        },
+        {
+          "driver_name": "Sofia Anders",
+          "avg_places_gained": 0.25
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "driver_id": 1,
+          "avg_position_gain": 0.7083333333333334
+        },
+        {
+          "driver_id": 2,
+          "avg_position_gain": 0.5416666666666666
+        },
+        {
+          "driver_id": 5,
+          "avg_position_gain": 0.25
+        }
+      ]
+    },
+    {
+      "id": "q061",
+      "question": "Which 3 drivers lose the most places on average?",
+      "difficulty": "hard",
+      "tags": [
+        "drivers",
+        "positions",
+        "decline"
+      ],
+      "check": {
+        "type": "ordered_top_k",
+        "k": 3
+      },
+      "canonical_sql": "SELECT d.full_name AS driver_name, ROUND(AVG(rr.start_position - rr.finish_position), 3) AS avg_places_gained FROM drivers d JOIN race_results rr ON rr.driver_id = d.id GROUP BY d.id ORDER BY avg_places_gained ASC, driver_name ASC LIMIT 3;",
+      "generated_sql": "SELECT \n    d.full_name,\n    AVG(rr.start_position - rr.finish_position) AS avg_places_lost\nFROM \n    race_results rr\nJOIN \n    drivers d ON rr.driver_id = d.id\nGROUP BY \n    rr.driver_id\nORDER BY \n    avg_places_lost DESC\nLIMIT 3;",
+      "status": "fail",
+      "ok": false,
+      "reason": "top 3 mismatch",
+      "generated_answer": "The three drivers who lose the most places on average are Logan Rossi (0.71 places), Leo Dubois (0.54 places), and Sofia Anders (0.25 places).",
+      "elapsed_sec": 2.44,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 3,
+      "agent_row_count": 3,
+      "canonical_rows_preview": [
+        {
+          "driver_name": "Logan Ivanov",
+          "avg_places_gained": -0.625
+        },
+        {
+          "driver_name": "Olivia Schmidt",
+          "avg_places_gained": -0.521
+        },
+        {
+          "driver_name": "Olivia Novak",
+          "avg_places_gained": -0.458
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "full_name": "Logan Rossi",
+          "avg_places_lost": 0.7083333333333334
+        },
+        {
+          "full_name": "Leo Dubois",
+          "avg_places_lost": 0.5416666666666666
+        },
+        {
+          "full_name": "Sofia Anders",
+          "avg_places_lost": 0.25
+        }
+      ]
+    },
+    {
+      "id": "q062",
+      "question": "Bottom three by average places gained metric.",
+      "difficulty": "hard",
+      "tags": [
+        "drivers",
+        "positions",
+        "decline"
+      ],
+      "check": {
+        "type": "ordered_top_k",
+        "k": 3
+      },
+      "canonical_sql": "SELECT d.full_name AS driver_name, ROUND(AVG(rr.start_position - rr.finish_position), 3) AS avg_places_gained FROM drivers d JOIN race_results rr ON rr.driver_id = d.id GROUP BY d.id ORDER BY avg_places_gained ASC, driver_name ASC LIMIT 3;",
+      "generated_sql": "WITH places_gained AS (\n  SELECT\n    rr.driver_id,\n    (rr.start_position - rr.finish_position) AS places_gained\n  FROM race_results rr\n  WHERE rr.finish_position > 0\n),\navg_places_gained AS (\n  SELECT\n    driver_id,\n    AVG(places_gained) AS avg_places_gained\n  FROM places_gained\n  GROUP BY driver_id\n)\nSELECT\n  d.full_name,\n  apg.avg_places_gained\nFROM avg_places_gained apg\nJOIN drivers d ON d.id = apg.driver_id\nORDER BY apg.avg_places_gained ASC\nLIMIT 3;",
+      "status": "fail",
+      "ok": false,
+      "reason": "top 3 mismatch",
+      "generated_answer": "The bottom three drivers by average places gained are Logan Ivanov (-0.625), Olivia Schmidt (-0.521), and Olivia Novak (-0.458).",
+      "elapsed_sec": 4.171,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 3,
+      "agent_row_count": 3,
+      "canonical_rows_preview": [
+        {
+          "driver_name": "Logan Ivanov",
+          "avg_places_gained": -0.625
+        },
+        {
+          "driver_name": "Olivia Schmidt",
+          "avg_places_gained": -0.521
+        },
+        {
+          "driver_name": "Olivia Novak",
+          "avg_places_gained": -0.458
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "full_name": "Logan Ivanov",
+          "avg_places_gained": -0.625
+        },
+        {
+          "full_name": "Olivia Schmidt",
+          "avg_places_gained": -0.5208333333333334
+        },
+        {
+          "full_name": "Olivia Novak",
+          "avg_places_gained": -0.4583333333333333
+        }
+      ]
+    },
+    {
+      "id": "q063",
+      "question": "Show count of race_results by status.",
+      "difficulty": "easy",
+      "tags": [
+        "results",
+        "status",
+        "distribution"
+      ],
+      "check": {
+        "type": "exact_rows"
+      },
+      "canonical_sql": "SELECT status, COUNT(*) AS result_count FROM race_results GROUP BY status ORDER BY status ASC;",
+      "generated_sql": "SELECT status, COUNT(*) AS count FROM race_results GROUP BY status;",
+      "status": "pass",
+      "ok": true,
+      "reason": "rows match",
+      "generated_answer": "There are 16 race results with the status \"DNF\" and 368 race results with the status \"Finished.\"",
+      "elapsed_sec": 2.372,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 2,
+      "agent_row_count": 2,
+      "canonical_rows_preview": [
+        {
+          "status": "DNF",
+          "result_count": 16
+        },
+        {
+          "status": "Finished",
+          "result_count": 368
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "status": "DNF",
+          "count": 16
+        },
+        {
+          "status": "Finished",
+          "count": 368
+        }
+      ]
+    },
+    {
+      "id": "q064",
+      "question": "How many Finished vs DNF results are there?",
+      "difficulty": "easy",
+      "tags": [
+        "results",
+        "status",
+        "distribution"
+      ],
+      "check": {
+        "type": "exact_rows"
+      },
+      "canonical_sql": "SELECT status, COUNT(*) AS result_count FROM race_results GROUP BY status ORDER BY status ASC;",
+      "generated_sql": "SELECT \n  SUM(CASE WHEN status = 'Finished' THEN 1 ELSE 0 END) AS Finished,\n  SUM(CASE WHEN status = 'DNF' THEN 1 ELSE 0 END) AS DNF\nFROM race_results;",
+      "status": "fail",
+      "ok": false,
+      "reason": "row mismatch",
+      "generated_answer": "There are 368 Finished results and 16 DNF results.",
+      "elapsed_sec": 2.063,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 2,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "status": "DNF",
+          "result_count": 16
+        },
+        {
+          "status": "Finished",
+          "result_count": 368
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "Finished": 368,
+          "DNF": 16
+        }
+      ]
+    },
+    {
+      "id": "q065",
+      "question": "Total awarded points by season year.",
+      "difficulty": "easy",
+      "tags": [
+        "season",
+        "points",
+        "aggregate"
+      ],
+      "check": {
+        "type": "exact_rows"
+      },
+      "canonical_sql": "SELECT r.season_year, ROUND(SUM(rr.points), 3) AS total_points FROM races r JOIN race_results rr ON rr.race_id = r.id GROUP BY r.season_year ORDER BY r.season_year ASC;",
+      "generated_sql": "SELECT r.season_year, SUM(rr.points) AS total_points\nFROM race_results rr\nJOIN races r ON rr.race_id = r.id\nGROUP BY r.season_year\nORDER BY r.season_year;",
+      "status": "pass",
+      "ok": true,
+      "reason": "rows match",
+      "generated_answer": "The total awarded points by season year are:\n- 2024: 2174 points\n- 2025: 2336 points",
+      "elapsed_sec": 2.343,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 2,
+      "agent_row_count": 2,
+      "canonical_rows_preview": [
+        {
+          "season_year": 2024,
+          "total_points": 2174.0
+        },
+        {
+          "season_year": 2025,
+          "total_points": 2336.0
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "season_year": 2024,
+          "total_points": 2174.0
+        },
+        {
+          "season_year": 2025,
+          "total_points": 2336.0
+        }
+      ]
+    },
+    {
+      "id": "q066",
+      "question": "For each season_year, sum all points.",
+      "difficulty": "easy",
+      "tags": [
+        "season",
+        "points",
+        "aggregate"
+      ],
+      "check": {
+        "type": "exact_rows"
+      },
+      "canonical_sql": "SELECT r.season_year, ROUND(SUM(rr.points), 3) AS total_points FROM races r JOIN race_results rr ON rr.race_id = r.id GROUP BY r.season_year ORDER BY r.season_year ASC;",
+      "generated_sql": "SELECT season_year, SUM(points) AS total_points\nFROM race_results\nJOIN races ON race_results.race_id = races.id\nGROUP BY season_year;",
+      "status": "pass",
+      "ok": true,
+      "reason": "rows match",
+      "generated_answer": "In 2024, the total points summed across all races were 2174.0, and in 2025, the total points were 2336.0.",
+      "elapsed_sec": 2.772,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 2,
+      "agent_row_count": 2,
+      "canonical_rows_preview": [
+        {
+          "season_year": 2024,
+          "total_points": 2174.0
+        },
+        {
+          "season_year": 2025,
+          "total_points": 2336.0
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "season_year": 2024,
+          "total_points": 2174.0
+        },
+        {
+          "season_year": 2025,
+          "total_points": 2336.0
+        }
+      ]
+    },
+    {
+      "id": "q067",
+      "question": "What is the average lap time across all laps?",
+      "difficulty": "easy",
+      "tags": [
+        "laps",
+        "aggregate"
+      ],
+      "check": {
+        "type": "numeric",
+        "tolerance": 0.01
+      },
+      "canonical_sql": "SELECT ROUND(AVG(lap_time_sec), 3) AS value FROM lap_times;",
+      "generated_sql": "SELECT AVG(lap_time_sec) AS average_lap_time FROM lap_times;",
+      "status": "pass",
+      "ok": true,
+      "reason": "numeric diff=0.000168, tol=0.01",
+      "generated_answer": "The average lap time across all laps is approximately 87.69 seconds.",
+      "elapsed_sec": 2.687,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "value": 87.691
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "average_lap_time": 87.69083163021246
+        }
+      ]
+    },
+    {
+      "id": "q068",
+      "question": "Compute mean lap_time_sec in lap_times.",
+      "difficulty": "easy",
+      "tags": [
+        "laps",
+        "aggregate"
+      ],
+      "check": {
+        "type": "numeric",
+        "tolerance": 0.01
+      },
+      "canonical_sql": "SELECT ROUND(AVG(lap_time_sec), 3) AS value FROM lap_times;",
+      "generated_sql": "SELECT AVG(lap_time_sec) AS mean_lap_time_sec FROM lap_times;",
+      "status": "pass",
+      "ok": true,
+      "reason": "numeric diff=0.000168, tol=0.01",
+      "generated_answer": "The mean lap_time_sec in lap_times is approximately 87.69 seconds.",
+      "elapsed_sec": 2.408,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "value": 87.691
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "mean_lap_time_sec": 87.69083163021246
+        }
+      ]
+    },
+    {
+      "id": "q069",
+      "question": "Which driver has the fastest average lap time?",
+      "difficulty": "medium",
+      "tags": [
+        "drivers",
+        "laps",
+        "performance"
+      ],
+      "check": {
+        "type": "exact_rows"
+      },
+      "canonical_sql": "SELECT d.full_name AS driver_name, ROUND(AVG(lt.lap_time_sec), 3) AS avg_lap_time FROM drivers d JOIN lap_times lt ON lt.driver_id = d.id GROUP BY d.id ORDER BY avg_lap_time ASC, driver_name ASC LIMIT 1;",
+      "generated_sql": "SELECT driver_id, AVG(lap_time_sec) AS avg_lap_time\nFROM lap_times\nGROUP BY driver_id\nORDER BY avg_lap_time\nLIMIT 1;",
+      "status": "fail",
+      "ok": false,
+      "reason": "row mismatch",
+      "generated_answer": "Driver 7 has the fastest average lap time of approximately 87.44 seconds.",
+      "elapsed_sec": 3.742,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "driver_name": "Olivia Novak",
+          "avg_lap_time": 87.435
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "driver_id": 7,
+          "avg_lap_time": 87.43514465408802
+        }
+      ]
+    },
+    {
+      "id": "q070",
+      "question": "Return the driver with lowest mean lap_time_sec.",
+      "difficulty": "medium",
+      "tags": [
+        "drivers",
+        "laps",
+        "performance"
+      ],
+      "check": {
+        "type": "exact_rows"
+      },
+      "canonical_sql": "SELECT d.full_name AS driver_name, ROUND(AVG(lt.lap_time_sec), 3) AS avg_lap_time FROM drivers d JOIN lap_times lt ON lt.driver_id = d.id GROUP BY d.id ORDER BY avg_lap_time ASC, driver_name ASC LIMIT 1;",
+      "generated_sql": "SELECT driver_id\nFROM lap_times\nGROUP BY driver_id\nORDER BY AVG(lap_time_sec) ASC\nLIMIT 1;",
+      "status": "fail",
+      "ok": false,
+      "reason": "row mismatch",
+      "generated_answer": "The driver with the lowest mean lap_time_sec is driver_id 7.",
+      "elapsed_sec": 3.653,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "driver_name": "Olivia Novak",
+          "avg_lap_time": 87.435
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "driver_id": 7
+        }
+      ]
+    },
+    {
+      "id": "q071",
+      "question": "Which driver has the slowest average lap time?",
+      "difficulty": "medium",
+      "tags": [
+        "drivers",
+        "laps",
+        "performance"
+      ],
+      "check": {
+        "type": "exact_rows"
+      },
+      "canonical_sql": "SELECT d.full_name AS driver_name, ROUND(AVG(lt.lap_time_sec), 3) AS avg_lap_time FROM drivers d JOIN lap_times lt ON lt.driver_id = d.id GROUP BY d.id ORDER BY avg_lap_time DESC, driver_name ASC LIMIT 1;",
+      "generated_sql": "SELECT drivers.full_name\nFROM drivers\nJOIN lap_times ON drivers.id = lap_times.driver_id\nGROUP BY drivers.id\nORDER BY AVG(lap_times.lap_time_sec) DESC\nLIMIT 1;",
+      "status": "fail",
+      "ok": false,
+      "reason": "row mismatch",
+      "generated_answer": "The driver with the slowest average lap time is Logan Rossi.",
+      "elapsed_sec": 2.073,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "driver_name": "Logan Rossi",
+          "avg_lap_time": 88.117
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "full_name": "Logan Rossi"
+        }
+      ]
+    },
+    {
+      "id": "q072",
+      "question": "Return the driver with highest mean lap_time_sec.",
+      "difficulty": "medium",
+      "tags": [
+        "drivers",
+        "laps",
+        "performance"
+      ],
+      "check": {
+        "type": "exact_rows"
+      },
+      "canonical_sql": "SELECT d.full_name AS driver_name, ROUND(AVG(lt.lap_time_sec), 3) AS avg_lap_time FROM drivers d JOIN lap_times lt ON lt.driver_id = d.id GROUP BY d.id ORDER BY avg_lap_time DESC, driver_name ASC LIMIT 1;",
+      "generated_sql": "SELECT driver_id, AVG(lap_time_sec) AS mean_lap_time\nFROM lap_times\nGROUP BY driver_id\nORDER BY mean_lap_time DESC\nLIMIT 1;",
+      "status": "fail",
+      "ok": false,
+      "reason": "row mismatch",
+      "generated_answer": "The driver with the highest mean lap time is driver_id 1, with an average lap time of 88.12 seconds.",
+      "elapsed_sec": 2.209,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "driver_name": "Logan Rossi",
+          "avg_lap_time": 88.117
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "driver_id": 1,
+          "mean_lap_time": 88.11712248438577
+        }
+      ]
+    },
+    {
+      "id": "q073",
+      "question": "What is the average number of pit stops per race?",
+      "difficulty": "medium",
+      "tags": [
+        "pit_stops",
+        "races",
+        "aggregate"
+      ],
+      "check": {
+        "type": "numeric",
+        "tolerance": 0.01
+      },
+      "canonical_sql": "SELECT ROUND(CAST(COUNT(*) AS REAL) / (SELECT COUNT(*) FROM races), 3) AS value FROM pit_stops;",
+      "generated_sql": "SELECT AVG(pit_stop_count) AS avg_pit_stops_per_race\nFROM (\n  SELECT race_id, COUNT(*) AS pit_stop_count\n  FROM pit_stops\n  GROUP BY race_id\n) sub;",
+      "status": "pass",
+      "ok": true,
+      "reason": "numeric diff=0.000500, tol=0.01",
+      "generated_answer": "The average number of pit stops per race is approximately 12.69.",
+      "elapsed_sec": 1.943,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "value": 12.688
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "avg_pit_stops_per_race": 12.6875
+        }
+      ]
+    },
+    {
+      "id": "q074",
+      "question": "Compute pit_stops count divided by races count.",
+      "difficulty": "medium",
+      "tags": [
+        "pit_stops",
+        "races",
+        "aggregate"
+      ],
+      "check": {
+        "type": "numeric",
+        "tolerance": 0.01
+      },
+      "canonical_sql": "SELECT ROUND(CAST(COUNT(*) AS REAL) / (SELECT COUNT(*) FROM races), 3) AS value FROM pit_stops;",
+      "generated_sql": "SELECT \n  (SELECT COUNT(*) FROM pit_stops) * 1.0 / (SELECT COUNT(*) FROM races) AS pit_stops_per_race;",
+      "status": "pass",
+      "ok": true,
+      "reason": "numeric diff=0.000500, tol=0.01",
+      "generated_answer": "The count of pit stops divided by the count of races is 12.6875.",
+      "elapsed_sec": 2.526,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "value": 12.688
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "pit_stops_per_race": 12.6875
+        }
+      ]
+    },
+    {
+      "id": "q075",
+      "question": "Which driver has the most pit stops?",
+      "difficulty": "easy",
+      "tags": [
+        "drivers",
+        "pit_stops",
+        "ranking"
+      ],
+      "check": {
+        "type": "exact_rows"
+      },
+      "canonical_sql": "SELECT d.full_name AS driver_name, COUNT(*) AS pit_count FROM drivers d JOIN pit_stops ps ON ps.driver_id = d.id GROUP BY d.id ORDER BY pit_count DESC, driver_name ASC LIMIT 1;",
+      "generated_sql": "SELECT drivers.full_name\nFROM drivers\nJOIN pit_stops ON drivers.id = pit_stops.driver_id\nGROUP BY drivers.id\nORDER BY COUNT(pit_stops.id) DESC\nLIMIT 1;",
+      "status": "fail",
+      "ok": false,
+      "reason": "row mismatch",
+      "generated_answer": "The driver with the most pit stops is Logan Ivanov.",
+      "elapsed_sec": 1.991,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "driver_name": "Logan Ivanov",
+          "pit_count": 85
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "full_name": "Logan Ivanov"
+        }
+      ]
+    },
+    {
+      "id": "q076",
+      "question": "Return driver with highest pit stop count.",
+      "difficulty": "easy",
+      "tags": [
+        "drivers",
+        "pit_stops",
+        "ranking"
+      ],
+      "check": {
+        "type": "exact_rows"
+      },
+      "canonical_sql": "SELECT d.full_name AS driver_name, COUNT(*) AS pit_count FROM drivers d JOIN pit_stops ps ON ps.driver_id = d.id GROUP BY d.id ORDER BY pit_count DESC, driver_name ASC LIMIT 1;",
+      "generated_sql": "SELECT drivers.id, drivers.full_name, COUNT(pit_stops.id) AS pit_stop_count\nFROM drivers\nJOIN pit_stops ON drivers.id = pit_stops.driver_id\nGROUP BY drivers.id\nORDER BY pit_stop_count DESC\nLIMIT 1;",
+      "status": "fail",
+      "ok": false,
+      "reason": "row mismatch",
+      "generated_answer": "The driver with the highest pit stop count is Logan Ivanov with 85 pit stops.",
+      "elapsed_sec": 2.434,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "driver_name": "Logan Ivanov",
+          "pit_count": 85
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "id": 4,
+          "full_name": "Logan Ivanov",
+          "pit_stop_count": 85
+        }
+      ]
+    },
+    {
+      "id": "q077",
+      "question": "Which race had the most pit stops?",
+      "difficulty": "easy",
+      "tags": [
+        "races",
+        "pit_stops",
+        "ranking"
+      ],
+      "check": {
+        "type": "exact_rows"
+      },
+      "canonical_sql": "SELECT r.race_name, COUNT(*) AS pit_count FROM races r JOIN pit_stops ps ON ps.race_id = r.id GROUP BY r.id ORDER BY pit_count DESC, r.race_name ASC LIMIT 1;",
+      "generated_sql": "SELECT races.race_name\nFROM races\nJOIN pit_stops ON races.id = pit_stops.race_id\nGROUP BY races.id\nORDER BY COUNT(pit_stops.id) DESC\nLIMIT 1;",
+      "status": "fail",
+      "ok": false,
+      "reason": "row mismatch",
+      "generated_answer": "The Montreal Grand Prix had the most pit stops.",
+      "elapsed_sec": 2.148,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "race_name": "Montreal Grand Prix",
+          "pit_count": 19
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "race_name": "Montreal Grand Prix"
+        }
+      ]
+    },
+    {
+      "id": "q078",
+      "question": "Return race with max pit_count.",
+      "difficulty": "easy",
+      "tags": [
+        "races",
+        "pit_stops",
+        "ranking"
+      ],
+      "check": {
+        "type": "exact_rows"
+      },
+      "canonical_sql": "SELECT r.race_name, COUNT(*) AS pit_count FROM races r JOIN pit_stops ps ON ps.race_id = r.id GROUP BY r.id ORDER BY pit_count DESC, r.race_name ASC LIMIT 1;",
+      "generated_sql": "SELECT race_id, COUNT(*) AS pit_count\nFROM pit_stops\nGROUP BY race_id\nORDER BY pit_count DESC\nLIMIT 1;",
+      "status": "fail",
+      "ok": false,
+      "reason": "row mismatch",
+      "generated_answer": "The race with the maximum pit count is race_id 31, with 19 pit stops.",
+      "elapsed_sec": 1.856,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "race_name": "Montreal Grand Prix",
+          "pit_count": 19
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "race_id": 31,
+          "pit_count": 19
+        }
+      ]
+    },
+    {
+      "id": "q079",
+      "question": "Show how many races were run at each circuit.",
+      "difficulty": "easy",
+      "tags": [
+        "races",
+        "circuits",
+        "distribution"
+      ],
+      "check": {
+        "type": "exact_rows"
+      },
+      "canonical_sql": "SELECT circuit, COUNT(*) AS race_count FROM races GROUP BY circuit ORDER BY race_count DESC, circuit ASC;",
+      "generated_sql": "SELECT circuit, COUNT(*) AS race_count\nFROM races\nGROUP BY circuit;",
+      "status": "fail",
+      "ok": false,
+      "reason": "row mismatch",
+      "generated_answer": "Races run at each circuit are as follows:\n- Austin: 4 races\n- Barcelona: 4 races\n- Imola: 4 races\n- Interlagos: 4 races\n- Montreal: 4 races\n- Monza: 6 races\n- Silverstone: 6 races\n- Spa: 6 races\n- Suzuka: 6 races\n- Zandvoort: 4 races",
+      "elapsed_sec": 2.691,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 10,
+      "agent_row_count": 10,
+      "canonical_rows_preview": [
+        {
+          "circuit": "Monza",
+          "race_count": 6
+        },
+        {
+          "circuit": "Silverstone",
+          "race_count": 6
+        },
+        {
+          "circuit": "Spa",
+          "race_count": 6
+        },
+        {
+          "circuit": "Suzuka",
+          "race_count": 6
+        },
+        {
+          "circuit": "Austin",
+          "race_count": 4
+        },
+        {
+          "circuit": "Barcelona",
+          "race_count": 4
+        },
+        {
+          "circuit": "Imola",
+          "race_count": 4
+        },
+        {
+          "circuit": "Interlagos",
+          "race_count": 4
+        },
+        {
+          "circuit": "Montreal",
+          "race_count": 4
+        },
+        {
+          "circuit": "Zandvoort",
+          "race_count": 4
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "circuit": "Austin",
+          "race_count": 4
+        },
+        {
+          "circuit": "Barcelona",
+          "race_count": 4
+        },
+        {
+          "circuit": "Imola",
+          "race_count": 4
+        },
+        {
+          "circuit": "Interlagos",
+          "race_count": 4
+        },
+        {
+          "circuit": "Montreal",
+          "race_count": 4
+        },
+        {
+          "circuit": "Monza",
+          "race_count": 6
+        },
+        {
+          "circuit": "Silverstone",
+          "race_count": 6
+        },
+        {
+          "circuit": "Spa",
+          "race_count": 6
+        },
+        {
+          "circuit": "Suzuka",
+          "race_count": 6
+        },
+        {
+          "circuit": "Zandvoort",
+          "race_count": 4
+        }
+      ]
+    },
+    {
+      "id": "q080",
+      "question": "Count races grouped by circuit.",
+      "difficulty": "easy",
+      "tags": [
+        "races",
+        "circuits",
+        "distribution"
+      ],
+      "check": {
+        "type": "exact_rows"
+      },
+      "canonical_sql": "SELECT circuit, COUNT(*) AS race_count FROM races GROUP BY circuit ORDER BY race_count DESC, circuit ASC;",
+      "generated_sql": "SELECT circuit, COUNT(*) AS race_count\nFROM races\nGROUP BY circuit;",
+      "status": "fail",
+      "ok": false,
+      "reason": "row mismatch",
+      "generated_answer": "The count of races grouped by circuit is as follows: Austin - 4, Barcelona - 4, Imola - 4, Interlagos - 4, Montreal - 4, Monza - 6, Silverstone - 6, Spa - 6, Suzuka - 6, and Zandvoort - 4.",
+      "elapsed_sec": 2.974,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 10,
+      "agent_row_count": 10,
+      "canonical_rows_preview": [
+        {
+          "circuit": "Monza",
+          "race_count": 6
+        },
+        {
+          "circuit": "Silverstone",
+          "race_count": 6
+        },
+        {
+          "circuit": "Spa",
+          "race_count": 6
+        },
+        {
+          "circuit": "Suzuka",
+          "race_count": 6
+        },
+        {
+          "circuit": "Austin",
+          "race_count": 4
+        },
+        {
+          "circuit": "Barcelona",
+          "race_count": 4
+        },
+        {
+          "circuit": "Imola",
+          "race_count": 4
+        },
+        {
+          "circuit": "Interlagos",
+          "race_count": 4
+        },
+        {
+          "circuit": "Montreal",
+          "race_count": 4
+        },
+        {
+          "circuit": "Zandvoort",
+          "race_count": 4
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "circuit": "Austin",
+          "race_count": 4
+        },
+        {
+          "circuit": "Barcelona",
+          "race_count": 4
+        },
+        {
+          "circuit": "Imola",
+          "race_count": 4
+        },
+        {
+          "circuit": "Interlagos",
+          "race_count": 4
+        },
+        {
+          "circuit": "Montreal",
+          "race_count": 4
+        },
+        {
+          "circuit": "Monza",
+          "race_count": 6
+        },
+        {
+          "circuit": "Silverstone",
+          "race_count": 6
+        },
+        {
+          "circuit": "Spa",
+          "race_count": 6
+        },
+        {
+          "circuit": "Suzuka",
+          "race_count": 6
+        },
+        {
+          "circuit": "Zandvoort",
+          "race_count": 4
+        }
+      ]
+    },
+    {
+      "id": "q081",
+      "question": "Which circuit appears most often?",
+      "difficulty": "easy",
+      "tags": [
+        "races",
+        "circuits",
+        "ranking"
+      ],
+      "check": {
+        "type": "exact_rows"
+      },
+      "canonical_sql": "SELECT circuit FROM races GROUP BY circuit ORDER BY COUNT(*) DESC, circuit ASC LIMIT 1;",
+      "generated_sql": "SELECT circuit\nFROM races\nGROUP BY circuit\nORDER BY COUNT(*) DESC\nLIMIT 1;",
+      "status": "fail",
+      "ok": false,
+      "reason": "row mismatch",
+      "generated_answer": "The circuit that appears most often is Suzuka.",
+      "elapsed_sec": 1.924,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "circuit": "Monza"
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "circuit": "Suzuka"
+        }
+      ]
+    },
+    {
+      "id": "q082",
+      "question": "Find the most frequently used circuit.",
+      "difficulty": "easy",
+      "tags": [
+        "races",
+        "circuits",
+        "ranking"
+      ],
+      "check": {
+        "type": "exact_rows"
+      },
+      "canonical_sql": "SELECT circuit FROM races GROUP BY circuit ORDER BY COUNT(*) DESC, circuit ASC LIMIT 1;",
+      "generated_sql": "SELECT circuit\nFROM races\nGROUP BY circuit\nORDER BY COUNT(*) DESC\nLIMIT 1;",
+      "status": "fail",
+      "ok": false,
+      "reason": "row mismatch",
+      "generated_answer": "The most frequently used circuit is Suzuka.",
+      "elapsed_sec": 2.066,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "circuit": "Monza"
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "circuit": "Suzuka"
+        }
+      ]
+    },
+    {
+      "id": "q083",
+      "question": "Who is the points leader in 2024?",
+      "difficulty": "medium",
+      "tags": [
+        "season",
+        "drivers",
+        "points"
+      ],
+      "check": {
+        "type": "exact_rows"
+      },
+      "canonical_sql": "SELECT d.full_name AS driver_name FROM drivers d JOIN race_results rr ON rr.driver_id = d.id JOIN races r ON r.id = rr.race_id WHERE r.season_year = 2024 GROUP BY d.id ORDER BY SUM(rr.points) DESC, driver_name ASC LIMIT 1;",
+      "generated_sql": "SELECT d.full_name\nFROM drivers d\nJOIN race_results rr ON d.id = rr.driver_id\nJOIN races r ON rr.race_id = r.id\nWHERE r.season_year = 2024\nGROUP BY d.id\nORDER BY SUM(rr.points) DESC\nLIMIT 1;",
+      "status": "pass",
+      "ok": true,
+      "reason": "rows match",
+      "generated_answer": "The points leader in 2024 is Ethan Tanaka.",
+      "elapsed_sec": 2.569,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "driver_name": "Ethan Tanaka"
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "full_name": "Ethan Tanaka"
+        }
+      ]
+    },
+    {
+      "id": "q084",
+      "question": "Top driver by points in season 2024.",
+      "difficulty": "medium",
+      "tags": [
+        "season",
+        "drivers",
+        "points"
+      ],
+      "check": {
+        "type": "exact_rows"
+      },
+      "canonical_sql": "SELECT d.full_name AS driver_name FROM drivers d JOIN race_results rr ON rr.driver_id = d.id JOIN races r ON r.id = rr.race_id WHERE r.season_year = 2024 GROUP BY d.id ORDER BY SUM(rr.points) DESC, driver_name ASC LIMIT 1;",
+      "generated_sql": "SELECT d.full_name, SUM(rr.points) AS total_points\nFROM drivers d\nJOIN race_results rr ON d.id = rr.driver_id\nJOIN races r ON rr.race_id = r.id\nWHERE r.season_year = 2024\nGROUP BY d.id\nORDER BY total_points DESC\nLIMIT 1;",
+      "status": "fail",
+      "ok": false,
+      "reason": "row mismatch",
+      "generated_answer": "The top driver by points in the 2024 season is Ethan Tanaka with 350 points.",
+      "elapsed_sec": 2.563,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "driver_name": "Ethan Tanaka"
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "full_name": "Ethan Tanaka",
+          "total_points": 350.0
+        }
+      ]
+    },
+    {
+      "id": "q085",
+      "question": "Who is the points leader in 2025?",
+      "difficulty": "medium",
+      "tags": [
+        "season",
+        "drivers",
+        "points"
+      ],
+      "check": {
+        "type": "exact_rows"
+      },
+      "canonical_sql": "SELECT d.full_name AS driver_name FROM drivers d JOIN race_results rr ON rr.driver_id = d.id JOIN races r ON r.id = rr.race_id WHERE r.season_year = 2025 GROUP BY d.id ORDER BY SUM(rr.points) DESC, driver_name ASC LIMIT 1;",
+      "generated_sql": "SELECT d.full_name\nFROM drivers d\nJOIN race_results rr ON d.id = rr.driver_id\nJOIN races r ON rr.race_id = r.id\nWHERE r.season_year = 2025\nGROUP BY d.id\nORDER BY SUM(rr.points) DESC\nLIMIT 1;",
+      "status": "pass",
+      "ok": true,
+      "reason": "rows match",
+      "generated_answer": "The points leader in 2025 is Liam Rossi.",
+      "elapsed_sec": 2.259,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "driver_name": "Liam Rossi"
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "full_name": "Liam Rossi"
+        }
+      ]
+    },
+    {
+      "id": "q086",
+      "question": "Top driver by points in season 2025.",
+      "difficulty": "medium",
+      "tags": [
+        "season",
+        "drivers",
+        "points"
+      ],
+      "check": {
+        "type": "exact_rows"
+      },
+      "canonical_sql": "SELECT d.full_name AS driver_name FROM drivers d JOIN race_results rr ON rr.driver_id = d.id JOIN races r ON r.id = rr.race_id WHERE r.season_year = 2025 GROUP BY d.id ORDER BY SUM(rr.points) DESC, driver_name ASC LIMIT 1;",
+      "generated_sql": "SELECT drivers.full_name, SUM(race_results.points) AS total_points\nFROM race_results\nJOIN drivers ON race_results.driver_id = drivers.id\nJOIN races ON race_results.race_id = races.id\nWHERE races.season_year = 2025\nGROUP BY drivers.id\nORDER BY total_points DESC\nLIMIT 1;",
+      "status": "fail",
+      "ok": false,
+      "reason": "row mismatch",
+      "generated_answer": "The top driver by points in the 2025 season is Liam Rossi with 369 points.",
+      "elapsed_sec": 3.097,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "driver_name": "Liam Rossi"
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "full_name": "Liam Rossi",
+          "total_points": 369.0
+        }
+      ]
+    },
+    {
+      "id": "q087",
+      "question": "Which team scored most points in 2024?",
+      "difficulty": "medium",
+      "tags": [
+        "season",
+        "teams",
+        "points"
+      ],
+      "check": {
+        "type": "exact_rows"
+      },
+      "canonical_sql": "SELECT t.name AS team_name FROM teams t JOIN drivers d ON d.team_id = t.id JOIN race_results rr ON rr.driver_id = d.id JOIN races r ON r.id = rr.race_id WHERE r.season_year = 2024 GROUP BY t.id ORDER BY SUM(rr.points) DESC, team_name ASC LIMIT 1;",
+      "generated_sql": "SELECT teams.name\nFROM teams\nJOIN race_results ON teams.id = race_results.driver_id\nJOIN races ON race_results.race_id = races.id\nWHERE races.season_year = 2024\nGROUP BY teams.id\nORDER BY SUM(race_results.points) DESC\nLIMIT 1;",
+      "status": "fail",
+      "ok": false,
+      "reason": "row mismatch",
+      "generated_answer": "The team that scored the most points in 2024 is Quantum Racing.",
+      "elapsed_sec": 2.242,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "team_name": "Velocity Racing"
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "name": "Quantum Racing"
+        }
+      ]
+    },
+    {
+      "id": "q088",
+      "question": "Top team by points for season 2024.",
+      "difficulty": "medium",
+      "tags": [
+        "season",
+        "teams",
+        "points"
+      ],
+      "check": {
+        "type": "exact_rows"
+      },
+      "canonical_sql": "SELECT t.name AS team_name FROM teams t JOIN drivers d ON d.team_id = t.id JOIN race_results rr ON rr.driver_id = d.id JOIN races r ON r.id = rr.race_id WHERE r.season_year = 2024 GROUP BY t.id ORDER BY SUM(rr.points) DESC, team_name ASC LIMIT 1;",
+      "generated_sql": "SELECT teams.name, SUM(race_results.points) AS total_points\nFROM race_results\nJOIN races ON race_results.race_id = races.id\nJOIN teams ON race_results.team_id = teams.id\nWHERE races.season_year = 2024\nGROUP BY teams.id\nORDER BY total_points DESC\nLIMIT 1;",
+      "status": "fail",
+      "ok": false,
+      "reason": "exception: no such column: race_results.team_id",
+      "generated_answer": "",
+      "elapsed_sec": 1.323,
+      "agent_error": "SQL execution failed: no such column: race_results.team_id",
+      "agent_error_type": "OperationalError",
+      "agent_error_repr": "OperationalError('no such column: race_results.team_id')",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "Traceback (most recent call last):\n  File \"/home/ac/Documents/squealer/agent.py\", line 62, in run_once\n    rows = execute_select(db_path=db_path, sql=sql, row_limit=row_limit)\n  File \"/home/ac/Documents/squealer/db.py\", line 21, in execute_select\n    cur.execute(limited_sql)\nsqlite3.OperationalError: no such column: race_results.team_id\n",
+      "error_type": "runtime_error"
+    },
+    {
+      "id": "q089",
+      "question": "Which team scored most points in 2025?",
+      "difficulty": "medium",
+      "tags": [
+        "season",
+        "teams",
+        "points"
+      ],
+      "check": {
+        "type": "exact_rows"
+      },
+      "canonical_sql": "SELECT t.name AS team_name FROM teams t JOIN drivers d ON d.team_id = t.id JOIN race_results rr ON rr.driver_id = d.id JOIN races r ON r.id = rr.race_id WHERE r.season_year = 2025 GROUP BY t.id ORDER BY SUM(rr.points) DESC, team_name ASC LIMIT 1;",
+      "generated_sql": "SELECT teams.name, SUM(race_results.points) AS total_points\nFROM race_results\nJOIN races ON race_results.race_id = races.id\nJOIN teams ON race_results.team_id = teams.id\nWHERE races.season_year = 2025\nGROUP BY teams.id\nORDER BY total_points DESC\nLIMIT 1;",
+      "status": "fail",
+      "ok": false,
+      "reason": "exception: no such column: race_results.team_id",
+      "generated_answer": "",
+      "elapsed_sec": 1.566,
+      "agent_error": "SQL execution failed: no such column: race_results.team_id",
+      "agent_error_type": "OperationalError",
+      "agent_error_repr": "OperationalError('no such column: race_results.team_id')",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "Traceback (most recent call last):\n  File \"/home/ac/Documents/squealer/agent.py\", line 62, in run_once\n    rows = execute_select(db_path=db_path, sql=sql, row_limit=row_limit)\n  File \"/home/ac/Documents/squealer/db.py\", line 21, in execute_select\n    cur.execute(limited_sql)\nsqlite3.OperationalError: no such column: race_results.team_id\n",
+      "error_type": "runtime_error"
+    },
+    {
+      "id": "q090",
+      "question": "Top team by points for season 2025.",
+      "difficulty": "medium",
+      "tags": [
+        "season",
+        "teams",
+        "points"
+      ],
+      "check": {
+        "type": "exact_rows"
+      },
+      "canonical_sql": "SELECT t.name AS team_name FROM teams t JOIN drivers d ON d.team_id = t.id JOIN race_results rr ON rr.driver_id = d.id JOIN races r ON r.id = rr.race_id WHERE r.season_year = 2025 GROUP BY t.id ORDER BY SUM(rr.points) DESC, team_name ASC LIMIT 1;",
+      "generated_sql": "SELECT t.name, SUM(rr.points) AS total_points\nFROM race_results rr\nJOIN races r ON rr.race_id = r.id\nJOIN teams t ON rr.team_id = t.id\nWHERE r.season_year = 2025\nGROUP BY t.id\nORDER BY total_points DESC\nLIMIT 1;",
+      "status": "fail",
+      "ok": false,
+      "reason": "exception: no such column: rr.team_id",
+      "generated_answer": "",
+      "elapsed_sec": 1.791,
+      "agent_error": "SQL execution failed: no such column: rr.team_id",
+      "agent_error_type": "OperationalError",
+      "agent_error_repr": "OperationalError('no such column: rr.team_id')",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "Traceback (most recent call last):\n  File \"/home/ac/Documents/squealer/agent.py\", line 62, in run_once\n    rows = execute_select(db_path=db_path, sql=sql, row_limit=row_limit)\n  File \"/home/ac/Documents/squealer/db.py\", line 21, in execute_select\n    cur.execute(limited_sql)\nsqlite3.OperationalError: no such column: rr.team_id\n",
+      "error_type": "runtime_error"
+    },
+    {
+      "id": "q091",
+      "question": "Top 5 circuits by average rain probability.",
+      "difficulty": "medium",
+      "tags": [
+        "weather",
+        "circuits",
+        "aggregate"
+      ],
+      "check": {
+        "type": "ordered_top_k",
+        "k": 5
+      },
+      "canonical_sql": "SELECT r.circuit, ROUND(AVG(w.rain_probability), 3) AS avg_rain_prob FROM races r JOIN weather w ON w.race_id = r.id GROUP BY r.circuit ORDER BY avg_rain_prob DESC, r.circuit ASC LIMIT 5;",
+      "generated_sql": "SELECT \n    r.circuit, \n    AVG(w.rain_probability) AS avg_rain_probability\nFROM \n    races r\nJOIN \n    weather w ON r.id = w.race_id\nGROUP BY \n    r.circuit\nORDER BY \n    avg_rain_probability DESC\nLIMIT 5;",
+      "status": "fail",
+      "ok": false,
+      "reason": "top 5 mismatch",
+      "generated_answer": "The top 5 circuits by average rain probability are:\n\n1. Zandvoort - 48.13%\n2. Monza - 43.22%\n3. Silverstone - 26.37%\n4. Imola - 22.47%\n5. Montreal - 21.88%",
+      "elapsed_sec": 2.89,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 5,
+      "agent_row_count": 5,
+      "canonical_rows_preview": [
+        {
+          "circuit": "Zandvoort",
+          "avg_rain_prob": 0.481
+        },
+        {
+          "circuit": "Monza",
+          "avg_rain_prob": 0.432
+        },
+        {
+          "circuit": "Silverstone",
+          "avg_rain_prob": 0.264
+        },
+        {
+          "circuit": "Imola",
+          "avg_rain_prob": 0.225
+        },
+        {
+          "circuit": "Montreal",
+          "avg_rain_prob": 0.219
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "circuit": "Zandvoort",
+          "avg_rain_probability": 0.48125
+        },
+        {
+          "circuit": "Monza",
+          "avg_rain_probability": 0.43216666666666664
+        },
+        {
+          "circuit": "Silverstone",
+          "avg_rain_probability": 0.26366666666666666
+        },
+        {
+          "circuit": "Imola",
+          "avg_rain_probability": 0.22474999999999998
+        },
+        {
+          "circuit": "Montreal",
+          "avg_rain_probability": 0.21875000000000003
+        }
+      ]
+    },
+    {
+      "id": "q092",
+      "question": "Rank circuits by mean rain_probability and show five.",
+      "difficulty": "medium",
+      "tags": [
+        "weather",
+        "circuits",
+        "aggregate"
+      ],
+      "check": {
+        "type": "ordered_top_k",
+        "k": 5
+      },
+      "canonical_sql": "SELECT r.circuit, ROUND(AVG(w.rain_probability), 3) AS avg_rain_prob FROM races r JOIN weather w ON w.race_id = r.id GROUP BY r.circuit ORDER BY avg_rain_prob DESC, r.circuit ASC LIMIT 5;",
+      "generated_sql": "SELECT \n  r.circuit, \n  AVG(w.rain_probability) AS mean_rain_probability\nFROM \n  races r\nJOIN \n  weather w ON r.id = w.race_id\nGROUP BY \n  r.circuit\nORDER BY \n  mean_rain_probability DESC\nLIMIT 5;",
+      "status": "fail",
+      "ok": false,
+      "reason": "top 5 mismatch",
+      "generated_answer": "The top five circuits ranked by mean rain probability are:\n\n1. Zandvoort - 0.48125\n2. Monza - 0.43217\n3. Silverstone - 0.26367\n4. Imola - 0.22475\n5. Montreal - 0.21875",
+      "elapsed_sec": 2.974,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 5,
+      "agent_row_count": 5,
+      "canonical_rows_preview": [
+        {
+          "circuit": "Zandvoort",
+          "avg_rain_prob": 0.481
+        },
+        {
+          "circuit": "Monza",
+          "avg_rain_prob": 0.432
+        },
+        {
+          "circuit": "Silverstone",
+          "avg_rain_prob": 0.264
+        },
+        {
+          "circuit": "Imola",
+          "avg_rain_prob": 0.225
+        },
+        {
+          "circuit": "Montreal",
+          "avg_rain_prob": 0.219
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "circuit": "Zandvoort",
+          "mean_rain_probability": 0.48125
+        },
+        {
+          "circuit": "Monza",
+          "mean_rain_probability": 0.43216666666666664
+        },
+        {
+          "circuit": "Silverstone",
+          "mean_rain_probability": 0.26366666666666666
+        },
+        {
+          "circuit": "Imola",
+          "mean_rain_probability": 0.22474999999999998
+        },
+        {
+          "circuit": "Montreal",
+          "mean_rain_probability": 0.21875000000000003
+        }
+      ]
+    },
+    {
+      "id": "q093",
+      "question": "How many races by each weather condition?",
+      "difficulty": "easy",
+      "tags": [
+        "weather",
+        "distribution"
+      ],
+      "check": {
+        "type": "exact_rows"
+      },
+      "canonical_sql": "SELECT condition, COUNT(*) AS race_count FROM weather GROUP BY condition ORDER BY race_count DESC, condition ASC;",
+      "generated_sql": "SELECT condition, COUNT(*) AS race_count\nFROM weather\nGROUP BY condition;",
+      "status": "fail",
+      "ok": false,
+      "reason": "row mismatch",
+      "generated_answer": "The number of races by each weather condition is as follows:\n- Clear: 20 races\n- Cloudy: 12 races\n- Heavy Rain: 2 races\n- Light Rain: 7 races\n- Windy: 7 races",
+      "elapsed_sec": 2.332,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 5,
+      "agent_row_count": 5,
+      "canonical_rows_preview": [
+        {
+          "condition": "Clear",
+          "race_count": 20
+        },
+        {
+          "condition": "Cloudy",
+          "race_count": 12
+        },
+        {
+          "condition": "Light Rain",
+          "race_count": 7
+        },
+        {
+          "condition": "Windy",
+          "race_count": 7
+        },
+        {
+          "condition": "Heavy Rain",
+          "race_count": 2
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "condition": "Clear",
+          "race_count": 20
+        },
+        {
+          "condition": "Cloudy",
+          "race_count": 12
+        },
+        {
+          "condition": "Heavy Rain",
+          "race_count": 2
+        },
+        {
+          "condition": "Light Rain",
+          "race_count": 7
+        },
+        {
+          "condition": "Windy",
+          "race_count": 7
+        }
+      ]
+    },
+    {
+      "id": "q094",
+      "question": "Show weather condition distribution.",
+      "difficulty": "easy",
+      "tags": [
+        "weather",
+        "distribution"
+      ],
+      "check": {
+        "type": "exact_rows"
+      },
+      "canonical_sql": "SELECT condition, COUNT(*) AS race_count FROM weather GROUP BY condition ORDER BY race_count DESC, condition ASC;",
+      "generated_sql": "SELECT condition, COUNT(*) AS count FROM weather GROUP BY condition ORDER BY count DESC;",
+      "status": "fail",
+      "ok": false,
+      "reason": "row mismatch",
+      "generated_answer": "The weather condition distribution is as follows: Clear (20), Cloudy (12), Windy (7), Light Rain (7), and Heavy Rain (2).",
+      "elapsed_sec": 2.567,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 5,
+      "agent_row_count": 5,
+      "canonical_rows_preview": [
+        {
+          "condition": "Clear",
+          "race_count": 20
+        },
+        {
+          "condition": "Cloudy",
+          "race_count": 12
+        },
+        {
+          "condition": "Light Rain",
+          "race_count": 7
+        },
+        {
+          "condition": "Windy",
+          "race_count": 7
+        },
+        {
+          "condition": "Heavy Rain",
+          "race_count": 2
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "condition": "Clear",
+          "count": 20
+        },
+        {
+          "condition": "Cloudy",
+          "count": 12
+        },
+        {
+          "condition": "Windy",
+          "count": 7
+        },
+        {
+          "condition": "Light Rain",
+          "count": 7
+        },
+        {
+          "condition": "Heavy Rain",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "id": "q095",
+      "question": "How many distinct circuits are there?",
+      "difficulty": "easy",
+      "tags": [
+        "circuits",
+        "count"
+      ],
+      "check": {
+        "type": "numeric",
+        "tolerance": 0.0
+      },
+      "canonical_sql": "SELECT COUNT(DISTINCT circuit) AS value FROM races;",
+      "generated_sql": "SELECT COUNT(DISTINCT circuit) FROM races;",
+      "status": "pass",
+      "ok": true,
+      "reason": "numeric diff=0.000000, tol=0.0",
+      "generated_answer": "There are 10 distinct circuits.",
+      "elapsed_sec": 1.497,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "value": 10
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "COUNT(DISTINCT circuit)": 10
+        }
+      ]
+    },
+    {
+      "id": "q096",
+      "question": "Count unique circuit values in races.",
+      "difficulty": "easy",
+      "tags": [
+        "circuits",
+        "count"
+      ],
+      "check": {
+        "type": "numeric",
+        "tolerance": 0.0
+      },
+      "canonical_sql": "SELECT COUNT(DISTINCT circuit) AS value FROM races;",
+      "generated_sql": "SELECT COUNT(DISTINCT circuit) FROM races;",
+      "status": "pass",
+      "ok": true,
+      "reason": "numeric diff=0.000000, tol=0.0",
+      "generated_answer": "There are 10 unique circuit values in the races.",
+      "elapsed_sec": 2.045,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "value": 10
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "COUNT(DISTINCT circuit)": 10
+        }
+      ]
+    },
+    {
+      "id": "q097",
+      "question": "How many races happened on or after 2025-01-01?",
+      "difficulty": "easy",
+      "tags": [
+        "date",
+        "filter",
+        "races"
+      ],
+      "check": {
+        "type": "numeric",
+        "tolerance": 0.0
+      },
+      "canonical_sql": "SELECT COUNT(*) AS value FROM races WHERE race_date >= '2025-01-01';",
+      "generated_sql": "SELECT COUNT(*) FROM races WHERE race_date >= '2025-01-01';",
+      "status": "pass",
+      "ok": true,
+      "reason": "numeric diff=0.000000, tol=0.0",
+      "generated_answer": "There were 26 races that happened on or after 2025-01-01.",
+      "elapsed_sec": 2.004,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "value": 26
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "COUNT(*)": 26
+        }
+      ]
+    },
+    {
+      "id": "q098",
+      "question": "Count races with race_date >= 2025-01-01.",
+      "difficulty": "easy",
+      "tags": [
+        "date",
+        "filter",
+        "races"
+      ],
+      "check": {
+        "type": "numeric",
+        "tolerance": 0.0
+      },
+      "canonical_sql": "SELECT COUNT(*) AS value FROM races WHERE race_date >= '2025-01-01';",
+      "generated_sql": "SELECT COUNT(*) FROM races WHERE race_date >= '2025-01-01';",
+      "status": "pass",
+      "ok": true,
+      "reason": "numeric diff=0.000000, tol=0.0",
+      "generated_answer": "There are 26 races with a race_date on or after 2025-01-01.",
+      "elapsed_sec": 1.716,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "value": 26
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "COUNT(*)": 26
+        }
+      ]
+    },
+    {
+      "id": "q099",
+      "question": "How many races happened before 2025-01-01?",
+      "difficulty": "easy",
+      "tags": [
+        "date",
+        "filter",
+        "races"
+      ],
+      "check": {
+        "type": "numeric",
+        "tolerance": 0.0
+      },
+      "canonical_sql": "SELECT COUNT(*) AS value FROM races WHERE race_date < '2025-01-01';",
+      "generated_sql": "SELECT COUNT(*) FROM races WHERE race_date < '2025-01-01';",
+      "status": "pass",
+      "ok": true,
+      "reason": "numeric diff=0.000000, tol=0.0",
+      "generated_answer": "There were 22 races that happened before 2025-01-01.",
+      "elapsed_sec": 2.724,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "value": 22
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "COUNT(*)": 22
+        }
+      ]
+    },
+    {
+      "id": "q100",
+      "question": "Count races with race_date < 2025-01-01.",
+      "difficulty": "easy",
+      "tags": [
+        "date",
+        "filter",
+        "races"
+      ],
+      "check": {
+        "type": "numeric",
+        "tolerance": 0.0
+      },
+      "canonical_sql": "SELECT COUNT(*) AS value FROM races WHERE race_date < '2025-01-01';",
+      "generated_sql": "SELECT COUNT(*) FROM races WHERE race_date < '2025-01-01';",
+      "status": "pass",
+      "ok": true,
+      "reason": "numeric diff=0.000000, tol=0.0",
+      "generated_answer": "There are 22 races with a race_date before January 1, 2025.",
+      "elapsed_sec": 1.739,
+      "agent_error": null,
+      "agent_error_type": "",
+      "agent_error_repr": "",
+      "agent_error_cause_type": "",
+      "agent_error_cause_repr": "",
+      "agent_error_traceback": "",
+      "canonical_row_count": 1,
+      "agent_row_count": 1,
+      "canonical_rows_preview": [
+        {
+          "value": 22
+        }
+      ],
+      "agent_rows_preview": [
+        {
+          "COUNT(*)": 22
+        }
+      ]
+    }
+  ]
+}
