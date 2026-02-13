@@ -21,6 +21,7 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--model", default="gpt-4.1-mini")
     p.add_argument("--benchmark", default="benchmarks/v1/questions_v1.json")
     p.add_argument("--max-rows", type=int, default=5000)
+    p.add_argument("--max-sql-retries", type=int, default=2)
     p.add_argument("--out", default=None, help="Optional explicit output path. If omitted, auto-generates a timestamped filename.")
     p.add_argument("--out-dir", default="eval_reports")
     p.add_argument("--answer-preview-rows", type=int, default=20)
@@ -185,7 +186,13 @@ def main() -> None:
         }
 
         try:
-            agent_result = run_once(args.db_path, args.model, q, args.max_rows)
+            agent_result = run_once(
+                args.db_path,
+                args.model,
+                q,
+                args.max_rows,
+                max_sql_retries=max(0, args.max_sql_retries),
+            )
             generated_sql = (agent_result.get("sql") or "").strip()
             row["generated_sql"] = generated_sql
             row["generated_answer"] = agent_result.get("answer", "")

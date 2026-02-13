@@ -24,7 +24,57 @@ def _exception_details(exc: Exception) -> dict[str, Any]:
     }
 
 
-def run_once(db_path: str, model: str, question: str, row_limit: int) -> dict[str, Any]:
+def _validate_or_error(sql: str) -> str | None:
+    validation = validate_read_only_sql(sql)
+    if validation.ok:
+        return None
+    return f"SQL blocked by guardrails: {validation.error}"
+
+
+def _execute_with_optional_retry(
+    llm: OpenAIClient,
+    db_path: str,
+    question: str,
+    schema: str,
+    sql: str,
+    row_limit: int,
+    max_sql_retries: int,
+) -> tuple[bool, str, list[dict[str, Any]], int]:
+    err = _validate_or_error(sql)
+    if err is not None:
+        return False, err, [], 1
+
+    sql_attempts = 1
+    current_sql = sql
+    last_exec_error: Exception | None = None
+    while True:
+        try:
+            rows = execute_select(db_path=db_path, sql=current_sql, row_limit=row_limit)
+            return True, current_sql, rows, sql_attempts
+        except Exception as exec_exc:
+            last_exec_error = exec_exc
+
+        if (sql_attempts - 1) >= max_sql_retries:
+            return False, f"SQL execution failed: {last_exec_error}", [], sql_attempts
+
+        try:
+            repaired_sql = llm.generate_sql_repair(
+                question=question,
+                schema=schema,
+                failed_sql=current_sql,
+                error=str(last_exec_error),
+            ).strip()
+        except Exception as repair_exc:
+            return False, f"SQL execution failed: {last_exec_error}; retry generation failed: {repair_exc}", [], sql_attempts
+
+        sql_attempts += 1
+        err = _validate_or_error(repaired_sql)
+        if err is not None:
+            return False, f"SQL execution failed: {last_exec_error}; retry failed: {err}", [], sql_attempts
+        current_sql = repaired_sql
+
+
+def run_once(db_path: str, model: str, question: str, row_limit: int, max_sql_retries: int = 1) -> dict[str, Any]:
     started = time.time()
     try:
         llm = OpenAIClient(model=model)
@@ -54,37 +104,50 @@ def run_once(db_path: str, model: str, question: str, row_limit: int) -> dict[st
             **_exception_details(exc),
         }
 
-    validation = validate_read_only_sql(sql)
-    if not validation.ok:
-        return {"ok": False, "error": f"SQL blocked by guardrails: {validation.error}", "question": question, "sql": sql, "rows": [], "elapsed_sec": round(time.time() - started, 3)}
-
-    try:
-        rows = execute_select(db_path=db_path, sql=sql, row_limit=row_limit)
-    except Exception as exc:
+    ok, final_sql, rows, sql_attempts = _execute_with_optional_retry(
+        llm=llm,
+        db_path=db_path,
+        question=question,
+        schema=schema,
+        sql=sql,
+        row_limit=row_limit,
+        max_sql_retries=max_sql_retries,
+    )
+    if not ok:
         return {
             "ok": False,
-            "error": f"SQL execution failed: {exc}",
+            "error": final_sql,
             "question": question,
             "sql": sql,
             "rows": [],
+            "sql_attempts": sql_attempts,
             "elapsed_sec": round(time.time() - started, 3),
-            **_exception_details(exc),
         }
 
     try:
-        answer = llm.generate_answer(question=question, sql=sql, rows=rows)
+        answer = llm.generate_answer(question=question, sql=final_sql, rows=rows)
     except Exception as exc:
         return {
             "ok": False,
             "error": f"Answer generation failed: {exc}",
             "question": question,
-            "sql": sql,
+            "sql": final_sql,
             "rows": rows,
+            "sql_attempts": sql_attempts,
             "elapsed_sec": round(time.time() - started, 3),
             **_exception_details(exc),
         }
 
-    return {"ok": True, "error": None, "question": question, "sql": sql, "rows": rows, "answer": answer, "elapsed_sec": round(time.time() - started, 3)}
+    return {
+        "ok": True,
+        "error": None,
+        "question": question,
+        "sql": final_sql,
+        "rows": rows,
+        "answer": answer,
+        "sql_attempts": sql_attempts,
+        "elapsed_sec": round(time.time() - started, 3),
+    }
 
 
 def parse_args() -> argparse.Namespace:
@@ -92,6 +155,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--db-path", default="race_team.db")
     parser.add_argument("--model", default="gpt-4.1-mini")
     parser.add_argument("--row-limit", type=int, default=50)
+    parser.add_argument("--max-sql-retries", type=int, default=1)
     parser.add_argument("--question", help="Single question to run.")
     parser.add_argument("--interactive", action="store_true")
     parser.add_argument("--json", action="store_true")
@@ -105,6 +169,8 @@ def print_result(result: dict[str, Any], as_json: bool) -> None:
     print(f"ok: {result['ok']}")
     print(f"question: {result['question']}")
     print(f"elapsed_sec: {result['elapsed_sec']}")
+    if "sql_attempts" in result:
+        print(f"sql_attempts: {result['sql_attempts']}")
     if result.get("sql"):
         print("\nSQL:")
         print(result["sql"])
@@ -128,12 +194,24 @@ def main() -> None:
                 break
             if not q:
                 continue
-            print_result(run_once(args.db_path, args.model, q, args.row_limit), args.json)
+            print_result(
+                run_once(args.db_path, args.model, q, args.row_limit, max_sql_retries=max(0, args.max_sql_retries)),
+                args.json,
+            )
             print()
         return
     if not args.question:
         raise SystemExit("Provide --question or use --interactive")
-    print_result(run_once(args.db_path, args.model, args.question, args.row_limit), args.json)
+    print_result(
+        run_once(
+            args.db_path,
+            args.model,
+            args.question,
+            args.row_limit,
+            max_sql_retries=max(0, args.max_sql_retries),
+        ),
+        args.json,
+    )
 
 
 if __name__ == "__main__":

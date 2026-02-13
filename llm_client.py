@@ -15,6 +15,7 @@ except ModuleNotFoundError as exc:
 from prompts import (
     ANSWER_SYSTEM_PROMPT,
     ANSWER_USER_PROMPT_TEMPLATE,
+    SQL_REPAIR_USER_PROMPT_TEMPLATE,
     SQL_SYSTEM_PROMPT,
     SQL_USER_PROMPT_TEMPLATE,
 )
@@ -23,6 +24,10 @@ from prompts import (
 class LLMClient(ABC):
     @abstractmethod
     def generate_sql(self, question: str, schema: str) -> str:
+        raise NotImplementedError
+
+    @abstractmethod
+    def generate_sql_repair(self, question: str, schema: str, failed_sql: str, error: str) -> str:
         raise NotImplementedError
 
     @abstractmethod
@@ -75,6 +80,17 @@ class OpenAIClient(LLMClient):
 
     def generate_sql(self, question: str, schema: str) -> str:
         return self._call_text(SQL_SYSTEM_PROMPT, SQL_USER_PROMPT_TEMPLATE.format(schema=schema, question=question))
+
+    def generate_sql_repair(self, question: str, schema: str, failed_sql: str, error: str) -> str:
+        return self._call_text(
+            SQL_SYSTEM_PROMPT,
+            SQL_REPAIR_USER_PROMPT_TEMPLATE.format(
+                schema=schema,
+                question=question,
+                failed_sql=failed_sql,
+                error=error,
+            ),
+        )
 
     def generate_answer(self, question: str, sql: str, rows: list[dict]) -> str:
         return self._call_text(
