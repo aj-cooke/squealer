@@ -14,8 +14,13 @@ except ModuleNotFoundError as exc:
 
 from prompts import (
     ANSWER_SYSTEM_PROMPT,
+    ANSWER_ADEQUACY_SYSTEM_PROMPT,
+    ANSWER_ADEQUACY_USER_PROMPT_TEMPLATE,
     ANSWER_USER_PROMPT_TEMPLATE,
+    INTENT_SPEC_SYSTEM_PROMPT,
+    INTENT_SPEC_USER_PROMPT_TEMPLATE,
     SQL_REPAIR_USER_PROMPT_TEMPLATE,
+    SQL_RETRY_GUIDANCE_TEMPLATE,
     SQL_SYSTEM_PROMPT,
     SQL_USER_PROMPT_TEMPLATE,
 )
@@ -23,7 +28,7 @@ from prompts import (
 
 class LLMClient(ABC):
     @abstractmethod
-    def generate_sql(self, question: str, schema: str) -> str:
+    def generate_sql(self, question: str, schema: str, retry_guidance: str = "") -> str:
         raise NotImplementedError
 
     @abstractmethod
@@ -32,6 +37,21 @@ class LLMClient(ABC):
 
     @abstractmethod
     def generate_answer(self, question: str, sql: str, rows: list[dict]) -> str:
+        raise NotImplementedError
+
+    @abstractmethod
+    def generate_intent_spec(self, question: str, schema: str, prior_feedback: str = "") -> dict:
+        raise NotImplementedError
+
+    @abstractmethod
+    def evaluate_answer_adequacy(
+        self,
+        original_question: str,
+        intent_spec: dict,
+        sql: str,
+        rows: list[dict],
+        answer: str,
+    ) -> dict:
         raise NotImplementedError
 
 
@@ -78,8 +98,11 @@ class OpenAIClient(LLMClient):
             raise RuntimeError(f"OpenAI call failed after {self.max_attempts} attempt(s): {last_exc!r}") from last_exc
         raise RuntimeError("OpenAI call failed unexpectedly with no captured exception.")
 
-    def generate_sql(self, question: str, schema: str) -> str:
-        return self._call_text(SQL_SYSTEM_PROMPT, SQL_USER_PROMPT_TEMPLATE.format(schema=schema, question=question))
+    def generate_sql(self, question: str, schema: str, retry_guidance: str = "") -> str:
+        user_prompt = SQL_USER_PROMPT_TEMPLATE.format(schema=schema, question=question)
+        if retry_guidance.strip():
+            user_prompt += SQL_RETRY_GUIDANCE_TEMPLATE.format(retry_guidance=retry_guidance.strip())
+        return self._call_text(SQL_SYSTEM_PROMPT, user_prompt)
 
     def generate_sql_repair(self, question: str, schema: str, failed_sql: str, error: str) -> str:
         return self._call_text(
@@ -97,6 +120,51 @@ class OpenAIClient(LLMClient):
             ANSWER_SYSTEM_PROMPT,
             ANSWER_USER_PROMPT_TEMPLATE.format(question=question, sql=sql, rows=rows[:20]),
         )
+
+    def generate_intent_spec(self, question: str, schema: str, prior_feedback: str = "") -> dict:
+        text = self._call_text(
+            INTENT_SPEC_SYSTEM_PROMPT,
+            INTENT_SPEC_USER_PROMPT_TEMPLATE.format(schema=schema, question=question, prior_feedback=prior_feedback or "none"),
+        )
+        values = _parse_prefixed_lines(text)
+        precise = values.get("PRECISE_QUESTION", "").strip() or question
+        requirements_raw = values.get("SQL_REQUIREMENTS", "")
+        requirements = [part.strip() for part in requirements_raw.split(";") if part.strip()]
+        return {
+            "precise_question": precise,
+            "sql_requirements": requirements,
+        }
+
+    def evaluate_answer_adequacy(
+        self,
+        original_question: str,
+        intent_spec: dict,
+        sql: str,
+        rows: list[dict],
+        answer: str,
+    ) -> dict:
+        text = self._call_text(
+            ANSWER_ADEQUACY_SYSTEM_PROMPT,
+            ANSWER_ADEQUACY_USER_PROMPT_TEMPLATE.format(
+                original_question=original_question,
+                intent_spec=intent_spec,
+                sql=sql,
+                rows=rows[:20],
+                answer=answer,
+            ),
+        )
+        values = _parse_prefixed_lines(text)
+        is_sufficient = values.get("SUFFICIENT", "").strip().lower() in {"yes", "true"}
+        next_action = values.get("NEXT_ACTION", "keep").strip().lower()
+        if next_action not in {"keep", "refine_and_retry"}:
+            next_action = "keep" if is_sufficient else "refine_and_retry"
+        return {
+            "is_sufficient": is_sufficient,
+            "reason_code": values.get("REASON_CODE", "other").strip() or "other",
+            "missing_piece": values.get("MISSING_PIECE", "").strip(),
+            "next_action": next_action,
+            "sql_fix_hint": values.get("SQL_FIX_HINT", "").strip(),
+        }
 
 
 def _load_openai_api_key_from_dotenv(dotenv_path: str = ".env") -> str:
@@ -140,3 +208,14 @@ def _probe_dns(hostname: str) -> None:
     except Exception:
         # Probe is informational only; retry logic still decides next step.
         pass
+
+
+def _parse_prefixed_lines(text: str) -> dict[str, str]:
+    parsed: dict[str, str] = {}
+    for raw_line in text.splitlines():
+        line = raw_line.strip()
+        if not line or ":" not in line:
+            continue
+        key, value = line.split(":", 1)
+        parsed[key.strip().upper()] = value.strip()
+    return parsed

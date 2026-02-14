@@ -18,6 +18,7 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--questions-file", default="eval_questions.json")
     p.add_argument("--row-limit", type=int, default=50)
     p.add_argument("--max-sql-retries", type=int, default=1)
+    p.add_argument("--max-semantic-retries", type=int, default=1)
     p.add_argument("--out", default=None, help="Optional explicit output path. If omitted, auto-generates a timestamped filename.")
     p.add_argument("--out-dir", default="eval_reports")
     return p.parse_args()
@@ -47,6 +48,7 @@ def main() -> None:
             q,
             args.row_limit,
             max_sql_retries=max(0, args.max_sql_retries),
+            max_semantic_retries=max(0, args.max_semantic_retries),
         )
         result["eval_elapsed_sec"] = round(time.time() - started, 3)
         result["status"] = "pass" if result["ok"] else "fail"

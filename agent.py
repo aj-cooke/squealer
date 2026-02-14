@@ -74,7 +74,14 @@ def _execute_with_optional_retry(
         current_sql = repaired_sql
 
 
-def run_once(db_path: str, model: str, question: str, row_limit: int, max_sql_retries: int = 1) -> dict[str, Any]:
+def run_once(
+    db_path: str,
+    model: str,
+    question: str,
+    row_limit: int,
+    max_sql_retries: int = 1,
+    max_semantic_retries: int = 1,
+) -> dict[str, Any]:
     started = time.time()
     try:
         llm = OpenAIClient(model=model)
@@ -90,62 +97,181 @@ def run_once(db_path: str, model: str, question: str, row_limit: int, max_sql_re
         }
 
     schema = get_schema_context(db_path)
+    semantic_feedback = ""
+    semantic_attempts: list[dict[str, Any]] = []
+    total_sql_attempts = 0
+    last_sql = ""
+    last_error = "No attempt executed."
 
-    try:
-        sql = llm.generate_sql(question=question, schema=schema).strip()
-    except Exception as exc:
-        return {
-            "ok": False,
-            "error": f"SQL generation failed: {exc}",
-            "question": question,
-            "sql": "",
-            "rows": [],
-            "elapsed_sec": round(time.time() - started, 3),
-            **_exception_details(exc),
+    for semantic_idx in range(max_semantic_retries + 1):
+        semantic_attempt_no = semantic_idx + 1
+        attempt_info: dict[str, Any] = {
+            "semantic_attempt": semantic_attempt_no,
+            "intent_spec": {},
+            "precise_question": "",
+            "generated_sql": "",
+            "adequacy": {},
+            "status": "incomplete",
         }
 
-    ok, final_sql, rows, sql_attempts = _execute_with_optional_retry(
-        llm=llm,
-        db_path=db_path,
-        question=question,
-        schema=schema,
-        sql=sql,
-        row_limit=row_limit,
-        max_sql_retries=max_sql_retries,
-    )
-    if not ok:
-        return {
-            "ok": False,
-            "error": final_sql,
-            "question": question,
-            "sql": sql,
-            "rows": [],
-            "sql_attempts": sql_attempts,
-            "elapsed_sec": round(time.time() - started, 3),
-        }
+        try:
+            intent_spec = llm.generate_intent_spec(
+                question=question,
+                schema=schema,
+                prior_feedback=semantic_feedback,
+            )
+        except Exception as exc:
+            return {
+                "ok": False,
+                "error": f"Intent normalization failed: {exc}",
+                "question": question,
+                "sql": last_sql,
+                "rows": [],
+                "semantic_attempts": semantic_attempts,
+                "semantic_attempts_used": semantic_attempt_no,
+                "sql_attempts": total_sql_attempts,
+                "elapsed_sec": round(time.time() - started, 3),
+                **_exception_details(exc),
+            }
 
-    try:
-        answer = llm.generate_answer(question=question, sql=final_sql, rows=rows)
-    except Exception as exc:
+        precise_question = (intent_spec.get("precise_question") or question).strip()
+        sql_requirements = intent_spec.get("sql_requirements", [])
+        attempt_info["intent_spec"] = intent_spec
+        attempt_info["precise_question"] = precise_question
+
+        try:
+            retry_guidance = ""
+            if sql_requirements:
+                retry_guidance = " ; ".join(str(req) for req in sql_requirements if str(req).strip())
+            if semantic_feedback:
+                retry_guidance = f"{retry_guidance} ; {semantic_feedback}".strip(" ;")
+            sql = llm.generate_sql(question=precise_question, schema=schema, retry_guidance=retry_guidance).strip()
+        except Exception as exc:
+            attempt_info["status"] = "sql_generation_failed"
+            semantic_attempts.append(attempt_info)
+            return {
+                "ok": False,
+                "error": f"SQL generation failed: {exc}",
+                "question": question,
+                "sql": last_sql,
+                "rows": [],
+                "semantic_attempts": semantic_attempts,
+                "semantic_attempts_used": semantic_attempt_no,
+                "sql_attempts": total_sql_attempts,
+                "elapsed_sec": round(time.time() - started, 3),
+                **_exception_details(exc),
+            }
+
+        last_sql = sql
+        attempt_info["generated_sql"] = sql
+
+        ok, final_sql, rows, sql_attempts = _execute_with_optional_retry(
+            llm=llm,
+            db_path=db_path,
+            question=precise_question,
+            schema=schema,
+            sql=sql,
+            row_limit=row_limit,
+            max_sql_retries=max_sql_retries,
+        )
+        total_sql_attempts += sql_attempts
+        last_sql = final_sql if ok else sql
+        if not ok:
+            last_error = final_sql
+            attempt_info["status"] = "sql_execution_failed"
+            attempt_info["error"] = final_sql
+            semantic_attempts.append(attempt_info)
+            if semantic_idx >= max_semantic_retries:
+                return {
+                    "ok": False,
+                    "error": final_sql,
+                    "question": question,
+                    "sql": sql,
+                    "rows": [],
+                    "semantic_attempts": semantic_attempts,
+                    "semantic_attempts_used": semantic_attempt_no,
+                    "sql_attempts": total_sql_attempts,
+                    "elapsed_sec": round(time.time() - started, 3),
+                }
+            semantic_feedback = f"Previous attempt failed to execute SQL: {final_sql}"
+            continue
+
+        try:
+            answer = llm.generate_answer(question=question, sql=final_sql, rows=rows)
+        except Exception as exc:
+            return {
+                "ok": False,
+                "error": f"Answer generation failed: {exc}",
+                "question": question,
+                "sql": final_sql,
+                "rows": rows,
+                "semantic_attempts": semantic_attempts,
+                "semantic_attempts_used": semantic_attempt_no,
+                "sql_attempts": total_sql_attempts,
+                "elapsed_sec": round(time.time() - started, 3),
+                **_exception_details(exc),
+            }
+
+        adequacy = {
+            "is_sufficient": True,
+            "reason_code": "sufficient",
+            "missing_piece": "",
+            "next_action": "keep",
+        }
+        adequacy_error = ""
+        try:
+            adequacy = llm.evaluate_answer_adequacy(
+                original_question=question,
+                intent_spec=intent_spec,
+                sql=final_sql,
+                rows=rows,
+                answer=answer,
+            )
+        except Exception as exc:
+            adequacy_error = str(exc)
+
+        attempt_info["adequacy"] = adequacy
+        if adequacy_error:
+            attempt_info["adequacy_error"] = adequacy_error
+
+        should_refine = (not adequacy.get("is_sufficient", False)) and adequacy.get("next_action") == "refine_and_retry"
+        if should_refine and semantic_idx < max_semantic_retries:
+            attempt_info["status"] = "refine_and_retry"
+            semantic_attempts.append(attempt_info)
+            semantic_feedback = (
+                f"Reason={adequacy.get('reason_code', 'other')}; "
+                f"Missing={adequacy.get('missing_piece', '')}; "
+                f"SQLFix={adequacy.get('sql_fix_hint', '')}; "
+                f"Previous SQL={final_sql}"
+            )
+            continue
+
+        attempt_info["status"] = "completed"
+        semantic_attempts.append(attempt_info)
         return {
-            "ok": False,
-            "error": f"Answer generation failed: {exc}",
+            "ok": True,
+            "error": None,
             "question": question,
             "sql": final_sql,
             "rows": rows,
-            "sql_attempts": sql_attempts,
+            "answer": answer,
+            "intent_spec": intent_spec,
+            "adequacy": adequacy,
+            "semantic_attempts": semantic_attempts,
+            "semantic_attempts_used": semantic_attempt_no,
+            "sql_attempts": total_sql_attempts,
             "elapsed_sec": round(time.time() - started, 3),
-            **_exception_details(exc),
         }
 
     return {
-        "ok": True,
-        "error": None,
+        "ok": False,
+        "error": last_error,
         "question": question,
-        "sql": final_sql,
-        "rows": rows,
-        "answer": answer,
-        "sql_attempts": sql_attempts,
+        "sql": last_sql,
+        "rows": [],
+        "semantic_attempts": semantic_attempts,
+        "semantic_attempts_used": len(semantic_attempts),
+        "sql_attempts": total_sql_attempts,
         "elapsed_sec": round(time.time() - started, 3),
     }
 
@@ -156,13 +282,15 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--model", default="gpt-4.1-mini")
     parser.add_argument("--row-limit", type=int, default=50)
     parser.add_argument("--max-sql-retries", type=int, default=1)
+    parser.add_argument("--max-semantic-retries", type=int, default=1)
     parser.add_argument("--question", help="Single question to run.")
     parser.add_argument("--interactive", action="store_true")
     parser.add_argument("--json", action="store_true")
+    parser.add_argument("--show-thinking", action="store_true", help="Print structured reasoning trace.")
     return parser.parse_args()
 
 
-def print_result(result: dict[str, Any], as_json: bool) -> None:
+def print_result(result: dict[str, Any], as_json: bool, show_thinking: bool = False) -> None:
     if as_json:
         print(json.dumps(result, indent=2, default=str))
         return
@@ -171,6 +299,8 @@ def print_result(result: dict[str, Any], as_json: bool) -> None:
     print(f"elapsed_sec: {result['elapsed_sec']}")
     if "sql_attempts" in result:
         print(f"sql_attempts: {result['sql_attempts']}")
+    if "semantic_attempts_used" in result:
+        print(f"semantic_attempts_used: {result['semantic_attempts_used']}")
     if result.get("sql"):
         print("\nSQL:")
         print(result["sql"])
@@ -184,6 +314,33 @@ def print_result(result: dict[str, Any], as_json: bool) -> None:
         print("\nerror:")
         print(result["error"])
 
+    if show_thinking:
+        if result.get("intent_spec"):
+            print("\nintent_spec:")
+            print(f"precise_question: {result['intent_spec'].get('precise_question', '')}")
+            reqs = result["intent_spec"].get("sql_requirements", [])
+            if reqs:
+                print("sql_requirements:")
+                for req in reqs:
+                    print(f"- {req}")
+        if result.get("adequacy"):
+            print("\nadequacy:")
+            print(f"is_sufficient: {result['adequacy'].get('is_sufficient')}")
+            print(f"reason_code: {result['adequacy'].get('reason_code', '')}")
+            if result["adequacy"].get("missing_piece"):
+                print(f"missing_piece: {result['adequacy'].get('missing_piece', '')}")
+            if result["adequacy"].get("sql_fix_hint"):
+                print(f"sql_fix_hint: {result['adequacy'].get('sql_fix_hint', '')}")
+        if result.get("semantic_attempts"):
+            print("\nsemantic_attempts:")
+            for attempt in result["semantic_attempts"]:
+                print(
+                    f"- attempt={attempt.get('semantic_attempt')} status={attempt.get('status')} "
+                    f"question={attempt.get('precise_question', '')}"
+                )
+                if attempt.get("adequacy", {}).get("missing_piece"):
+                    print(f"  adequacy_missing: {attempt['adequacy'].get('missing_piece', '')}")
+
 
 def main() -> None:
     args = parse_args()
@@ -195,8 +352,16 @@ def main() -> None:
             if not q:
                 continue
             print_result(
-                run_once(args.db_path, args.model, q, args.row_limit, max_sql_retries=max(0, args.max_sql_retries)),
+                run_once(
+                    args.db_path,
+                    args.model,
+                    q,
+                    args.row_limit,
+                    max_sql_retries=max(0, args.max_sql_retries),
+                    max_semantic_retries=max(0, args.max_semantic_retries),
+                ),
                 args.json,
+                show_thinking=args.show_thinking,
             )
             print()
         return
@@ -209,8 +374,10 @@ def main() -> None:
             args.question,
             args.row_limit,
             max_sql_retries=max(0, args.max_sql_retries),
+            max_semantic_retries=max(0, args.max_semantic_retries),
         ),
         args.json,
+        show_thinking=args.show_thinking,
     )
 
 
