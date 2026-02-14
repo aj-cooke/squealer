@@ -5,3 +5,4 @@ __pycache__/
 *.db
 eval_report.json
 eval_report_v2.json
+artifacts/

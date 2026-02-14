@@ -1,0 +1,1062 @@
+{
+  "generated_at_utc": "2026-02-14T04:38:51.488602+00:00",
+  "questions_file": "eval_questions.json",
+  "model": "gpt-4.1-mini",
+  "rag": {
+    "enabled": true,
+    "examples_path": "benchmarks/v1/questions_v1.json",
+    "profiles_path": "artifacts/value_profiles.json",
+    "example_top_k": 4,
+    "schema_top_k": 4,
+    "value_top_k": 8,
+    "use_embeddings": true,
+    "embedding_model": "text-embedding-3-small",
+    "embedding_index_path": "artifacts/example_embeddings.json",
+    "schema_embedding_index_path": "artifacts/schema_embeddings.json"
+  },
+  "summary": {
+    "total": 10,
+    "ok": 10,
+    "failed": 0,
+    "success_rate": 1.0,
+    "latency_p50": 6.444,
+    "latency_max": 18.246
+  },
+  "results": [
+    {
+      "ok": true,
+      "error": null,
+      "question": "Who has the most total points across all races?",
+      "sql": "SELECT d.full_name AS driver_name, SUM(rr.points) AS total_points FROM drivers d JOIN race_results rr ON rr.driver_id = d.id GROUP BY d.id ORDER BY total_points DESC, d.full_name ASC LIMIT 1;",
+      "rows": [
+        {
+          "driver_name": "Ethan Tanaka",
+          "total_points": 691.0
+        }
+      ],
+      "answer": "Ethan Tanaka has the most total points across all races, with 691 points.",
+      "intent_spec": {
+        "precise_question": "Which driver has the highest total sum of points accumulated across all races?",
+        "sql_requirements": [
+          "SELECT driver full_name",
+          "JOIN race_results on driver_id",
+          "GROUP BY driver id",
+          "CALCULATE SUM of points per driver",
+          "ORDER BY total points DESC",
+          "LIMIT 1",
+          "INCLUDE total points value in output"
+        ]
+      },
+      "adequacy": {
+        "is_sufficient": true,
+        "reason_code": "sufficient",
+        "missing_piece": "none",
+        "next_action": "keep",
+        "sql_fix_hint": "none"
+      },
+      "semantic_attempts": [
+        {
+          "semantic_attempt": 1,
+          "intent_spec": {
+            "precise_question": "Identify the driver with the highest sum of points accumulated across all races.",
+            "sql_requirements": [
+              "sum points grouped by driver_id",
+              "order by total points descending",
+              "limit to top 1",
+              "join drivers table to get driver full_name"
+            ]
+          },
+          "precise_question": "Identify the driver with the highest sum of points accumulated across all races.",
+          "generated_sql": "SELECT d.full_name AS driver_name \nFROM drivers d \nJOIN race_results rr ON rr.driver_id = d.id \nGROUP BY d.id \nORDER BY SUM(rr.points) DESC, d.full_name ASC \nLIMIT 1;",
+          "adequacy": {
+            "is_sufficient": false,
+            "reason_code": "insufficient_scope",
+            "missing_piece": "The total points value is missing to confirm the sum of points.",
+            "next_action": "refine_and_retry",
+            "sql_fix_hint": "Include SUM(rr.points) in the SELECT clause to show total points alongside driver name."
+          },
+          "status": "refine_and_retry",
+          "rag": {
+            "candidate_tables": [
+              "race_results",
+              "races"
+            ],
+            "examples_used": 4,
+            "schema_hits_used": 5,
+            "value_hints_used": 8
+          }
+        },
+        {
+          "semantic_attempt": 2,
+          "intent_spec": {
+            "precise_question": "Which driver has the highest total sum of points accumulated across all races?",
+            "sql_requirements": [
+              "SELECT driver full_name",
+              "JOIN race_results on driver_id",
+              "GROUP BY driver id",
+              "CALCULATE SUM of points per driver",
+              "ORDER BY total points DESC",
+              "LIMIT 1",
+              "INCLUDE total points value in output"
+            ]
+          },
+          "precise_question": "Which driver has the highest total sum of points accumulated across all races?",
+          "generated_sql": "SELECT d.full_name AS driver_name, SUM(rr.points) AS total_points FROM drivers d JOIN race_results rr ON rr.driver_id = d.id GROUP BY d.id ORDER BY total_points DESC, d.full_name ASC LIMIT 1;",
+          "adequacy": {
+            "is_sufficient": true,
+            "reason_code": "sufficient",
+            "missing_piece": "none",
+            "next_action": "keep",
+            "sql_fix_hint": "none"
+          },
+          "status": "completed",
+          "rag": {
+            "candidate_tables": [
+              "drivers",
+              "race_results",
+              "races"
+            ],
+            "examples_used": 4,
+            "schema_hits_used": 5,
+            "value_hints_used": 8
+          }
+        }
+      ],
+      "semantic_attempts_used": 2,
+      "sql_attempts": 2,
+      "rag_enabled": true,
+      "elapsed_sec": 11.123,
+      "eval_elapsed_sec": 11.126,
+      "status": "pass"
+    },
+    {
+      "ok": true,
+      "error": null,
+      "question": "Which 3 drivers have the fastest single lap times overall?",
+      "sql": "SELECT d.full_name AS driver_name, MIN(lt.lap_time_sec) AS fastest_lap_sec\nFROM drivers d\nJOIN lap_times lt ON lt.driver_id = d.id\nGROUP BY d.id\nORDER BY fastest_lap_sec ASC, d.full_name ASC\nLIMIT 3;",
+      "rows": [
+        {
+          "driver_name": "Ethan Tanaka",
+          "fastest_lap_sec": 82.29
+        },
+        {
+          "driver_name": "Leo Dubois",
+          "fastest_lap_sec": 82.614
+        },
+        {
+          "driver_name": "Logan Rossi",
+          "fastest_lap_sec": 82.73
+        }
+      ],
+      "answer": "The three drivers with the fastest single lap times overall are Ethan Tanaka (82.29 seconds), Leo Dubois (82.614 seconds), and Logan Rossi (82.73 seconds).",
+      "intent_spec": {
+        "precise_question": "Identify the top 3 drivers with the fastest single lap times across all races.",
+        "sql_requirements": [
+          "select driver_id and minimum lap_time_sec from lap_times",
+          "group by driver_id",
+          "order by minimum lap_time_sec ascending",
+          "limit to 3 records",
+          "join with drivers table to get driver full_name"
+        ]
+      },
+      "adequacy": {
+        "is_sufficient": true,
+        "reason_code": "sufficient",
+        "missing_piece": "none",
+        "next_action": "keep",
+        "sql_fix_hint": "none"
+      },
+      "semantic_attempts": [
+        {
+          "semantic_attempt": 1,
+          "intent_spec": {
+            "precise_question": "Identify the top 3 drivers with the fastest single lap times across all races.",
+            "sql_requirements": [
+              "select driver_id and minimum lap_time_sec from lap_times",
+              "group by driver_id",
+              "order by minimum lap_time_sec ascending",
+              "limit to 3 records",
+              "join with drivers table to get driver full_name"
+            ]
+          },
+          "precise_question": "Identify the top 3 drivers with the fastest single lap times across all races.",
+          "generated_sql": "SELECT d.full_name AS driver_name, MIN(lt.lap_time_sec) AS fastest_lap_sec\nFROM drivers d\nJOIN lap_times lt ON lt.driver_id = d.id\nGROUP BY d.id\nORDER BY fastest_lap_sec ASC, d.full_name ASC\nLIMIT 3;",
+          "adequacy": {
+            "is_sufficient": true,
+            "reason_code": "sufficient",
+            "missing_piece": "none",
+            "next_action": "keep",
+            "sql_fix_hint": "none"
+          },
+          "status": "completed",
+          "rag": {
+            "candidate_tables": [
+              "race_results",
+              "lap_times",
+              "drivers"
+            ],
+            "examples_used": 4,
+            "schema_hits_used": 5,
+            "value_hints_used": 8
+          }
+        }
+      ],
+      "semantic_attempts_used": 1,
+      "sql_attempts": 1,
+      "rag_enabled": true,
+      "elapsed_sec": 6.208,
+      "eval_elapsed_sec": 6.213,
+      "status": "pass"
+    },
+    {
+      "ok": true,
+      "error": null,
+      "question": "Show the latest 5 races with weather conditions.",
+      "sql": "SELECT r.race_date, r.race_name, w.condition FROM races r JOIN weather w ON w.race_id = r.id ORDER BY r.race_date DESC, r.id DESC LIMIT 5;",
+      "rows": [
+        {
+          "race_date": "2026-01-17",
+          "race_name": "Spa Grand Prix",
+          "condition": "Cloudy"
+        },
+        {
+          "race_date": "2026-01-03",
+          "race_name": "Suzuka Grand Prix",
+          "condition": "Windy"
+        },
+        {
+          "race_date": "2025-12-20",
+          "race_name": "Monza Grand Prix",
+          "condition": "Light Rain"
+        },
+        {
+          "race_date": "2025-12-06",
+          "race_name": "Silverstone Grand Prix",
+          "condition": "Cloudy"
+        },
+        {
+          "race_date": "2025-11-22",
+          "race_name": "Zandvoort Grand Prix",
+          "condition": "Heavy Rain"
+        }
+      ],
+      "answer": "The latest 5 races with weather conditions are:\n\n1. Spa Grand Prix on 2026-01-17 with Cloudy weather.\n2. Suzuka Grand Prix on 2026-01-03 with Windy weather.\n3. Monza Grand Prix on 2025-12-20 with Light Rain.\n4. Silverstone Grand Prix on 2025-12-06 with Cloudy weather.\n5. Zandvoort Grand Prix on 2025-11-22 with Heavy Rain.",
+      "intent_spec": {
+        "precise_question": "Retrieve the latest 5 races ordered by race_date along with their weather conditions.",
+        "sql_requirements": [
+          "select from races and weather tables",
+          "join on race_id",
+          "order by race_date descending",
+          "limit to 5 records",
+          "include race details and weather condition fields"
+        ]
+      },
+      "adequacy": {
+        "is_sufficient": true,
+        "reason_code": "sufficient",
+        "missing_piece": "none",
+        "next_action": "keep",
+        "sql_fix_hint": "none"
+      },
+      "semantic_attempts": [
+        {
+          "semantic_attempt": 1,
+          "intent_spec": {
+            "precise_question": "Retrieve the latest 5 races ordered by race_date along with their weather conditions.",
+            "sql_requirements": [
+              "select from races and weather tables",
+              "join on race_id",
+              "order by race_date descending",
+              "limit to 5 records",
+              "include race details and weather condition fields"
+            ]
+          },
+          "precise_question": "Retrieve the latest 5 races ordered by race_date along with their weather conditions.",
+          "generated_sql": "SELECT r.race_date, r.race_name, w.condition FROM races r JOIN weather w ON w.race_id = r.id ORDER BY r.race_date DESC, r.id DESC LIMIT 5;",
+          "adequacy": {
+            "is_sufficient": true,
+            "reason_code": "sufficient",
+            "missing_piece": "none",
+            "next_action": "keep",
+            "sql_fix_hint": "none"
+          },
+          "status": "completed",
+          "rag": {
+            "candidate_tables": [
+              "weather",
+              "races"
+            ],
+            "examples_used": 4,
+            "schema_hits_used": 4,
+            "value_hints_used": 8
+          }
+        }
+      ],
+      "semantic_attempts_used": 1,
+      "sql_attempts": 1,
+      "rag_enabled": true,
+      "elapsed_sec": 6.68,
+      "eval_elapsed_sec": 6.684,
+      "status": "pass"
+    },
+    {
+      "ok": true,
+      "error": null,
+      "question": "Which team scored the most points in season 2025?",
+      "sql": "SELECT t.name AS team_name, SUM(rr.points) AS total_points FROM teams t JOIN drivers d ON d.team_id = t.id JOIN race_results rr ON rr.driver_id = d.id JOIN races r ON r.id = rr.race_id WHERE r.season_year = 2025 GROUP BY t.id ORDER BY total_points DESC, team_name ASC LIMIT 1;",
+      "rows": [
+        {
+          "team_name": "Quantum Racing",
+          "total_points": 709.0
+        }
+      ],
+      "answer": "The team that scored the most points in the 2025 season is Quantum Racing with 709 points.",
+      "intent_spec": {
+        "precise_question": "Identify the team that scored the highest total points in the 2025 season.",
+        "sql_requirements": [
+          "join teams, drivers, race_results, and races tables",
+          "filter races by season_year = 2025",
+          "group results by team",
+          "sum points from race_results as total_points",
+          "order by total_points descending",
+          "select team name and total_points",
+          "limit to 1 result"
+        ]
+      },
+      "adequacy": {
+        "is_sufficient": true,
+        "reason_code": "sufficient",
+        "missing_piece": "none",
+        "next_action": "keep",
+        "sql_fix_hint": "none"
+      },
+      "semantic_attempts": [
+        {
+          "semantic_attempt": 1,
+          "intent_spec": {
+            "precise_question": "Identify the team that accumulated the highest total points across all races in the 2025 season.",
+            "sql_requirements": [
+              "filter race_results by races in season_year 2025",
+              "join race_results with races on race_id",
+              "join race_results with drivers on driver_id",
+              "group by drivers.team_id",
+              "sum points per team",
+              "order by total points descending",
+              "limit to top 1 team",
+              "return team name and total points"
+            ]
+          },
+          "precise_question": "Identify the team that accumulated the highest total points across all races in the 2025 season.",
+          "generated_sql": "SELECT t.name AS team_name FROM teams t JOIN drivers d ON d.team_id = t.id JOIN race_results rr ON rr.driver_id = d.id JOIN races r ON r.id = rr.race_id WHERE r.season_year = 2025 GROUP BY t.id ORDER BY SUM(rr.points) DESC LIMIT 1;",
+          "adequacy": {
+            "is_sufficient": false,
+            "reason_code": "insufficient_scope",
+            "missing_piece": "total points for the team is missing in the result",
+            "next_action": "refine_and_retry",
+            "sql_fix_hint": "include SUM(rr.points) as total_points in the SELECT clause to return both team name and total points"
+          },
+          "status": "refine_and_retry",
+          "rag": {
+            "candidate_tables": [
+              "race_results",
+              "races",
+              "drivers",
+              "teams"
+            ],
+            "examples_used": 4,
+            "schema_hits_used": 7,
+            "value_hints_used": 8
+          }
+        },
+        {
+          "semantic_attempt": 2,
+          "intent_spec": {
+            "precise_question": "Which team scored the highest total points in the 2025 season?",
+            "sql_requirements": [
+              "select team name and sum of points as total_points",
+              "join teams, drivers, race_results, and races tables",
+              "filter by season_year = 2025",
+              "group by team id",
+              "order by total_points descending",
+              "limit to 1 result"
+            ]
+          },
+          "precise_question": "Which team scored the highest total points in the 2025 season?",
+          "generated_sql": "SELECT t.name AS team_name FROM teams t JOIN drivers d ON d.team_id = t.id JOIN race_results rr ON rr.driver_id = d.id JOIN races r ON r.id = rr.race_id WHERE r.season_year = 2025 GROUP BY t.id ORDER BY SUM(rr.points) DESC, team_name ASC LIMIT 1;",
+          "adequacy": {
+            "is_sufficient": false,
+            "reason_code": "insufficient_scope",
+            "missing_piece": "total_points column missing in SELECT clause and result",
+            "next_action": "refine_and_retry",
+            "sql_fix_hint": "Add SUM(rr.points) AS total_points to the SELECT clause to show total points scored by the team."
+          },
+          "status": "refine_and_retry",
+          "rag": {
+            "candidate_tables": [
+              "teams",
+              "drivers",
+              "race_results",
+              "races"
+            ],
+            "examples_used": 4,
+            "schema_hits_used": 7,
+            "value_hints_used": 8
+          }
+        },
+        {
+          "semantic_attempt": 3,
+          "intent_spec": {
+            "precise_question": "Identify the team that scored the highest total points in the 2025 season.",
+            "sql_requirements": [
+              "join teams, drivers, race_results, and races tables",
+              "filter races by season_year = 2025",
+              "group results by team",
+              "sum points from race_results as total_points",
+              "order by total_points descending",
+              "select team name and total_points",
+              "limit to 1 result"
+            ]
+          },
+          "precise_question": "Identify the team that scored the highest total points in the 2025 season.",
+          "generated_sql": "SELECT t.name AS team_name, SUM(rr.points) AS total_points FROM teams t JOIN drivers d ON d.team_id = t.id JOIN race_results rr ON rr.driver_id = d.id JOIN races r ON r.id = rr.race_id WHERE r.season_year = 2025 GROUP BY t.id ORDER BY total_points DESC, team_name ASC LIMIT 1;",
+          "adequacy": {
+            "is_sufficient": true,
+            "reason_code": "sufficient",
+            "missing_piece": "none",
+            "next_action": "keep",
+            "sql_fix_hint": "none"
+          },
+          "status": "completed",
+          "rag": {
+            "candidate_tables": [
+              "teams",
+              "drivers",
+              "race_results",
+              "races"
+            ],
+            "examples_used": 4,
+            "schema_hits_used": 7,
+            "value_hints_used": 8
+          }
+        }
+      ],
+      "semantic_attempts_used": 3,
+      "sql_attempts": 3,
+      "rag_enabled": true,
+      "elapsed_sec": 17.485,
+      "eval_elapsed_sec": 17.487,
+      "status": "pass"
+    },
+    {
+      "ok": true,
+      "error": null,
+      "question": "What is the average pit stop duration by driver?",
+      "sql": "SELECT d.full_name, ROUND(AVG(ps.duration_sec), 3) AS avg_pit_stop_duration\nFROM pit_stops ps\nJOIN drivers d ON ps.driver_id = d.id\nGROUP BY ps.driver_id, d.full_name;",
+      "rows": [
+        {
+          "full_name": "Logan Rossi",
+          "avg_pit_stop_duration": 2.785
+        },
+        {
+          "full_name": "Leo Dubois",
+          "avg_pit_stop_duration": 2.795
+        },
+        {
+          "full_name": "Olivia Schmidt",
+          "avg_pit_stop_duration": 2.766
+        },
+        {
+          "full_name": "Logan Ivanov",
+          "avg_pit_stop_duration": 2.712
+        },
+        {
+          "full_name": "Sofia Anders",
+          "avg_pit_stop_duration": 2.707
+        },
+        {
+          "full_name": "Liam Rossi",
+          "avg_pit_stop_duration": 2.725
+        },
+        {
+          "full_name": "Olivia Novak",
+          "avg_pit_stop_duration": 2.713
+        },
+        {
+          "full_name": "Ethan Tanaka",
+          "avg_pit_stop_duration": 2.744
+        }
+      ],
+      "answer": "The average pit stop durations by driver are as follows:\n- Logan Rossi: 2.785 seconds\n- Leo Dubois: 2.795 seconds\n- Olivia Schmidt: 2.766 seconds\n- Logan Ivanov: 2.712 seconds\n- Sofia Anders: 2.707 seconds\n- Liam Rossi: 2.725 seconds\n- Olivia Novak: 2.713 seconds\n- Ethan Tanaka: 2.744 seconds",
+      "intent_spec": {
+        "precise_question": "What is the average pit stop duration for each driver across all races?",
+        "sql_requirements": [
+          "select driver_id",
+          "calculate average duration_sec from pit_stops",
+          "group by driver_id"
+        ]
+      },
+      "adequacy": {
+        "is_sufficient": true,
+        "reason_code": "sufficient",
+        "missing_piece": "none",
+        "next_action": "keep",
+        "sql_fix_hint": "none"
+      },
+      "semantic_attempts": [
+        {
+          "semantic_attempt": 1,
+          "intent_spec": {
+            "precise_question": "What is the average pit stop duration for each driver across all races?",
+            "sql_requirements": [
+              "select driver_id",
+              "calculate average duration_sec from pit_stops",
+              "group by driver_id"
+            ]
+          },
+          "precise_question": "What is the average pit stop duration for each driver across all races?",
+          "generated_sql": "SELECT d.full_name, ROUND(AVG(ps.duration_sec), 3) AS avg_pit_stop_duration\nFROM pit_stops ps\nJOIN drivers d ON ps.driver_id = d.id\nGROUP BY ps.driver_id, d.full_name;",
+          "adequacy": {
+            "is_sufficient": true,
+            "reason_code": "sufficient",
+            "missing_piece": "none",
+            "next_action": "keep",
+            "sql_fix_hint": "none"
+          },
+          "status": "completed",
+          "rag": {
+            "candidate_tables": [
+              "pit_stops"
+            ],
+            "examples_used": 4,
+            "schema_hits_used": 4,
+            "value_hints_used": 6
+          }
+        }
+      ],
+      "semantic_attempts_used": 1,
+      "sql_attempts": 1,
+      "rag_enabled": true,
+      "elapsed_sec": 6.076,
+      "eval_elapsed_sec": 6.079,
+      "status": "pass"
+    },
+    {
+      "ok": true,
+      "error": null,
+      "question": "Who had the best average finish position in season 2024?",
+      "sql": "SELECT d.full_name AS driver_name, AVG(rr.finish_position) AS avg_finish_position\nFROM drivers d\nJOIN race_results rr ON rr.driver_id = d.id\nJOIN races r ON r.id = rr.race_id\nWHERE r.season_year = 2024\nGROUP BY d.id\nORDER BY avg_finish_position ASC\nLIMIT 1;",
+      "rows": [
+        {
+          "driver_name": "Ethan Tanaka",
+          "avg_finish_position": 3.75
+        }
+      ],
+      "answer": "Ethan Tanaka had the best average finish position in the 2024 season, with an average finish position of 3.75.",
+      "intent_spec": {
+        "precise_question": "Identify the driver with the best (lowest) average finish position in the 2024 season.",
+        "sql_requirements": [
+          "Select driver full_name and average finish_position",
+          "Join drivers, race_results, and races tables",
+          "Filter by races.season_year = 2024",
+          "Group by driver id",
+          "Order by average finish_position ascending",
+          "Limit result to 1."
+        ]
+      },
+      "adequacy": {
+        "is_sufficient": true,
+        "reason_code": "sufficient",
+        "missing_piece": "none",
+        "next_action": "keep",
+        "sql_fix_hint": "none"
+      },
+      "semantic_attempts": [
+        {
+          "semantic_attempt": 1,
+          "intent_spec": {
+            "precise_question": "Identify the driver with the best (lowest) average finish position across all races in the 2024 season.",
+            "sql_requirements": [
+              "join race_results with races on race_id",
+              "filter races by season_year = 2024",
+              "group by driver_id",
+              "calculate average finish_position per driver",
+              "order by average finish_position ascending",
+              "limit to top 1 driver",
+              "include driver full_name in output by joining drivers table."
+            ]
+          },
+          "precise_question": "Identify the driver with the best (lowest) average finish position across all races in the 2024 season.",
+          "generated_sql": "SELECT d.full_name AS driver_name\nFROM drivers d\nJOIN race_results rr ON rr.driver_id = d.id\nJOIN races r ON r.id = rr.race_id\nWHERE r.season_year = 2024\nGROUP BY d.id\nORDER BY AVG(rr.finish_position) ASC\nLIMIT 1;",
+          "adequacy": {
+            "is_sufficient": false,
+            "reason_code": "insufficient_scope",
+            "missing_piece": "Missing average finish position value in output",
+            "next_action": "refine_and_retry",
+            "sql_fix_hint": "Include AVG(rr.finish_position) in SELECT clause to show the average finish position alongside driver name."
+          },
+          "status": "refine_and_retry",
+          "rag": {
+            "candidate_tables": [
+              "race_results",
+              "races"
+            ],
+            "examples_used": 4,
+            "schema_hits_used": 6,
+            "value_hints_used": 8
+          }
+        },
+        {
+          "semantic_attempt": 2,
+          "intent_spec": {
+            "precise_question": "Identify the driver with the best (lowest) average finish position in the 2024 season.",
+            "sql_requirements": [
+              "Select driver full_name and average finish_position",
+              "Join drivers, race_results, and races tables",
+              "Filter by races.season_year = 2024",
+              "Group by driver id",
+              "Order by average finish_position ascending",
+              "Limit result to 1."
+            ]
+          },
+          "precise_question": "Identify the driver with the best (lowest) average finish position in the 2024 season.",
+          "generated_sql": "SELECT d.full_name AS driver_name, AVG(rr.finish_position) AS avg_finish_position\nFROM drivers d\nJOIN race_results rr ON rr.driver_id = d.id\nJOIN races r ON r.id = rr.race_id\nWHERE r.season_year = 2024\nGROUP BY d.id\nORDER BY avg_finish_position ASC\nLIMIT 1;",
+          "adequacy": {
+            "is_sufficient": true,
+            "reason_code": "sufficient",
+            "missing_piece": "none",
+            "next_action": "keep",
+            "sql_fix_hint": "none"
+          },
+          "status": "completed",
+          "rag": {
+            "candidate_tables": [
+              "drivers",
+              "race_results",
+              "races"
+            ],
+            "examples_used": 4,
+            "schema_hits_used": 6,
+            "value_hints_used": 8
+          }
+        }
+      ],
+      "semantic_attempts_used": 2,
+      "sql_attempts": 2,
+      "rag_enabled": true,
+      "elapsed_sec": 10.93,
+      "eval_elapsed_sec": 10.932,
+      "status": "pass"
+    },
+    {
+      "ok": true,
+      "error": null,
+      "question": "How many DNFs did each driver have?",
+      "sql": "SELECT d.full_name AS driver_name, COUNT(*) AS dnf_count\nFROM drivers d\nJOIN race_results rr ON rr.driver_id = d.id\nWHERE rr.status = 'DNF'\nGROUP BY d.id\nORDER BY dnf_count DESC, driver_name ASC;",
+      "rows": [
+        {
+          "driver_name": "Liam Rossi",
+          "dnf_count": 5
+        },
+        {
+          "driver_name": "Olivia Schmidt",
+          "dnf_count": 4
+        },
+        {
+          "driver_name": "Leo Dubois",
+          "dnf_count": 2
+        },
+        {
+          "driver_name": "Logan Rossi",
+          "dnf_count": 2
+        },
+        {
+          "driver_name": "Olivia Novak",
+          "dnf_count": 2
+        },
+        {
+          "driver_name": "Ethan Tanaka",
+          "dnf_count": 1
+        }
+      ],
+      "answer": "Liam Rossi had 5 DNFs, Olivia Schmidt had 4, Leo Dubois had 2, Logan Rossi had 2, Olivia Novak had 2, and Ethan Tanaka had 1.",
+      "intent_spec": {
+        "precise_question": "Count the number of races each driver did not finish (DNF) based on their race results status.",
+        "sql_requirements": [
+          "Select driver_id and count of race_results where status indicates DNF",
+          "Group by driver_id",
+          "Include all drivers with at least one DNF",
+          "Order results by driver_id or count of DNFs"
+        ]
+      },
+      "adequacy": {
+        "is_sufficient": true,
+        "reason_code": "sufficient",
+        "missing_piece": "",
+        "next_action": "keep",
+        "sql_fix_hint": "None needed; query correctly counts DNFs per driver with proper grouping and filtering."
+      },
+      "semantic_attempts": [
+        {
+          "semantic_attempt": 1,
+          "intent_spec": {
+            "precise_question": "Count the number of races each driver did not finish (DNF) based on their race results status.",
+            "sql_requirements": [
+              "Select driver_id and count of race_results where status indicates DNF",
+              "Group by driver_id",
+              "Include all drivers with at least one DNF",
+              "Order results by driver_id or count of DNFs"
+            ]
+          },
+          "precise_question": "Count the number of races each driver did not finish (DNF) based on their race results status.",
+          "generated_sql": "SELECT d.full_name AS driver_name, COUNT(*) AS dnf_count\nFROM drivers d\nJOIN race_results rr ON rr.driver_id = d.id\nWHERE rr.status = 'DNF'\nGROUP BY d.id\nORDER BY dnf_count DESC, driver_name ASC;",
+          "adequacy": {
+            "is_sufficient": true,
+            "reason_code": "sufficient",
+            "missing_piece": "",
+            "next_action": "keep",
+            "sql_fix_hint": "None needed; query correctly counts DNFs per driver with proper grouping and filtering."
+          },
+          "status": "completed",
+          "rag": {
+            "candidate_tables": [
+              "lap_times",
+              "race_results",
+              "drivers",
+              "pit_stops"
+            ],
+            "examples_used": 4,
+            "schema_hits_used": 6,
+            "value_hints_used": 8
+          }
+        }
+      ],
+      "semantic_attempts_used": 1,
+      "sql_attempts": 1,
+      "rag_enabled": true,
+      "elapsed_sec": 5.919,
+      "eval_elapsed_sec": 5.922,
+      "status": "pass"
+    },
+    {
+      "ok": true,
+      "error": null,
+      "question": "Which circuit has the lowest average fastest lap?",
+      "sql": "SELECT r.circuit, AVG(rr.fastest_lap_sec) AS avg_fastest_lap\nFROM races r\nJOIN race_results rr ON rr.race_id = r.id\nWHERE rr.fastest_lap_sec IS NOT NULL\nGROUP BY r.circuit\nORDER BY avg_fastest_lap ASC\nLIMIT 1;",
+      "rows": [
+        {
+          "circuit": "Interlagos",
+          "avg_fastest_lap": 84.45290625000003
+        }
+      ],
+      "answer": "The circuit with the lowest average fastest lap is Interlagos, with an average fastest lap time of approximately 84.45 seconds.",
+      "intent_spec": {
+        "precise_question": "Identify the circuit with the lowest average fastest lap time across all races.",
+        "sql_requirements": [
+          "join races and race_results on race_id",
+          "group by circuit",
+          "calculate average of fastest_lap_sec",
+          "exclude null fastest_lap_sec values",
+          "order by average fastest_lap_sec ascending",
+          "limit to 1 result"
+        ]
+      },
+      "adequacy": {
+        "is_sufficient": true,
+        "reason_code": "sufficient",
+        "missing_piece": "none",
+        "next_action": "keep",
+        "sql_fix_hint": "none"
+      },
+      "semantic_attempts": [
+        {
+          "semantic_attempt": 1,
+          "intent_spec": {
+            "precise_question": "Identify the circuit with the lowest average fastest lap time across all races.",
+            "sql_requirements": [
+              "join races and race_results on race_id",
+              "group by circuit",
+              "calculate average of fastest_lap_sec",
+              "exclude null fastest_lap_sec values",
+              "order by average fastest_lap_sec ascending",
+              "limit to 1 result"
+            ]
+          },
+          "precise_question": "Identify the circuit with the lowest average fastest lap time across all races.",
+          "generated_sql": "SELECT r.circuit, AVG(rr.fastest_lap_sec) AS avg_fastest_lap\nFROM races r\nJOIN race_results rr ON rr.race_id = r.id\nWHERE rr.fastest_lap_sec IS NOT NULL\nGROUP BY r.circuit\nORDER BY avg_fastest_lap ASC\nLIMIT 1;",
+          "adequacy": {
+            "is_sufficient": true,
+            "reason_code": "sufficient",
+            "missing_piece": "none",
+            "next_action": "keep",
+            "sql_fix_hint": "none"
+          },
+          "status": "completed",
+          "rag": {
+            "candidate_tables": [
+              "race_results",
+              "races",
+              "lap_times"
+            ],
+            "examples_used": 4,
+            "schema_hits_used": 7,
+            "value_hints_used": 8
+          }
+        }
+      ],
+      "semantic_attempts_used": 1,
+      "sql_attempts": 1,
+      "rag_enabled": true,
+      "elapsed_sec": 5.178,
+      "eval_elapsed_sec": 5.18,
+      "status": "pass"
+    },
+    {
+      "ok": true,
+      "error": null,
+      "question": "Which drivers improved most from start to finish positions on average?",
+      "sql": "SELECT d.full_name AS driver_name, ROUND(AVG(rr.start_position - rr.finish_position), 3) AS avg_position_improvement\nFROM drivers d\nJOIN race_results rr ON rr.driver_id = d.id\nWHERE rr.start_position > 0 AND rr.finish_position > 0\nGROUP BY d.id\nORDER BY avg_position_improvement DESC, d.full_name ASC;",
+      "rows": [
+        {
+          "driver_name": "Logan Rossi",
+          "avg_position_improvement": 0.708
+        },
+        {
+          "driver_name": "Leo Dubois",
+          "avg_position_improvement": 0.542
+        },
+        {
+          "driver_name": "Sofia Anders",
+          "avg_position_improvement": 0.25
+        },
+        {
+          "driver_name": "Liam Rossi",
+          "avg_position_improvement": 0.229
+        },
+        {
+          "driver_name": "Ethan Tanaka",
+          "avg_position_improvement": -0.125
+        },
+        {
+          "driver_name": "Olivia Novak",
+          "avg_position_improvement": -0.458
+        },
+        {
+          "driver_name": "Olivia Schmidt",
+          "avg_position_improvement": -0.521
+        },
+        {
+          "driver_name": "Logan Ivanov",
+          "avg_position_improvement": -0.625
+        }
+      ],
+      "answer": "The drivers who improved the most on average from start to finish positions are Logan Rossi (0.708), Leo Dubois (0.542), and Sofia Anders (0.25).",
+      "intent_spec": {
+        "precise_question": "Which drivers have the highest average improvement in position from their start to finish across all races they participated in?",
+        "sql_requirements": [
+          "calculate difference between start_position and finish_position for each driver in race_results",
+          "average this difference per driver",
+          "order results by average improvement descending",
+          "include driver full_name",
+          "exclude cases with missing or invalid positions"
+        ]
+      },
+      "adequacy": {
+        "is_sufficient": true,
+        "reason_code": "sufficient",
+        "missing_piece": "none",
+        "next_action": "keep",
+        "sql_fix_hint": "none"
+      },
+      "semantic_attempts": [
+        {
+          "semantic_attempt": 1,
+          "intent_spec": {
+            "precise_question": "Which drivers have the highest average improvement in position from their start to finish across all races they participated in?",
+            "sql_requirements": [
+              "calculate difference between start_position and finish_position for each driver in race_results",
+              "average this difference per driver",
+              "order results by average improvement descending",
+              "include driver full_name",
+              "exclude cases with missing or invalid positions"
+            ]
+          },
+          "precise_question": "Which drivers have the highest average improvement in position from their start to finish across all races they participated in?",
+          "generated_sql": "SELECT d.full_name AS driver_name, ROUND(AVG(rr.start_position - rr.finish_position), 3) AS avg_position_improvement\nFROM drivers d\nJOIN race_results rr ON rr.driver_id = d.id\nWHERE rr.start_position > 0 AND rr.finish_position > 0\nGROUP BY d.id\nORDER BY avg_position_improvement DESC, d.full_name ASC;",
+          "adequacy": {
+            "is_sufficient": true,
+            "reason_code": "sufficient",
+            "missing_piece": "none",
+            "next_action": "keep",
+            "sql_fix_hint": "none"
+          },
+          "status": "completed",
+          "rag": {
+            "candidate_tables": [
+              "race_results",
+              "lap_times",
+              "drivers"
+            ],
+            "examples_used": 4,
+            "schema_hits_used": 6,
+            "value_hints_used": 8
+          }
+        }
+      ],
+      "semantic_attempts_used": 1,
+      "sql_attempts": 1,
+      "rag_enabled": true,
+      "elapsed_sec": 5.895,
+      "eval_elapsed_sec": 5.898,
+      "status": "pass"
+    },
+    {
+      "ok": true,
+      "error": null,
+      "question": "Top 5 races by rain probability.",
+      "sql": "SELECT r.race_name, MAX(w.rain_probability) AS max_rain_probability\nFROM races r\nJOIN weather w ON w.race_id = r.id\nGROUP BY r.race_name\nORDER BY max_rain_probability DESC, r.race_name ASC\nLIMIT 5;",
+      "rows": [
+        {
+          "race_name": "Zandvoort Grand Prix",
+          "max_rain_probability": 0.899
+        },
+        {
+          "race_name": "Monza Grand Prix",
+          "max_rain_probability": 0.792
+        },
+        {
+          "race_name": "Montreal Grand Prix",
+          "max_rain_probability": 0.768
+        },
+        {
+          "race_name": "Silverstone Grand Prix",
+          "max_rain_probability": 0.71
+        },
+        {
+          "race_name": "Imola Grand Prix",
+          "max_rain_probability": 0.698
+        }
+      ],
+      "answer": "The top 5 races by rain probability are:\n\n1. Zandvoort Grand Prix - 89.9%\n2. Monza Grand Prix - 79.2%\n3. Montreal Grand Prix - 76.8%\n4. Silverstone Grand Prix - 71.0%\n5. Imola Grand Prix - 69.8%",
+      "intent_spec": {
+        "precise_question": "What are the top 5 distinct races by their maximum rain probability?",
+        "sql_requirements": [
+          "Select distinct race names",
+          "Join races and weather tables on race_id",
+          "Aggregate to find maximum rain probability per race",
+          "Order results by maximum rain probability descending and race name ascending",
+          "Limit results to 5 entries"
+        ]
+      },
+      "adequacy": {
+        "is_sufficient": true,
+        "reason_code": "sufficient",
+        "missing_piece": "",
+        "next_action": "keep",
+        "sql_fix_hint": ""
+      },
+      "semantic_attempts": [
+        {
+          "semantic_attempt": 1,
+          "intent_spec": {
+            "precise_question": "What are the top 5 races with the highest rain probability?",
+            "sql_requirements": [
+              "select race_id and rain_probability from weather",
+              "order by rain_probability descending",
+              "limit 5",
+              "join with races table to get race details"
+            ]
+          },
+          "precise_question": "What are the top 5 races with the highest rain probability?",
+          "generated_sql": "SELECT r.race_name, w.rain_probability \nFROM races r \nJOIN weather w ON w.race_id = r.id \nORDER BY w.rain_probability DESC, r.race_name ASC \nLIMIT 5;",
+          "adequacy": {
+            "is_sufficient": false,
+            "reason_code": "insufficient_filtering",
+            "missing_piece": "The result includes multiple entries for the same race instead of distinct top 5 races.",
+            "next_action": "refine_and_retry",
+            "sql_fix_hint": "Add DISTINCT or GROUP BY on race_id to get unique races and select the highest rain_probability per race before ordering and limiting."
+          },
+          "status": "refine_and_retry",
+          "rag": {
+            "candidate_tables": [
+              "weather",
+              "races"
+            ],
+            "examples_used": 4,
+            "schema_hits_used": 5,
+            "value_hints_used": 8
+          }
+        },
+        {
+          "semantic_attempt": 2,
+          "intent_spec": {
+            "precise_question": "What are the top 5 distinct races with the highest rain probability?",
+            "sql_requirements": [
+              "Join races and weather tables on race_id",
+              "Group by race_id to get distinct races",
+              "Select race_name and maximum rain_probability per race",
+              "Order results by rain_probability descending and race_name ascending",
+              "Limit results to 5 entries"
+            ]
+          },
+          "precise_question": "What are the top 5 distinct races with the highest rain probability?",
+          "generated_sql": "SELECT r.race_name, MAX(w.rain_probability) AS rain_probability\nFROM races r\nJOIN weather w ON w.race_id = r.id\nGROUP BY r.id, r.race_name\nORDER BY rain_probability DESC, r.race_name ASC\nLIMIT 5;",
+          "adequacy": {
+            "is_sufficient": false,
+            "reason_code": "insufficient_filtering",
+            "missing_piece": "The result includes duplicate races instead of distinct races; the query should ensure distinct race names with their maximum rain probability.",
+            "next_action": "refine_and_retry",
+            "sql_fix_hint": "Use GROUP BY only on race_name or select distinct race_name with MAX rain_probability to avoid duplicate race entries."
+          },
+          "status": "refine_and_retry",
+          "rag": {
+            "candidate_tables": [
+              "races",
+              "weather"
+            ],
+            "examples_used": 4,
+            "schema_hits_used": 5,
+            "value_hints_used": 8
+          }
+        },
+        {
+          "semantic_attempt": 3,
+          "intent_spec": {
+            "precise_question": "What are the top 5 distinct races by their maximum rain probability?",
+            "sql_requirements": [
+              "Select distinct race names",
+              "Join races and weather tables on race_id",
+              "Aggregate to find maximum rain probability per race",
+              "Order results by maximum rain probability descending and race name ascending",
+              "Limit results to 5 entries"
+            ]
+          },
+          "precise_question": "What are the top 5 distinct races by their maximum rain probability?",
+          "generated_sql": "SELECT r.race_name, MAX(w.rain_probability) AS max_rain_probability\nFROM races r\nJOIN weather w ON w.race_id = r.id\nGROUP BY r.race_name\nORDER BY max_rain_probability DESC, r.race_name ASC\nLIMIT 5;",
+          "adequacy": {
+            "is_sufficient": true,
+            "reason_code": "sufficient",
+            "missing_piece": "",
+            "next_action": "keep",
+            "sql_fix_hint": ""
+          },
+          "status": "completed",
+          "rag": {
+            "candidate_tables": [
+              "races",
+              "weather"
+            ],
+            "examples_used": 4,
+            "schema_hits_used": 5,
+            "value_hints_used": 8
+          }
+        }
+      ],
+      "semantic_attempts_used": 3,
+      "sql_attempts": 3,
+      "rag_enabled": true,
+      "elapsed_sec": 18.246,
+      "eval_elapsed_sec": 18.25,
+      "status": "pass"
+    }
+  ]
+}

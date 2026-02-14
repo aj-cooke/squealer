@@ -9,6 +9,7 @@ from typing import Any
 
 from db import execute_select
 from llm_client import OpenAIClient
+from retriever import RAGContextBuilder, extract_tables_from_sql
 from schema_context import get_schema_context
 from sql_guardrails import validate_read_only_sql
 
@@ -81,6 +82,16 @@ def run_once(
     row_limit: int,
     max_sql_retries: int = 1,
     max_semantic_retries: int = 1,
+    enable_rag: bool = False,
+    rag_examples_path: str = "benchmarks/v1/questions_v1.json",
+    rag_profiles_path: str = "artifacts/value_profiles.json",
+    rag_example_top_k: int = 4,
+    rag_schema_top_k: int = 4,
+    rag_value_top_k: int = 8,
+    rag_use_embeddings: bool = False,
+    rag_embedding_model: str = "text-embedding-3-small",
+    rag_embedding_index_path: str = "artifacts/example_embeddings.json",
+    rag_schema_embedding_index_path: str = "artifacts/schema_embeddings.json",
 ) -> dict[str, Any]:
     started = time.time()
     try:
@@ -97,6 +108,27 @@ def run_once(
         }
 
     schema = get_schema_context(db_path)
+    rag_builder: RAGContextBuilder | None = None
+    rag_info: dict[str, Any] = {}
+    if enable_rag:
+        try:
+            rag_builder = RAGContextBuilder(
+                db_path=db_path,
+                examples_path=rag_examples_path,
+                profiles_path=rag_profiles_path,
+                example_top_k=max(1, rag_example_top_k),
+                schema_top_k=max(1, rag_schema_top_k),
+                value_top_k=max(1, rag_value_top_k),
+                use_embeddings=rag_use_embeddings,
+                embedding_model=rag_embedding_model,
+                embedding_index_path=rag_embedding_index_path,
+                schema_embedding_index_path=rag_schema_embedding_index_path,
+            )
+            if rag_builder.init_warnings:
+                rag_info["rag_warning"] = " ; ".join(rag_builder.init_warnings)
+        except Exception as exc:
+            rag_info["rag_error"] = f"RAG disabled due to init error: {exc}"
+
     semantic_feedback = ""
     semantic_attempts: list[dict[str, Any]] = []
     total_sql_attempts = 0
@@ -112,7 +144,23 @@ def run_once(
             "generated_sql": "",
             "adequacy": {},
             "status": "incomplete",
+            "rag": {},
         }
+
+        rag_context_text = ""
+        if rag_builder is not None:
+            rag_tables = extract_tables_from_sql(last_sql)
+            try:
+                rag_payload = rag_builder.build_context(question=question, extra_tables=rag_tables)
+                rag_context_text = rag_payload.get("context_text", "")
+                attempt_info["rag"] = {
+                    "candidate_tables": rag_payload.get("candidate_tables", []),
+                    "examples_used": len(rag_payload.get("examples", [])),
+                    "schema_hits_used": len(rag_payload.get("schema_hits", [])),
+                    "value_hints_used": len(rag_payload.get("value_hints", [])),
+                }
+            except Exception as exc:
+                attempt_info["rag"] = {"error": str(exc)}
 
         try:
             intent_spec = llm.generate_intent_spec(
@@ -145,7 +193,12 @@ def run_once(
                 retry_guidance = " ; ".join(str(req) for req in sql_requirements if str(req).strip())
             if semantic_feedback:
                 retry_guidance = f"{retry_guidance} ; {semantic_feedback}".strip(" ;")
-            sql = llm.generate_sql(question=precise_question, schema=schema, retry_guidance=retry_guidance).strip()
+            sql = llm.generate_sql(
+                question=precise_question,
+                schema=schema,
+                retry_guidance=retry_guidance,
+                rag_context=rag_context_text,
+            ).strip()
         except Exception as exc:
             attempt_info["status"] = "sql_generation_failed"
             semantic_attempts.append(attempt_info)
@@ -260,6 +313,8 @@ def run_once(
             "semantic_attempts": semantic_attempts,
             "semantic_attempts_used": semantic_attempt_no,
             "sql_attempts": total_sql_attempts,
+            "rag_enabled": rag_builder is not None,
+            **rag_info,
             "elapsed_sec": round(time.time() - started, 3),
         }
 
@@ -272,6 +327,8 @@ def run_once(
         "semantic_attempts": semantic_attempts,
         "semantic_attempts_used": len(semantic_attempts),
         "sql_attempts": total_sql_attempts,
+        "rag_enabled": rag_builder is not None,
+        **rag_info,
         "elapsed_sec": round(time.time() - started, 3),
     }
 
@@ -283,6 +340,16 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--row-limit", type=int, default=50)
     parser.add_argument("--max-sql-retries", type=int, default=1)
     parser.add_argument("--max-semantic-retries", type=int, default=1)
+    parser.add_argument("--enable-rag", action="store_true")
+    parser.add_argument("--rag-examples-path", default="benchmarks/v1/questions_v1.json")
+    parser.add_argument("--rag-profiles-path", default="artifacts/value_profiles.json")
+    parser.add_argument("--rag-example-top-k", type=int, default=4)
+    parser.add_argument("--rag-schema-top-k", type=int, default=4)
+    parser.add_argument("--rag-value-top-k", type=int, default=8)
+    parser.add_argument("--rag-use-embeddings", action="store_true")
+    parser.add_argument("--rag-embedding-model", default="text-embedding-3-small")
+    parser.add_argument("--rag-embedding-index-path", default="artifacts/example_embeddings.json")
+    parser.add_argument("--rag-schema-embedding-index-path", default="artifacts/schema_embeddings.json")
     parser.add_argument("--question", help="Single question to run.")
     parser.add_argument("--interactive", action="store_true")
     parser.add_argument("--json", action="store_true")
@@ -301,6 +368,8 @@ def print_result(result: dict[str, Any], as_json: bool, show_thinking: bool = Fa
         print(f"sql_attempts: {result['sql_attempts']}")
     if "semantic_attempts_used" in result:
         print(f"semantic_attempts_used: {result['semantic_attempts_used']}")
+    if "rag_enabled" in result:
+        print(f"rag_enabled: {result['rag_enabled']}")
     if result.get("sql"):
         print("\nSQL:")
         print(result["sql"])
@@ -338,6 +407,18 @@ def print_result(result: dict[str, Any], as_json: bool, show_thinking: bool = Fa
                     f"- attempt={attempt.get('semantic_attempt')} status={attempt.get('status')} "
                     f"question={attempt.get('precise_question', '')}"
                 )
+                rag_summary = attempt.get("rag", {})
+                if rag_summary:
+                    if rag_summary.get("error"):
+                        print(f"  rag_error: {rag_summary.get('error')}")
+                    else:
+                        print(
+                            "  rag: "
+                            f"tables={rag_summary.get('candidate_tables', [])} "
+                            f"examples={rag_summary.get('examples_used', 0)} "
+                            f"schema_hits={rag_summary.get('schema_hits_used', 0)} "
+                            f"value_hints={rag_summary.get('value_hints_used', 0)}"
+                        )
                 if attempt.get("adequacy", {}).get("missing_piece"):
                     print(f"  adequacy_missing: {attempt['adequacy'].get('missing_piece', '')}")
 
@@ -359,6 +440,16 @@ def main() -> None:
                     args.row_limit,
                     max_sql_retries=max(0, args.max_sql_retries),
                     max_semantic_retries=max(0, args.max_semantic_retries),
+                    enable_rag=args.enable_rag,
+                    rag_examples_path=args.rag_examples_path,
+                    rag_profiles_path=args.rag_profiles_path,
+                    rag_example_top_k=max(1, args.rag_example_top_k),
+                    rag_schema_top_k=max(1, args.rag_schema_top_k),
+                    rag_value_top_k=max(1, args.rag_value_top_k),
+                    rag_use_embeddings=args.rag_use_embeddings,
+                    rag_embedding_model=args.rag_embedding_model,
+                    rag_embedding_index_path=args.rag_embedding_index_path,
+                    rag_schema_embedding_index_path=args.rag_schema_embedding_index_path,
                 ),
                 args.json,
                 show_thinking=args.show_thinking,
@@ -375,6 +466,16 @@ def main() -> None:
             args.row_limit,
             max_sql_retries=max(0, args.max_sql_retries),
             max_semantic_retries=max(0, args.max_semantic_retries),
+            enable_rag=args.enable_rag,
+            rag_examples_path=args.rag_examples_path,
+            rag_profiles_path=args.rag_profiles_path,
+            rag_example_top_k=max(1, args.rag_example_top_k),
+            rag_schema_top_k=max(1, args.rag_schema_top_k),
+            rag_value_top_k=max(1, args.rag_value_top_k),
+            rag_use_embeddings=args.rag_use_embeddings,
+            rag_embedding_model=args.rag_embedding_model,
+            rag_embedding_index_path=args.rag_embedding_index_path,
+            rag_schema_embedding_index_path=args.rag_schema_embedding_index_path,
         ),
         args.json,
         show_thinking=args.show_thinking,

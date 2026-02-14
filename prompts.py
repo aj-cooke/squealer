@@ -17,6 +17,11 @@ Question:
 Return a single SQLite SELECT query.
 """
 
+SQL_RAG_CONTEXT_TEMPLATE = """
+Retrieved context:
+{rag_context}
+"""
+
 SQL_RETRY_GUIDANCE_TEMPLATE = """
 Retry guidance:
 {retry_guidance}

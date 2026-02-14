@@ -20,6 +20,7 @@ from prompts import (
     INTENT_SPEC_SYSTEM_PROMPT,
     INTENT_SPEC_USER_PROMPT_TEMPLATE,
     SQL_REPAIR_USER_PROMPT_TEMPLATE,
+    SQL_RAG_CONTEXT_TEMPLATE,
     SQL_RETRY_GUIDANCE_TEMPLATE,
     SQL_SYSTEM_PROMPT,
     SQL_USER_PROMPT_TEMPLATE,
@@ -28,7 +29,7 @@ from prompts import (
 
 class LLMClient(ABC):
     @abstractmethod
-    def generate_sql(self, question: str, schema: str, retry_guidance: str = "") -> str:
+    def generate_sql(self, question: str, schema: str, retry_guidance: str = "", rag_context: str = "") -> str:
         raise NotImplementedError
 
     @abstractmethod
@@ -98,8 +99,10 @@ class OpenAIClient(LLMClient):
             raise RuntimeError(f"OpenAI call failed after {self.max_attempts} attempt(s): {last_exc!r}") from last_exc
         raise RuntimeError("OpenAI call failed unexpectedly with no captured exception.")
 
-    def generate_sql(self, question: str, schema: str, retry_guidance: str = "") -> str:
+    def generate_sql(self, question: str, schema: str, retry_guidance: str = "", rag_context: str = "") -> str:
         user_prompt = SQL_USER_PROMPT_TEMPLATE.format(schema=schema, question=question)
+        if rag_context.strip():
+            user_prompt += SQL_RAG_CONTEXT_TEMPLATE.format(rag_context=rag_context.strip())
         if retry_guidance.strip():
             user_prompt += SQL_RETRY_GUIDANCE_TEMPLATE.format(retry_guidance=retry_guidance.strip())
         return self._call_text(SQL_SYSTEM_PROMPT, user_prompt)

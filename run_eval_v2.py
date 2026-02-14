@@ -23,6 +23,16 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--max-rows", type=int, default=5000)
     p.add_argument("--max-sql-retries", type=int, default=2)
     p.add_argument("--max-semantic-retries", type=int, default=1)
+    p.add_argument("--enable-rag", action="store_true")
+    p.add_argument("--rag-examples-path", default="benchmarks/v1/questions_v1.json")
+    p.add_argument("--rag-profiles-path", default="artifacts/value_profiles.json")
+    p.add_argument("--rag-example-top-k", type=int, default=4)
+    p.add_argument("--rag-schema-top-k", type=int, default=4)
+    p.add_argument("--rag-value-top-k", type=int, default=8)
+    p.add_argument("--rag-use-embeddings", action="store_true")
+    p.add_argument("--rag-embedding-model", default="text-embedding-3-small")
+    p.add_argument("--rag-embedding-index-path", default="artifacts/example_embeddings.json")
+    p.add_argument("--rag-schema-embedding-index-path", default="artifacts/schema_embeddings.json")
     p.add_argument("--out", default=None, help="Optional explicit output path. If omitted, auto-generates a timestamped filename.")
     p.add_argument("--out-dir", default="eval_reports")
     p.add_argument("--answer-preview-rows", type=int, default=20)
@@ -194,6 +204,16 @@ def main() -> None:
                 args.max_rows,
                 max_sql_retries=max(0, args.max_sql_retries),
                 max_semantic_retries=max(0, args.max_semantic_retries),
+                enable_rag=args.enable_rag,
+                rag_examples_path=args.rag_examples_path,
+                rag_profiles_path=args.rag_profiles_path,
+                rag_example_top_k=max(1, args.rag_example_top_k),
+                rag_schema_top_k=max(1, args.rag_schema_top_k),
+                rag_value_top_k=max(1, args.rag_value_top_k),
+                rag_use_embeddings=args.rag_use_embeddings,
+                rag_embedding_model=args.rag_embedding_model,
+                rag_embedding_index_path=args.rag_embedding_index_path,
+                rag_schema_embedding_index_path=args.rag_schema_embedding_index_path,
             )
             generated_sql = (agent_result.get("sql") or "").strip()
             row["generated_sql"] = generated_sql
@@ -306,6 +326,18 @@ def main() -> None:
         "generated_at_utc": generated_at,
         "benchmark": args.benchmark,
         "model": args.model,
+        "rag": {
+            "enabled": args.enable_rag,
+            "examples_path": args.rag_examples_path,
+            "profiles_path": args.rag_profiles_path,
+            "example_top_k": max(1, args.rag_example_top_k),
+            "schema_top_k": max(1, args.rag_schema_top_k),
+            "value_top_k": max(1, args.rag_value_top_k),
+            "use_embeddings": args.rag_use_embeddings,
+            "embedding_model": args.rag_embedding_model,
+            "embedding_index_path": args.rag_embedding_index_path,
+            "schema_embedding_index_path": args.rag_schema_embedding_index_path,
+        },
         "summary": summary,
         "results": results,
     }
